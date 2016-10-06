@@ -17,7 +17,7 @@ public class MatchResource {
     @GET
     @Timed
     public Match teamName() {
-        return new Match("Chelsea");
+        return new Match("Chelsea boys in blue, Chelsea Chelsea we love you!");
     }
 
 }

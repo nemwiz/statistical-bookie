@@ -8,6 +8,8 @@
         <dropwizard.version>1.0.2</dropwizard.version>
     </properties>
 
+
+
     <groupId>statistical-bookie</groupId>
     <artifactId>sb</artifactId>
     <version>1.0</version>
@@ -58,6 +60,37 @@
                 </execution>
             </executions>
         </plugin>
+
+        <plugin>
+            <groupId>com.spotify</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.4.13</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>build</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <imageName>sb-backend</imageName>
+                <dockerDirectory>${project.basedir}/docker</dockerDirectory>
+                <!-- optionally overwrite tags every time image is built with docker:build -->
+                <forceTags>true</forceTags>
+                <imageTags>
+                    <imageTag>${project.version}</imageTag>
+                </imageTags>
+                <resources>
+                    <resource>
+                        <targetPath>/</targetPath>
+                        <directory>${project.build.directory}</directory>
+                        <include>${project.build.finalName}.jar</include>
+                    </resource>
+                </resources>
+            </configuration>
+        </plugin>
+
     </plugins>
 </build>
 
