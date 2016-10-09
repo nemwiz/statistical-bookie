@@ -7,3 +7,6 @@ server:
     - type: http
       port: 5001
 
+databaseUrl: stats-db
+databasePort: 27017
+

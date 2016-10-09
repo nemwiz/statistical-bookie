@@ -1,0 +1,16 @@
+ version: '2'
+ services:
+   backend:
+     image: sb-backend
+     container_name: sb-backend
+     ports:
+      - "5000:5000"
+     depends_on:
+      - stats_db
+   stats_db:
+     image: mongo
+     container_name: stats-db
+     ports:
+      - "28008:27017"
+     volumes:
+      - "/var/lib/mongodb:/var/lib/mongodb:rw"
