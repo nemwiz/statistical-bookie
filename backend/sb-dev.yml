@@ -9,10 +9,9 @@ server:
 
 mongo:
   seeds:
-  - host: stats-db
-    port: 27017
+  - host: localhost
+    port: 28008
   database: stats
 #  credentials:
 #    userName: example
 #    password: example
-

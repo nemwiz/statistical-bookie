@@ -1,22 +1,22 @@
 package healthchecks;
 
 import com.codahale.metrics.health.HealthCheck;
-import com.mongodb.client.MongoDatabase;
+import org.mongodb.morphia.Datastore;
 
-public class DatabaseHealthCheck extends HealthCheck{
+public class DatabaseHealthCheck extends HealthCheck {
 
-    private final MongoDatabase mongoDatabase;
+    private final Datastore database;
 
-    public DatabaseHealthCheck(MongoDatabase mongoDB) {
-        this.mongoDatabase = mongoDB;
+    public DatabaseHealthCheck(Datastore mongoDB) {
+        this.database = mongoDB;
     }
 
     protected Result check() throws Exception {
 
-        if(this.mongoDatabase.getName().equals(null)) {
-            return Result.healthy();
+        if (this.database.getDB().getName().isEmpty()) {
+            return Result.unhealthy("MorphiaDatastore is null");
         }
+        return Result.healthy();
 
-        return Result.unhealthy("Database is null");
     }
 }

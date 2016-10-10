@@ -1,3 +1,6 @@
+import com.meltmedia.dropwizard.mongo.MongoBundle;
+import dao.MatchDAO;
+import dao.MorphiaDatastore;
 import healthchecks.DatabaseHealthCheck;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -5,31 +8,35 @@ import io.dropwizard.setup.Environment;
 import resource.MatchResource;
 
 public class StatsBookie extends Application<StatsBookieConfiguration> {
+
+    private MongoBundle<StatsBookieConfiguration> mongoBundle;
+
     public static void main(String[] args) throws Exception {
         new StatsBookie().run(args);
     }
 
     @Override
     public String getName() {
-        return "hello-world";
+        return "stats-bookie-backend-app";
     }
 
     @Override
     public void initialize(Bootstrap<StatsBookieConfiguration> bootstrap) {
-        // nothing to do yet
+        bootstrap.addBundle(mongoBundle = MongoBundle.<StatsBookieConfiguration>builder()
+                .withConfiguration(StatsBookieConfiguration::getMongo)
+                .build());
     }
 
     public void run(StatsBookieConfiguration statsBookieConfiguration, Environment environment) throws Exception {
 
-        final MongoDB mongoDB = new MongoDB(
-                statsBookieConfiguration.getDatabaseUrl(),
-                statsBookieConfiguration.getDatabasePort()
-        );
+        MorphiaDatastore morphiaDatastore = new MorphiaDatastore(mongoBundle.getClient(), mongoBundle.getDB().getName());
 
-        final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(mongoDB.getMongoDatabase());
-        environment.healthChecks().register("Database health check", databaseHealthCheck);
+        MatchDAO matchDAO = new MatchDAO(morphiaDatastore);
 
-        final MatchResource matchResource = new MatchResource();
+        final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(morphiaDatastore.getDatastore());
+        environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
+
+        final MatchResource matchResource = new MatchResource(matchDAO);
         environment.jersey().register(matchResource);
     }
 }
