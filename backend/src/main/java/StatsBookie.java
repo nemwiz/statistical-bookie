@@ -1,4 +1,5 @@
 import com.meltmedia.dropwizard.mongo.MongoBundle;
+import controller.MatchController;
 import dao.MatchDAO;
 import dao.MorphiaDatastore;
 import healthchecks.DatabaseHealthCheck;
@@ -36,7 +37,8 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
         final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(morphiaDatastore.getDatastore());
         environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
 
-        final MatchResource matchResource = new MatchResource(matchDAO);
+        final MatchController matchController = new MatchController(matchDAO);
+        final MatchResource matchResource = new MatchResource(matchController);
         environment.jersey().register(matchResource);
     }
 }

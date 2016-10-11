@@ -1,6 +1,7 @@
 package resource;
 
 import com.codahale.metrics.annotation.Timed;
+import controller.MatchController;
 import dao.MatchDAO;
 import model.Match;
 
@@ -15,16 +16,16 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class MatchResource {
 
-    private MatchDAO matchDAO;
+    private MatchController matchController;
 
-    public MatchResource(MatchDAO matchDAO) {
-        this.matchDAO = matchDAO;
+    public MatchResource(MatchController matchController) {
+        this.matchController = matchController;
     }
 
     @GET
     @Timed
     public List<Match> getAllMatches(@QueryParam("teamName") String teamName) {
-        return matchDAO.getMatchesByTeamName(teamName);
+        return matchController.getAllMatchesByTeamName(teamName);
     }
 
 }
