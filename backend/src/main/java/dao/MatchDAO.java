@@ -17,8 +17,7 @@ public class MatchDAO {
     public List<Match> getMatchesByTeamName(String teamName) {
 
        return this.datastore.getDatastore().createQuery(Match.class)
-               .field("homeTeam")
-               .contains(teamName)
+               .field("homeTeam").contains(teamName)
                .limit(10)
                .order("-date")
                .asList();

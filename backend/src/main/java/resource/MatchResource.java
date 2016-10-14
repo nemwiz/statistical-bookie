@@ -1,9 +1,7 @@
 package resource;
 
-import aggregator.GoalsAggregator;
 import com.codahale.metrics.annotation.Timed;
 import controller.MatchController;
-import dao.MatchDAO;
 import model.Match;
 
 import javax.ws.rs.GET;
@@ -26,11 +24,6 @@ public class MatchResource {
     @GET
     @Timed
     public List<Match> getAllMatches(@QueryParam("teamName") String teamName) {
-
-        List<Match> myMatchList = matchController.getAllMatchesByTeamName(teamName);
-
-        GoalsAggregator.aggregateGoals(myMatchList.get(9));
-
         return matchController.getAllMatchesByTeamName(teamName);
     }
 

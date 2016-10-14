@@ -29,4 +29,14 @@ public class GoalsAggregationModel {
     public int getFourOrMoreGoals() {
         return fourOrMoreGoals;
     }
+
+    @Override
+    public String toString() {
+        return "GoalsAggregationModel{" +
+                "oneGoal=" + oneGoal +
+                ", twoGoals=" + twoGoals +
+                ", threeGoals=" + threeGoals +
+                ", fourOrMoreGoals=" + fourOrMoreGoals +
+                '}';
+    }
 }
