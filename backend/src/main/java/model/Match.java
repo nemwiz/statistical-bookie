@@ -122,4 +122,96 @@ public class Match {
     public int getAwayTeamRedCards() {
         return awayTeamRedCards;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLeagueName(String leagueName) {
+        this.leagueName = leagueName;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setHomeTeam(String homeTeam) {
+        this.homeTeam = homeTeam;
+    }
+
+    public void setAwayTeam(String awayTeam) {
+        this.awayTeam = awayTeam;
+    }
+
+    public void setHomeTeamGoals(int homeTeamGoals) {
+        this.homeTeamGoals = homeTeamGoals;
+    }
+
+    public void setAwayTeamGoals(int awayTeamGoals) {
+        this.awayTeamGoals = awayTeamGoals;
+    }
+
+    public void setFinalOutcome(String finalOutcome) {
+        this.finalOutcome = finalOutcome;
+    }
+
+    public void setHomeTeamHalftimeGoals(int homeTeamHalftimeGoals) {
+        this.homeTeamHalftimeGoals = homeTeamHalftimeGoals;
+    }
+
+    public void setAwayTeamHalftimeGoals(int awayTeamHalftimeGoals) {
+        this.awayTeamHalftimeGoals = awayTeamHalftimeGoals;
+    }
+
+    public void setHalfTimeOutcome(String halfTimeOutcome) {
+        this.halfTimeOutcome = halfTimeOutcome;
+    }
+
+    public void setHomeTeamShots(int homeTeamShots) {
+        this.homeTeamShots = homeTeamShots;
+    }
+
+    public void setAwayTeamShots(int awayTeamShots) {
+        this.awayTeamShots = awayTeamShots;
+    }
+
+    public void setHomeTeamShotsOnTarget(int homeTeamShotsOnTarget) {
+        this.homeTeamShotsOnTarget = homeTeamShotsOnTarget;
+    }
+
+    public void setAwayTeamShotsOnTarget(int awayTeamShotsOnTarget) {
+        this.awayTeamShotsOnTarget = awayTeamShotsOnTarget;
+    }
+
+    public void setHomeTeamCorners(int homeTeamCorners) {
+        this.homeTeamCorners = homeTeamCorners;
+    }
+
+    public void setAwayTeamCorners(int awayTeamCorners) {
+        this.awayTeamCorners = awayTeamCorners;
+    }
+
+    public void setHomeTeamFouls(int homeTeamFouls) {
+        this.homeTeamFouls = homeTeamFouls;
+    }
+
+    public void setAwayTeamFouls(int awayTeamFouls) {
+        this.awayTeamFouls = awayTeamFouls;
+    }
+
+    public void setHomeTeamYellowCards(int homeTeamYellowCards) {
+        this.homeTeamYellowCards = homeTeamYellowCards;
+    }
+
+    public void setAwayTeamYellowCards(int awayTeamYellowCards) {
+        this.awayTeamYellowCards = awayTeamYellowCards;
+    }
+
+    public void setHomeTeamRedCards(int homeTeamRedCards) {
+        this.homeTeamRedCards = homeTeamRedCards;
+    }
+
+    public void setAwayTeamRedCards(int awayTeamRedCards) {
+        this.awayTeamRedCards = awayTeamRedCards;
+    }
 }
