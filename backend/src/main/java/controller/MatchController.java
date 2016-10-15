@@ -1,9 +1,9 @@
 package controller;
 
 import aggregator.GoalsAggregator;
-import aggregator.model.GoalsAggregationModel;
+import aggregator.model.NumberOfGoalsPerMatchModel;
 import dao.MatchDAO;
-import mapper.MatchGoalsToAggregatedGoalsMapper;
+import mapper.MatchToNumberOfGoalsMapper;
 import model.Match;
 
 import java.util.ArrayList;
@@ -17,50 +17,50 @@ public class MatchController {
         this.matchDAO = matchDAO;
     }
 
-    public List<Match> getAllMatchesByTeamName(String teamName) {
+    public List<Match> getNumberOfGoalsFromLastMatches(String teamName) {
 
         List<Match> matches = this.matchDAO.getMatchesByTeamName(teamName);
-        List<GoalsAggregationModel> gamList = new ArrayList<>();
+        List<NumberOfGoalsPerMatchModel> matchesWithNumberOfGoals = new ArrayList<>();
 
         matches.forEach(
-                match -> gamList.add(
-                        MatchGoalsToAggregatedGoalsMapper
-                                .mapMatchAggregatedGoalsToGoalsAggregationmodel(
-                                        GoalsAggregator.aggregateGoals(match))
+                match -> matchesWithNumberOfGoals.add(
+                        MatchToNumberOfGoalsMapper
+                                .mapSingleMatchToNumberOfGoalsModel(
+                                        GoalsAggregator.getNumberOfGoals(match))
                 )
         );
 
-        GoalsAggregationModel finalGam = getAggregatedGoalsForLastnMatches(gamList);
+        NumberOfGoalsPerMatchModel countOfLastMatchesWithNumberOfGoals = countNumberOfGoalsForEachFromLastNMatches(matchesWithNumberOfGoals);
 
-        System.out.println(finalGam.toString());
+        System.out.println(countOfLastMatchesWithNumberOfGoals.toString());
 
         return matches;
     }
 
-    private static GoalsAggregationModel getAggregatedGoalsForLastnMatches(List<GoalsAggregationModel> gamList) {
+    private static NumberOfGoalsPerMatchModel countNumberOfGoalsForEachFromLastNMatches(List<NumberOfGoalsPerMatchModel> matchesWithNumberOfGoals) {
 
-        int aggregatedOneGoalForLastnMatches = (int) gamList.stream()
+        int countOfLastMatchesWithOneGoal = (int) matchesWithNumberOfGoals.stream()
                 .filter(
-                        aggregatedMatch -> aggregatedMatch.getOneGoal()==1
+                        matchWithNumberOfGoals -> matchWithNumberOfGoals.getOneGoal()==1
                 ).count();
-        int aggregatedTwoGoalsForLastnMatches = (int) gamList.stream()
+        int countOfLastMatchesWithTwoGoals = (int) matchesWithNumberOfGoals.stream()
                 .filter(
-                        aggregatedMatch -> aggregatedMatch.getTwoGoals()==1
+                        matchWithNumberOfGoals -> matchWithNumberOfGoals.getTwoGoals()==1
                 ).count();
-        int aggregatedThreeGoalsForLastnMatches = (int) gamList.stream()
+        int countOfLastMatchesWithThreeGoals = (int) matchesWithNumberOfGoals.stream()
                 .filter(
-                        aggregatedMatch -> aggregatedMatch.getThreeGoals()==1
+                        matchWithNumberOfGoals -> matchWithNumberOfGoals.getThreeGoals()==1
                 ).count();
-        int aggregatedFourOrMoreGoalsForLastnMatches = (int) gamList.stream()
+        int countOfLastMatchesWithFourOrMoreGoals = (int) matchesWithNumberOfGoals.stream()
                 .filter(
-                        aggregatedMatch -> aggregatedMatch.getFourOrMoreGoals()==1
+                        matchWithNumberOfGoals -> matchWithNumberOfGoals.getFourOrMoreGoals()==1
                 ).count();
 
-        return new GoalsAggregationModel(
-                aggregatedOneGoalForLastnMatches,
-                aggregatedTwoGoalsForLastnMatches,
-                aggregatedThreeGoalsForLastnMatches,
-                aggregatedFourOrMoreGoalsForLastnMatches
+        return new NumberOfGoalsPerMatchModel(
+                countOfLastMatchesWithOneGoal,
+                countOfLastMatchesWithTwoGoals,
+                countOfLastMatchesWithThreeGoals,
+                countOfLastMatchesWithFourOrMoreGoals
         );
 
     }

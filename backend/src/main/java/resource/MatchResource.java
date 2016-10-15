@@ -24,7 +24,7 @@ public class MatchResource {
     @GET
     @Timed
     public List<Match> getAllMatches(@QueryParam("teamName") String teamName) {
-        return matchController.getAllMatchesByTeamName(teamName);
+        return matchController.getNumberOfGoalsFromLastMatches(teamName);
     }
 
 }

@@ -13,7 +13,7 @@ public class GoalsAggregator {
         return match.getHomeTeamGoals() + match.getAwayTeamGoals();
     }
 
-    public static List<Integer> aggregateGoals(Match match) {
+    public static List<Integer> getNumberOfGoals(Match match) {
 
         int totalGoals = sumGoals(match);
         List<Integer> aggregatedGoalsForOneMatch = new ArrayList<>();

@@ -46,7 +46,7 @@ public class GoalsAggregatorTest {
         int awayTeamGoals = 1;
         setUpMatch(homeTeamGoals, awayTeamGoals);
 
-        List<Integer> aggregatedGoals = GoalsAggregator.aggregateGoals(match);
+        List<Integer> aggregatedGoals = GoalsAggregator.getNumberOfGoals(match);
 
         long goalsAggregation = aggregatedGoals
                 .stream()
@@ -68,7 +68,7 @@ public class GoalsAggregatorTest {
 
         setUpMatch(0, 0);
 
-        List<Integer> aggregatedGoals = GoalsAggregator.aggregateGoals(match);
+        List<Integer> aggregatedGoals = GoalsAggregator.getNumberOfGoals(match);
 
         long goalsAggregation = aggregatedGoals
                 .stream()

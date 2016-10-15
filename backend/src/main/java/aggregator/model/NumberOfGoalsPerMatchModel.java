@@ -1,13 +1,13 @@
 package aggregator.model;
 
-public class GoalsAggregationModel {
+public class NumberOfGoalsPerMatchModel {
 
     private int oneGoal;
     private int twoGoals;
     private int threeGoals;
     private int fourOrMoreGoals;
 
-    public GoalsAggregationModel(int oneGoal, int twoGoals, int threeGoals, int fourOrMoreGoals) {
+    public NumberOfGoalsPerMatchModel(int oneGoal, int twoGoals, int threeGoals, int fourOrMoreGoals) {
         this.oneGoal = oneGoal;
         this.twoGoals = twoGoals;
         this.threeGoals = threeGoals;
@@ -32,7 +32,7 @@ public class GoalsAggregationModel {
 
     @Override
     public String toString() {
-        return "GoalsAggregationModel{" +
+        return "NumberOfGoalsPerMatchModel{" +
                 "oneGoal=" + oneGoal +
                 ", twoGoals=" + twoGoals +
                 ", threeGoals=" + threeGoals +
