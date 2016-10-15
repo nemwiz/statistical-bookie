@@ -31,6 +31,9 @@ public class Match {
     private int homeTeamRedCards;
     private int awayTeamRedCards;
 
+    public Match() {
+    }
+
     public long getId() {
         return id;
     }

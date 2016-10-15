@@ -6,7 +6,7 @@ import healthchecks.DatabaseHealthCheck;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import resource.MatchResource;
+import resource.NumberOfGoalsPerMatchResource;
 
 public class StatsBookie extends Application<StatsBookieConfiguration> {
 
@@ -38,7 +38,7 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
         environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
 
         final MatchController matchController = new MatchController(matchDAO);
-        final MatchResource matchResource = new MatchResource(matchController);
-        environment.jersey().register(matchResource);
+        final NumberOfGoalsPerMatchResource numberOfGoalsPerMatchResource = new NumberOfGoalsPerMatchResource(matchController);
+        environment.jersey().register(numberOfGoalsPerMatchResource);
     }
 }

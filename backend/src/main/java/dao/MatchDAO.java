@@ -14,13 +14,24 @@ public class MatchDAO {
         this.datastore = datastore;
     }
 
-    public List<Match> getMatchesByTeamName(String teamName) {
+    public List<Match> getMatchesByTeamName(String homeTeamName) {
 
        return this.datastore.getDatastore().createQuery(Match.class)
-               .field("homeTeam").contains(teamName)
+               .field("homeTeam").contains(homeTeamName)
                .limit(10)
                .order("-date")
                .asList();
+
+    }
+
+    public List<Match> getMatchesFromBothTeams(String homeTeamName, String awayTeamName) {
+
+        return this.datastore.getDatastore().createQuery(Match.class)
+                .field("homeTeam").contains(homeTeamName)
+                .field("awayTeam").contains(awayTeamName)
+                .limit(10)
+                .order("-date")
+                .asList();
 
     }
 

@@ -1,9 +1,10 @@
 package controller;
 
-import aggregator.GoalsAggregator;
-import aggregator.model.NumberOfGoalsPerMatchModel;
+import collecter.NumberOfGoalsCollecter;
+import collecter.TeamGoalsCollecter;
+import collecter.model.NumberOfGoalsModel;
+import collecter.model.TeamGoalsModel;
 import dao.MatchDAO;
-import mapper.MatchToNumberOfGoalsMapper;
 import model.Match;
 
 import java.util.ArrayList;
@@ -17,51 +18,81 @@ public class MatchController {
         this.matchDAO = matchDAO;
     }
 
-    public List<Match> getNumberOfGoalsFromLastMatches(String teamName) {
+    public List<Match> getMatches(String homeTeamName) {
+        getNumberOfGoalsFromLastMatches(homeTeamName);
+        getTeamGoalsFromLastMatches(homeTeamName, null);
+        return this.matchDAO.getMatchesByTeamName(homeTeamName);
+    }
 
-        List<Match> matches = this.matchDAO.getMatchesByTeamName(teamName);
-        List<NumberOfGoalsPerMatchModel> matchesWithNumberOfGoals = new ArrayList<>();
+    public void getNumberOfGoalsFromLastMatches(String homeTeamName) {
+
+        List<Match> matches = this.matchDAO.getMatchesByTeamName(homeTeamName);
+        List<NumberOfGoalsModel> matchesWithNumberOfGoals = new ArrayList<>();
 
         matches.forEach(
                 match -> matchesWithNumberOfGoals.add(
-                        MatchToNumberOfGoalsMapper
-                                .mapSingleMatchToNumberOfGoalsModel(
-                                        GoalsAggregator.getNumberOfGoals(match))
+                                        NumberOfGoalsCollecter.getNumberOfGoals(match)
                 )
         );
 
-        NumberOfGoalsPerMatchModel countOfLastMatchesWithNumberOfGoals = countNumberOfGoalsForEachFromLastNMatches(matchesWithNumberOfGoals);
+        countNumberOfGoalsForEachFromLastNMatches(matchesWithNumberOfGoals);
 
-        System.out.println(countOfLastMatchesWithNumberOfGoals.toString());
 
-        return matches;
+//        return countOfLastMatchesWithNumberOfGoals;
     }
 
-    private static NumberOfGoalsPerMatchModel countNumberOfGoalsForEachFromLastNMatches(List<NumberOfGoalsPerMatchModel> matchesWithNumberOfGoals) {
+    private static void countNumberOfGoalsForEachFromLastNMatches(List<NumberOfGoalsModel> matchesWithNumberOfGoals) {
 
-        int countOfLastMatchesWithOneGoal = (int) matchesWithNumberOfGoals.stream()
+        long countOfLastMatchesWithOneGoal = matchesWithNumberOfGoals.stream()
                 .filter(
-                        matchWithNumberOfGoals -> matchWithNumberOfGoals.getOneGoal()==1
+                        NumberOfGoalsModel::isOneGoalsScored
                 ).count();
-        int countOfLastMatchesWithTwoGoals = (int) matchesWithNumberOfGoals.stream()
+        long countOfLastMatchesWithTwoGoals = matchesWithNumberOfGoals.stream()
                 .filter(
-                        matchWithNumberOfGoals -> matchWithNumberOfGoals.getTwoGoals()==1
+                        NumberOfGoalsModel::isTwoGoalsScored
                 ).count();
-        int countOfLastMatchesWithThreeGoals = (int) matchesWithNumberOfGoals.stream()
+        long countOfLastMatchesWithThreeGoals = matchesWithNumberOfGoals.stream()
                 .filter(
-                        matchWithNumberOfGoals -> matchWithNumberOfGoals.getThreeGoals()==1
+                        NumberOfGoalsModel::isThreeGoalsScored
                 ).count();
-        int countOfLastMatchesWithFourOrMoreGoals = (int) matchesWithNumberOfGoals.stream()
+        long countOfLastMatchesWithFourOrMoreGoals = matchesWithNumberOfGoals.stream()
                 .filter(
-                        matchWithNumberOfGoals -> matchWithNumberOfGoals.getFourOrMoreGoals()==1
+                        NumberOfGoalsModel::isFourOrMoreGoalsScored
                 ).count();
 
-        return new NumberOfGoalsPerMatchModel(
-                countOfLastMatchesWithOneGoal,
-                countOfLastMatchesWithTwoGoals,
-                countOfLastMatchesWithThreeGoals,
-                countOfLastMatchesWithFourOrMoreGoals
+        System.out.println(countOfLastMatchesWithOneGoal + " " +
+                countOfLastMatchesWithTwoGoals + " " +
+        countOfLastMatchesWithThreeGoals + " " +
+        countOfLastMatchesWithFourOrMoreGoals);
+
+
+    }
+
+    public void getTeamGoalsFromLastMatches(String homeTeamName, String awayTeamName) {
+
+        List<Match> matches = this.matchDAO.getMatchesByTeamName(homeTeamName);
+        List<TeamGoalsModel> matchesWithTeamGoals = new ArrayList<>();
+
+        matches.forEach(
+                match -> matchesWithTeamGoals.add(
+                        TeamGoalsCollecter.getTeamGoalsScored(match)
+                )
         );
+
+        long lastMatchesWhereHomeTeamScored = matchesWithTeamGoals
+                .stream()
+                .filter(TeamGoalsModel::isHomeTeamScored)
+                .count();
+
+        System.out.println(lastMatchesWhereHomeTeamScored);
+    }
+
+    public long testFunc(String parameterName, List<?> matches) {
+
+        matches.stream()
+                .filter(null)
+                .count();
+        return 1;
 
     }
 
