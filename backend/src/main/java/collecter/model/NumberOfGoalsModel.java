@@ -11,13 +11,6 @@ public class NumberOfGoalsModel {
     private boolean isThreeGoalsScoredOnHalfTime;
     private boolean isFourOrMoreGoalsScoredOnHalfTime;
 
-    public NumberOfGoalsModel(boolean isOneGoalsScored, boolean isTwoGoalsScored, boolean isThreeGoalsScored, boolean isFourOrMoreGoalsScored) {
-        this.isOneGoalsScored = isOneGoalsScored;
-        this.isTwoGoalsScored = isTwoGoalsScored;
-        this.isThreeGoalsScored = isThreeGoalsScored;
-        this.isFourOrMoreGoalsScored = isFourOrMoreGoalsScored;
-    }
-
     public NumberOfGoalsModel(boolean isOneGoalsScored, boolean isTwoGoalsScored, boolean isThreeGoalsScored, boolean isFourOrMoreGoalsScored, boolean isOneGoalsScoredOnHalfTime, boolean isTwoGoalsScoredOnHalfTime, boolean isThreeGoalsScoredOnHalfTime, boolean isFourOrMoreGoalsScoredOnHalfTime) {
         this.isOneGoalsScored = isOneGoalsScored;
         this.isTwoGoalsScored = isTwoGoalsScored;
