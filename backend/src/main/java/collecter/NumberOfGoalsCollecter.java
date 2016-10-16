@@ -11,6 +11,10 @@ public class NumberOfGoalsCollecter {
         return match.getHomeTeamGoals() + match.getAwayTeamGoals();
     }
 
+    public static int sumGoalsOnHalfTime(Match match) {
+        return match.getHomeTeamHalftimeGoals() + match.getAwayTeamHalftimeGoals();
+    }
+
     public static NumberOfGoalsModel getNumberOfGoals(Match match) {
 
         int totalGoals = sumGoals(match);

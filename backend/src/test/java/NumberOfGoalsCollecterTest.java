@@ -47,6 +47,32 @@ public class NumberOfGoalsCollecterTest {
     }
 
     @Test
+    public void getSumOfGoalsOnHalfTime() {
+
+        int homeTeamHalfTimeGoals = 2;
+        int awayTeamHalfTimeGoals = 1;
+        int totalGoalsHalfTime = homeTeamHalfTimeGoals + awayTeamHalfTimeGoals;
+        matchHelper.setUpMatchHalfTimeGoals(homeTeamHalfTimeGoals, awayTeamHalfTimeGoals);
+
+        int sumOfGoalsOnHalfTime = NumberOfGoalsCollecter.sumGoalsOnHalfTime(match);
+
+        assertEquals(sumOfGoalsOnHalfTime, totalGoalsHalfTime);
+    }
+
+    @Test
+    public void getSumOfGoalsOnHalfTimeWhenNoGoals() {
+
+        int homeTeamHalfTimeGoals = 0;
+        int awayTeamHalfTimeGoals = 0;
+        int totalGoalsHalfTime = homeTeamHalfTimeGoals + awayTeamHalfTimeGoals;
+        matchHelper.setUpMatchHalfTimeGoals(homeTeamHalfTimeGoals, awayTeamHalfTimeGoals);
+
+        int sumOfGoalsOnHalfTime = NumberOfGoalsCollecter.sumGoalsOnHalfTime(match);
+
+        assertEquals(sumOfGoalsOnHalfTime, totalGoalsHalfTime);
+    }
+
+    @Test
     public void isOneGoalScoredIsSetToTrueAndOtherPropertiesToFalseWhenOnlyOneGoalIsScored() {
 
         matchHelper.setUpMatchGoals(
