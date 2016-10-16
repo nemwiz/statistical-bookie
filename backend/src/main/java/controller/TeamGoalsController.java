@@ -1,7 +1,6 @@
 package controller;
 
 import collecter.TeamGoalsCollecter;
-import collecter.model.NumberOfGoalsModel;
 import collecter.model.TeamGoalsModel;
 import model.Match;
 import viewmodel.TeamGoalsView;
