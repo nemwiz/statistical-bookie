@@ -2,10 +2,7 @@ package viewmodel;
 
 public class AggregatedMatchesModel {
 
-    private long oneGoalIsScored;
-    private long twoGoalsAreScored;
-    private long threeGoalsAreScored;
-    private long fourOrMoreGoalsAreScored;
+    private NumberOfGoalsViewModel numberOfGoalsViewModel;
     private long homeTeamScored;
     private long awayTeamScored;
     private long bothTeamsScored;
