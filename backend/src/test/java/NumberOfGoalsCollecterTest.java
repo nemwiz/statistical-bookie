@@ -11,20 +11,22 @@ import static org.junit.Assert.assertFalse;
 public class NumberOfGoalsCollecterTest {
 
     private Match match;
+    private MatchHelper matchHelper;
     private NumberOfGoalsModel numberOfGoalsModel;
-    int homeTeamGoals;
-    int awayTeamGoals;
-    int totalGoals;
 
     @Before
     public void setUp() {
         match = new Match();
+        matchHelper = new MatchHelper(match);
     }
 
     @Test
     public void getSumOfGoals() {
 
-        setUpMatch(3, 2);
+        int homeTeamGoals = 3;
+        int awayTeamGoals = 2;
+        int totalGoals = homeTeamGoals + awayTeamGoals;
+        matchHelper.setUpMatchGoals(homeTeamGoals, awayTeamGoals);
 
         int sumOfGoals = NumberOfGoalsCollecter.sumGoals(match);
 
@@ -34,7 +36,10 @@ public class NumberOfGoalsCollecterTest {
     @Test
     public void getSumOfGoalsWhenNoGoals() {
 
-        setUpMatch(0, 0);
+        int homeTeamGoals = 0;
+        int awayTeamGoals = 0;
+        int totalGoals = homeTeamGoals + awayTeamGoals;
+        matchHelper.setUpMatchGoals(homeTeamGoals, awayTeamGoals);
 
         int sumOfGoals = NumberOfGoalsCollecter.sumGoals(match);
 
@@ -44,7 +49,9 @@ public class NumberOfGoalsCollecterTest {
     @Test
     public void isOneGoalScoredIsSetToTrueAndOtherPropertiesToFalseWhenOnlyOneGoalIsScored() {
 
-        setUpMatch(0, 1);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(0),
+                MatchHelper.awayTeamGoals(1));
 
         numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
 
@@ -58,7 +65,9 @@ public class NumberOfGoalsCollecterTest {
     @Test
     public void isTwoGoalScoredIsSetToTrueAndPropertiesAfterToFalseWhenTwoGoalsAreScored() {
 
-        setUpMatch(1, 1);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(1),
+                MatchHelper.awayTeamGoals(1));
 
         numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
 
@@ -72,7 +81,9 @@ public class NumberOfGoalsCollecterTest {
     @Test
     public void isThreeGoalsScoredIsSetToTrueAndPropertiesAfterToFalseWhenThreeGoalsAreScored() {
 
-        setUpMatch(2, 1);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(2),
+                MatchHelper.awayTeamGoals(1));
 
         numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
 
@@ -86,7 +97,9 @@ public class NumberOfGoalsCollecterTest {
     @Test
     public void allPropertiesAreSetToTrueWhenFourOrMoreGoalsAreScored() {
 
-        setUpMatch(2, 3);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(2),
+                MatchHelper.awayTeamGoals(3));
 
         numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
 
@@ -100,7 +113,9 @@ public class NumberOfGoalsCollecterTest {
     @Test
     public void allPropertiesAreSetToFalseWhenNumberOfGoalsIsZero() {
 
-        setUpMatch(0, 0);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(0),
+                MatchHelper.awayTeamGoals(0));
 
         numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
 
@@ -109,16 +124,6 @@ public class NumberOfGoalsCollecterTest {
         assertFalse(numberOfGoalsModel.isThreeGoalsScored());
         assertFalse(numberOfGoalsModel.isFourOrMoreGoalsScored());
 
-    }
-
-
-    private void setUpMatch(int homeGoals, int awayGoals) {
-        homeTeamGoals = homeGoals;
-        awayTeamGoals = awayGoals;
-        totalGoals = homeTeamGoals + awayTeamGoals;
-
-        match.setHomeTeamGoals(homeTeamGoals);
-        match.setAwayTeamGoals(awayTeamGoals);
     }
 
 }

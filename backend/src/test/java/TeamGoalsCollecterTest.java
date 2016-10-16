@@ -10,20 +10,21 @@ import static junit.framework.TestCase.assertTrue;
 public class TeamGoalsCollecterTest {
 
     private Match match;
-    int homeTeamGoals;
-    int awayTeamGoals;
-    int totalGoals;
+    private MatchHelper matchHelper;
     private TeamGoalsModel teamGoalsModel;
 
     @Before
     public void setUp() {
         match = new Match();
+        matchHelper = new MatchHelper(match);
     }
 
     @Test
     public void homeTeamScoredIsSetToTrueWhenHomeTeamHasGoals() {
 
-        setUpMatch(3, 0);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(3),
+                MatchHelper.awayTeamGoals(0));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -34,7 +35,9 @@ public class TeamGoalsCollecterTest {
     @Test
     public void homeTeamScoredIsSetToFalseWhenHomeTeamHasZeroGoals() {
 
-        setUpMatch(0, 2);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(0),
+                MatchHelper.awayTeamGoals(2));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -45,7 +48,9 @@ public class TeamGoalsCollecterTest {
     @Test
     public void awayTeamScoredIsSetToTrueWhenAwayTeamHasGoals() {
 
-        setUpMatch(1, 2);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(1),
+                MatchHelper.awayTeamGoals(2));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -56,7 +61,9 @@ public class TeamGoalsCollecterTest {
     @Test
     public void awayTeamScoredIsSetToFalseWhenAwayTeamHasZeroGoals() {
 
-        setUpMatch(1, 0);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(1),
+                MatchHelper.awayTeamGoals(0));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -67,7 +74,9 @@ public class TeamGoalsCollecterTest {
     @Test
     public void bothTeamsScoredIsSetToTrueWhenBothTeamsHaveGoals() {
 
-        setUpMatch(1, 2);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(1),
+                MatchHelper.awayTeamGoals(2));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -80,7 +89,9 @@ public class TeamGoalsCollecterTest {
     @Test
     public void bothTeamsScoredIsSetToFalseWhenOnlyOneTeamHasGoals() {
 
-        setUpMatch(1, 0);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(1),
+                MatchHelper.awayTeamGoals(0));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -91,7 +102,9 @@ public class TeamGoalsCollecterTest {
     @Test
     public void homeTeamHalfTimeScoredIsSetToTrueWhenHomeTeamHasGoalsOnHalftime() {
 
-        setUpMatchHalfTimeGoals(3, 0);
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(3),
+                MatchHelper.awayTeamHalfTimeGoals(0));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -102,7 +115,9 @@ public class TeamGoalsCollecterTest {
     @Test
     public void homeTeamHalfTimeScoredIsSetToFalseWhenHomeTeamHasZeroGoalsOnHalftime() {
 
-        setUpMatchHalfTimeGoals(0, 2);
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(0),
+                MatchHelper.awayTeamHalfTimeGoals(2));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -113,7 +128,9 @@ public class TeamGoalsCollecterTest {
     @Test
     public void awayTeamHalfTimeScoredIsSetToTrueWhenAwayTeamHasGoalsOnHalftime() {
 
-        setUpMatchHalfTimeGoals(3, 1);
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(3),
+                MatchHelper.awayTeamHalfTimeGoals(1));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -124,7 +141,9 @@ public class TeamGoalsCollecterTest {
     @Test
     public void awayTeamHalfTimeScoredIsSetToFalseWhenAwayTeamHasZeroGoalsOnHalftime() {
 
-        setUpMatchHalfTimeGoals(0, 0);
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(0),
+                MatchHelper.awayTeamHalfTimeGoals(0));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -135,7 +154,9 @@ public class TeamGoalsCollecterTest {
     @Test
     public void bothTeamsScoredOnHalfTimeIsSetToTrueWhenBothTeamsHaveGoalsOnHalfTime() {
 
-        setUpMatchHalfTimeGoals(2, 2);
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(2),
+                MatchHelper.awayTeamHalfTimeGoals(2));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -148,7 +169,9 @@ public class TeamGoalsCollecterTest {
     @Test
     public void bothTeamsScoredOnHalfTimeIsSetToFalseWhenOnlyOneTeamHasGoalsOnHalfTime() {
 
-        setUpMatchHalfTimeGoals(0, 2);
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(0),
+                MatchHelper.awayTeamHalfTimeGoals(2));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -159,8 +182,13 @@ public class TeamGoalsCollecterTest {
     @Test
     public void allPropertiesAreSetToTrueWhenBothTeamsHaveGoalsOnHalfTimeAndEndOfMatch() {
 
-        setUpMatch(1, 3);
-        setUpMatchHalfTimeGoals(2, 2);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(1),
+                MatchHelper.awayTeamGoals(3));
+
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(2),
+                MatchHelper.awayTeamHalfTimeGoals(2));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -176,8 +204,13 @@ public class TeamGoalsCollecterTest {
     @Test
     public void allPropertiesAreFalseWhenBothTeamsHaveScoredZeroGoals() {
 
-        setUpMatch(0, 0);
-        setUpMatchHalfTimeGoals(0, 0);
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(0),
+                MatchHelper.awayTeamGoals(0));
+
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(0),
+                MatchHelper.awayTeamHalfTimeGoals(0));
 
         teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
 
@@ -189,20 +222,5 @@ public class TeamGoalsCollecterTest {
         assertFalse(teamGoalsModel.isBothTeamsScoredOnHalfTime());
 
     }
-
-    private void setUpMatch(int homeGoals, int awayGoals) {
-        homeTeamGoals = homeGoals;
-        awayTeamGoals = awayGoals;
-        totalGoals = homeTeamGoals + awayTeamGoals;
-
-        match.setHomeTeamGoals(homeTeamGoals);
-        match.setAwayTeamGoals(awayTeamGoals);
-    }
-
-    private void setUpMatchHalfTimeGoals(int homeHalfTimeGoals, int awayHalfTimeGoals) {
-        match.setHomeTeamHalftimeGoals(homeHalfTimeGoals);
-        match.setAwayTeamHalftimeGoals(awayHalfTimeGoals);
-    }
-
 
 }
