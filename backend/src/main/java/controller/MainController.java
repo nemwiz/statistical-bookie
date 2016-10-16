@@ -1,5 +1,8 @@
 package controller;
 
+import aggregator.MatchOutcomeAggregator;
+import aggregator.NumberOfGoalsAggregator;
+import aggregator.TeamGoalsAggregator;
 import dao.MatchDAO;
 import model.Match;
 import viewmodel.MatchOutcomeView;
@@ -11,9 +14,9 @@ import java.util.List;
 public class MainController {
 
     private MatchDAO matchDAO;
-    private NumberOfGoalsController numberOfGoalsController;
-    private TeamGoalsController teamGoalsController;
-    private MatchOutcomeController matchOutcomeController;
+    private NumberOfGoalsAggregator numberOfGoalsAggregator;
+    private TeamGoalsAggregator teamGoalsAggregator;
+    private MatchOutcomeAggregator matchOutcomeAggregator;
 
     public MainController(MatchDAO matchDAO) {
         this.matchDAO = matchDAO;
@@ -23,13 +26,13 @@ public class MainController {
 
         List<Match> matches = this.matchDAO.getMatchesByTeamName(homeTeamName);
 
-        numberOfGoalsController = new NumberOfGoalsController(matches);
-        teamGoalsController = new TeamGoalsController(matches);
-        matchOutcomeController = new MatchOutcomeController(matches);
+        numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
+        teamGoalsAggregator = new TeamGoalsAggregator(matches);
+        matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
 
-        NumberOfGoalsView numberOfGoalsView = numberOfGoalsController.getNumberOfGoalsAggregated();
-        TeamGoalsView teamGoalsView = teamGoalsController.getTeamGoalsAggregated();
-        MatchOutcomeView matchOutcomeView = matchOutcomeController.getMatchOutcomeAggregated();
+        NumberOfGoalsView numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
+        TeamGoalsView teamGoalsView = teamGoalsAggregator.getAggregatedCount();
+        MatchOutcomeView matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
 
         System.out.println(numberOfGoalsView);
         System.out.println(teamGoalsView);

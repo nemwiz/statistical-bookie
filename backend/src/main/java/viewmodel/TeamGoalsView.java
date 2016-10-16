@@ -1,6 +1,6 @@
 package viewmodel;
 
-public class TeamGoalsView {
+public class TeamGoalsView implements ViewModel{
 
     private long homeTeamScored;
     private long awayTeamScored;

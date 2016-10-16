@@ -1,5 +1,6 @@
-package controller;
+package aggregator;
 
+import aggregator.Aggregator;
 import collecter.TeamGoalsCollecter;
 import collecter.model.TeamGoalsModel;
 import model.Match;
@@ -8,26 +9,26 @@ import viewmodel.TeamGoalsView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamGoalsController {
+public class TeamGoalsAggregator extends Aggregator {
     
     private List<Match> matches;
     private List<TeamGoalsModel> matchesWithTeamGoals;
 
-    public TeamGoalsController(List<Match> matches) {
+    public TeamGoalsAggregator(List<Match> matches) {
         this.matches = matches;
     }
     
     
-    public TeamGoalsView getTeamGoalsAggregated() {
+    public TeamGoalsView getAggregatedCount() {
 
         aggregateMatches();
         long[] countOfTeamGoalsFullTime = getCountFullTime();
         long[] countOfTeamGoalsHalfTime = getCountHalfTime();
 
-        return mapArraysToModel(countOfTeamGoalsFullTime, countOfTeamGoalsHalfTime);
+        return mapArraysToViewModel(countOfTeamGoalsFullTime, countOfTeamGoalsHalfTime);
     }
 
-    private TeamGoalsView mapArraysToModel(long[] countOfTeamGoalsFullTime, long[] countOfTeamGoalsHalfTime) {
+    private TeamGoalsView mapArraysToViewModel(long[] countOfTeamGoalsFullTime, long[] countOfTeamGoalsHalfTime) {
         return new TeamGoalsView(
                 countOfTeamGoalsFullTime[0],
                 countOfTeamGoalsFullTime[1],

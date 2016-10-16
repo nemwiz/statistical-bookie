@@ -1,6 +1,6 @@
 package viewmodel;
 
-public class NumberOfGoalsView {
+public class NumberOfGoalsView implements ViewModel{
 
     private long oneGoal;
     private long twoGoals;

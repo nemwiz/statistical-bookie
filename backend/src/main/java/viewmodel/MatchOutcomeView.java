@@ -1,6 +1,6 @@
 package viewmodel;
 
-public class MatchOutcomeView {
+public class MatchOutcomeView implements ViewModel {
 
     private long homeTeamWinFullTime;
     private long drawFullTime;

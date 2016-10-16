@@ -1,23 +1,29 @@
-package controller;
+package aggregator;
 
+import aggregator.Aggregator;
 import model.Match;
 import viewmodel.MatchOutcomeView;
 
 import java.util.List;
 
-public class MatchOutcomeController {
+public class MatchOutcomeAggregator extends Aggregator {
 
     private List<Match> matches;
 
-    public MatchOutcomeController(List<Match> matches) {
+    public MatchOutcomeAggregator(List<Match> matches) {
         this.matches = matches;
     }
 
-    public MatchOutcomeView getMatchOutcomeAggregated() {
+    public MatchOutcomeView getAggregatedCount() {
 
         long[] countOfMatchOutcomeFullTime = getCountFullTime();
         long[] countOfTeamGoalsHalfTime = getCountHalfTime();
 
+        return mapArrayToViewModel(countOfMatchOutcomeFullTime, countOfTeamGoalsHalfTime);
+
+    }
+
+    private MatchOutcomeView mapArrayToViewModel(long[] countOfMatchOutcomeFullTime, long[] countOfTeamGoalsHalfTime) {
         return new MatchOutcomeView(
                 countOfMatchOutcomeFullTime[0],
                 countOfMatchOutcomeFullTime[1],
@@ -26,7 +32,6 @@ public class MatchOutcomeController {
                 countOfTeamGoalsHalfTime[1],
                 countOfTeamGoalsHalfTime[2]
         );
-
     }
 
     private long[] getCountFullTime() {
