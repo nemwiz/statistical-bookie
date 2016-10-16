@@ -3,7 +3,7 @@ package controller;
 import collecter.NumberOfGoalsCollecter;
 import collecter.model.NumberOfGoalsModel;
 import model.Match;
-import viewmodel.NumberOfGoalsViewModel;
+import viewmodel.NumberOfGoalsView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class NumberOfGoalsController {
         this.matches = matches;
     }
 
-    public NumberOfGoalsViewModel getNumberOfGoalsAggregated() {
+    public NumberOfGoalsView getNumberOfGoalsAggregated() {
 
         aggregateMatches();
         long [] countOfFullTimeGoals = getCountFullTime();
@@ -28,8 +28,8 @@ public class NumberOfGoalsController {
 
     }
 
-    private NumberOfGoalsViewModel mapArraysToModel(long[] countOfFullTimeGoals, long[] countOfHalfTimeGoals) {
-        return new NumberOfGoalsViewModel(
+    private NumberOfGoalsView mapArraysToModel(long[] countOfFullTimeGoals, long[] countOfHalfTimeGoals) {
+        return new NumberOfGoalsView(
                 countOfFullTimeGoals[0],
                 countOfFullTimeGoals[1],
                 countOfFullTimeGoals[2],

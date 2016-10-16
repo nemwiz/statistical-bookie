@@ -1,7 +1,7 @@
 package resource;
 
 import com.codahale.metrics.annotation.Timed;
-import controller.MatchController;
+import controller.MainController;
 import model.Match;
 
 import javax.ws.rs.GET;
@@ -15,22 +15,22 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class NumberOfGoalsPerMatchResource {
 
-    private MatchController matchController;
+    private MainController mainController;
 
-    public NumberOfGoalsPerMatchResource(MatchController matchController) {
-        this.matchController = matchController;
+    public NumberOfGoalsPerMatchResource(MainController mainController) {
+        this.mainController = mainController;
     }
 
 //    @GET
 //    @Timed
 //    public NumberOfGoalsModel getNumberOfGoalsFromLastMatches(@QueryParam("homeTeamName") String homeTeamName) {
-//        return matchController.getNumberOfGoalsFromLastMatches(homeTeamName);
+//        return mainController.getNumberOfGoalsFromLastMatches(homeTeamName);
 //    }
 
     @GET
     @Timed
     public List<Match> getMatches(@QueryParam("homeTeamName") String homeTeamName) {
-        return matchController.getMatches(homeTeamName);
+        return mainController.getMatches(homeTeamName);
     }
 
 }

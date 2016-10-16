@@ -2,7 +2,7 @@ package viewmodel;
 
 public class AggregatedMatchesModel {
 
-    private NumberOfGoalsViewModel numberOfGoalsViewModel;
+    private NumberOfGoalsView numberOfGoalsView;
     private long homeTeamScored;
     private long awayTeamScored;
     private long bothTeamsScored;
