@@ -79,9 +79,9 @@ public class MatchOutcomeAggregatorTest {
         assertEquals(expectedCount, matchOutcomeView.getDrawHalfTime());
     }
 
-    private void createMatches(long numberOfMatchesToAdd, String halfTimeAndFinalOutcome) {
+    private void createMatches(long numberOfMatchesToCreate, String halfTimeAndFinalOutcome) {
 
-        for(int i=0; i < numberOfMatchesToAdd; i++) {
+        for(int i=0; i < numberOfMatchesToCreate; i++) {
 
             Match match = new Match();
 

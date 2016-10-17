@@ -69,10 +69,12 @@ public class NumberOfGoalsView implements ViewModel{
     @Override
     public String toString() {
         return "NumberOfGoalsView{" +
-                "oneGoal=" + oneGoal +
+                "noGoals=" + noGoals +
+                ", oneGoal=" + oneGoal +
                 ", twoGoals=" + twoGoals +
                 ", threeGoals=" + threeGoals +
                 ", fourOrMoreGoals=" + fourOrMoreGoals +
+                ", noGoalsHalfTime=" + noGoalsHalfTime +
                 ", oneGoalHalfTime=" + oneGoalHalfTime +
                 ", twoGoalsHalfTime=" + twoGoalsHalfTime +
                 ", threeGoalsHalfTime=" + threeGoalsHalfTime +

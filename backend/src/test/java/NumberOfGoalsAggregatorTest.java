@@ -14,7 +14,7 @@ public class NumberOfGoalsAggregatorTest {
     private NumberOfGoalsAggregator numberOfGoalsAggregator;
     private NumberOfGoalsView numberOfGoalsView;
     private List<Match> matches;
-    private long expectedCount;
+    private int expectedCount;
     private int numberOfGoalsScoredOnMatch;
 
     @Before
@@ -120,9 +120,9 @@ public class NumberOfGoalsAggregatorTest {
 
     }
 
-    private void createMatches(long numberOfMatchesToAdd, int numberOfGoals) {
+    private void createMatches(long numberOfMatchesToCreate, int numberOfGoals) {
 
-        for(int i=0; i < numberOfMatchesToAdd; i++) {
+        for(int i=0; i < numberOfMatchesToCreate; i++) {
 
             Match match = new Match();
 

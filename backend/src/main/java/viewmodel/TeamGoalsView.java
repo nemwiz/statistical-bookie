@@ -18,6 +18,30 @@ public class TeamGoalsView implements ViewModel{
         this.bothTeamsScoredHalfTime = bothTeamsScoredHalfTime;
     }
 
+    public long getHomeTeamScored() {
+        return homeTeamScored;
+    }
+
+    public long getAwayTeamScored() {
+        return awayTeamScored;
+    }
+
+    public long getBothTeamsScored() {
+        return bothTeamsScored;
+    }
+
+    public long getHomeTeamScoredHalfTime() {
+        return homeTeamScoredHalfTime;
+    }
+
+    public long getAwayTeamScoredHalfTime() {
+        return awayTeamScoredHalfTime;
+    }
+
+    public long getBothTeamsScoredHalfTime() {
+        return bothTeamsScoredHalfTime;
+    }
+
     @Override
     public String toString() {
         return "TeamGoalsView{" +
