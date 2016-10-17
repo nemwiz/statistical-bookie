@@ -22,6 +22,38 @@ public class NumberOfGoalsView implements ViewModel{
         this.fourOrMoreGoalsHalfTime = fourOrMoreGoalsHalfTime;
     }
 
+    public long getOneGoal() {
+        return oneGoal;
+    }
+
+    public long getTwoGoals() {
+        return twoGoals;
+    }
+
+    public long getThreeGoals() {
+        return threeGoals;
+    }
+
+    public long getFourOrMoreGoals() {
+        return fourOrMoreGoals;
+    }
+
+    public long getOneGoalHalfTime() {
+        return oneGoalHalfTime;
+    }
+
+    public long getTwoGoalsHalfTime() {
+        return twoGoalsHalfTime;
+    }
+
+    public long getThreeGoalsHalfTime() {
+        return threeGoalsHalfTime;
+    }
+
+    public long getFourOrMoreGoalsHalfTime() {
+        return fourOrMoreGoalsHalfTime;
+    }
+
     @Override
     public String toString() {
         return "NumberOfGoalsView{" +

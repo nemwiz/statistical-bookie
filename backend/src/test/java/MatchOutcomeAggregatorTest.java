@@ -11,20 +11,16 @@ import static junit.framework.TestCase.assertEquals;
 
 public class MatchOutcomeAggregatorTest {
 
-    public static String HOME_TEAM_WIN = "H";
-    public static String DRAW = "D";
-    public static String AWAY_TEAM_WIN = "A";
+    private static String HOME_TEAM_WIN = "H";
+    private static String DRAW = "D";
+    private static String AWAY_TEAM_WIN = "A";
 
     private MatchOutcomeAggregator matchOutcomeAggregator;
     private MatchOutcomeView matchOutcomeView;
-    private Match match;
-    private MatchHelper matchHelper;
     private List<Match> matches;
 
     @Before
     public void setUp() {
-        match = new Match();
-        matchHelper = new MatchHelper(match);
         matches = new ArrayList<>();
     }
 
