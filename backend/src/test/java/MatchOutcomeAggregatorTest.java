@@ -31,24 +31,21 @@ public class MatchOutcomeAggregatorTest {
     @Test
     public void checkThatCountOfHomeTeamWinAtFullAndHalfTimeIsCorrect() {
 
-        long countOfHomeTeamWinMatches = 3;
-        matches.add(MatchHelper.createMatchWithFinalAndHalfTimeOutcome(HOME_TEAM_WIN, HOME_TEAM_WIN));
-        matches.add(MatchHelper.createMatchWithFinalAndHalfTimeOutcome(HOME_TEAM_WIN, HOME_TEAM_WIN));
-        matches.add(MatchHelper.createMatchWithFinalAndHalfTimeOutcome(HOME_TEAM_WIN, HOME_TEAM_WIN));
+        long countOfMatches = 3;
+        createMatches(countOfMatches, HOME_TEAM_WIN);
         matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
 
         matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
 
-        assertEquals(countOfHomeTeamWinMatches, matchOutcomeView.getHomeTeamWinFullTime());
-        assertEquals(countOfHomeTeamWinMatches, matchOutcomeView.getHomeTeamWinHalfTime());
+        assertEquals(countOfMatches, matchOutcomeView.getHomeTeamWinFullTime());
+        assertEquals(countOfMatches, matchOutcomeView.getHomeTeamWinHalfTime());
     }
 
     @Test
     public void checkThatCountOfDrawMatchesAtFullAndHalfTimeIsCorrect() {
 
         long countOfDrawMatches = 2;
-        matches.add(MatchHelper.createMatchWithFinalAndHalfTimeOutcome(DRAW, DRAW));
-        matches.add(MatchHelper.createMatchWithFinalAndHalfTimeOutcome(DRAW, DRAW));
+        createMatches(countOfDrawMatches, DRAW);
         matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
 
         matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
@@ -60,9 +57,8 @@ public class MatchOutcomeAggregatorTest {
     @Test
     public void checkThatCountOfAwayTeamWinAtFullAndHalfTimeIsCorrect() {
 
-        long countOfAwayTeamWinMatches = 2;
-        matches.add(MatchHelper.createMatchWithFinalAndHalfTimeOutcome(AWAY_TEAM_WIN, AWAY_TEAM_WIN));
-        matches.add(MatchHelper.createMatchWithFinalAndHalfTimeOutcome(AWAY_TEAM_WIN, AWAY_TEAM_WIN));
+        long countOfAwayTeamWinMatches = 5;
+        createMatches(countOfAwayTeamWinMatches, AWAY_TEAM_WIN);
         matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
 
         matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
@@ -87,6 +83,33 @@ public class MatchOutcomeAggregatorTest {
         assertEquals(expectedCount, matchOutcomeView.getDrawHalfTime());
     }
 
+    private void createMatches(long numberOfMatchesToAdd, String halfTimeAndFinalOutcome) {
+
+        for(int i=0; i < numberOfMatchesToAdd; i++) {
+
+            Match match = new Match();
+
+            switch (halfTimeAndFinalOutcome) {
+
+                case "H":
+                    match.setFinalOutcome(HOME_TEAM_WIN);
+                    match.setHalfTimeOutcome(HOME_TEAM_WIN);
+                    break;
+                case "D":
+                    match.setFinalOutcome(DRAW);
+                    match.setHalfTimeOutcome(DRAW);
+                    break;
+                case "A":
+                    match.setFinalOutcome(AWAY_TEAM_WIN);
+                    match.setHalfTimeOutcome(AWAY_TEAM_WIN);
+                    break;
+            }
+
+            matches.add(match);
+
+        }
+
+    }
 
 
 }
