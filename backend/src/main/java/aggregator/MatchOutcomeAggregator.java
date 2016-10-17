@@ -1,6 +1,5 @@
 package aggregator;
 
-import aggregator.Aggregator;
 import model.Match;
 import viewmodel.MatchOutcomeView;
 

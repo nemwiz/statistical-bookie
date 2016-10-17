@@ -18,6 +18,30 @@ public class MatchOutcomeView implements ViewModel {
         this.awayTeamWinHalfTime = awayTeamWinHalfTime;
     }
 
+    public long getHomeTeamWinFullTime() {
+        return homeTeamWinFullTime;
+    }
+
+    public long getDrawFullTime() {
+        return drawFullTime;
+    }
+
+    public long getAwayTeamWinFullTime() {
+        return awayTeamWinFullTime;
+    }
+
+    public long getHomeTeamWinHalfTime() {
+        return homeTeamWinHalfTime;
+    }
+
+    public long getDrawHalfTime() {
+        return drawHalfTime;
+    }
+
+    public long getAwayTeamWinHalfTime() {
+        return awayTeamWinHalfTime;
+    }
+
     @Override
     public String toString() {
         return "MatchOutcomeView{" +
