@@ -1,6 +1,5 @@
 package aggregator;
 
-import aggregator.Aggregator;
 import collecter.NumberOfGoalsCollecter;
 import collecter.model.NumberOfGoalsModel;
 import model.Match;
@@ -35,10 +34,12 @@ public class NumberOfGoalsAggregator extends Aggregator{
                 countOfFullTimeGoals[1],
                 countOfFullTimeGoals[2],
                 countOfFullTimeGoals[3],
+                countOfFullTimeGoals[4],
                 countOfHalfTimeGoals[0],
                 countOfHalfTimeGoals[1],
                 countOfHalfTimeGoals[2],
-                countOfHalfTimeGoals[3]
+                countOfHalfTimeGoals[3],
+                countOfHalfTimeGoals[4]
         );
     }
 
@@ -53,6 +54,9 @@ public class NumberOfGoalsAggregator extends Aggregator{
 
     private long[] getCountFullTime() {
 
+        long countOfLastMatchesWithNoGoals = matchesWithNumberOfGoals.stream()
+                .filter(match -> !match.isOneGoalsScored())
+                .count();
         long countOfLastMatchesWithOneGoal = matchesWithNumberOfGoals.stream()
                 .filter(
                         NumberOfGoalsModel::isOneGoalsScored
@@ -71,15 +75,19 @@ public class NumberOfGoalsAggregator extends Aggregator{
                 ).count();
 
         return new long[]{
+                countOfLastMatchesWithNoGoals,
                 countOfLastMatchesWithOneGoal,
-        countOfLastMatchesWithTwoGoals,
-        countOfLastMatchesWithThreeGoals,
-        countOfLastMatchesWithFourOrMoreGoals};
+                countOfLastMatchesWithTwoGoals,
+                countOfLastMatchesWithThreeGoals,
+                countOfLastMatchesWithFourOrMoreGoals};
 
     }
 
     private long[] getCountHalfTime() {
 
+        long countOfLastMatchesWithNoGoalsOnHalfTime = matchesWithNumberOfGoals.stream()
+                .filter(match -> !match.isOneGoalsScoredOnHalfTime())
+                .count();
         long countOfLastMatchesWithOneGoalOnHalfTime = matchesWithNumberOfGoals.stream()
                 .filter(
                         NumberOfGoalsModel::isOneGoalsScoredOnHalfTime
@@ -98,6 +106,7 @@ public class NumberOfGoalsAggregator extends Aggregator{
                 ).count();
 
         return new long[]{
+                countOfLastMatchesWithNoGoalsOnHalfTime,
                 countOfLastMatchesWithOneGoalOnHalfTime,
                 countOfLastMatchesWithTwoGoalsOnHalfTime,
                 countOfLastMatchesWithThreeGoalsOnHalfTime,

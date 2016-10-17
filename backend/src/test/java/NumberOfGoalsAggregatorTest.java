@@ -23,6 +23,22 @@ public class NumberOfGoalsAggregatorTest {
     }
 
     @Test
+    public void countOfNoGoalsIsCorrectWhenNoGoalsAreScored() {
+
+        expectedCount = 9;
+        numberOfGoalsScoredOnMatch = 0;
+        createMatches(expectedCount, numberOfGoalsScoredOnMatch);
+        numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
+
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
+
+        assertEquals(expectedCount, numberOfGoalsView.getNoGoals());
+        assertEquals(expectedCount, numberOfGoalsView.getNoGoalsHalfTime());
+
+
+    }
+
+    @Test
     public void countOfOneGoalIsCorrectWhenOneGoalIsScored() {
 
         expectedCount = 3;
@@ -95,6 +111,7 @@ public class NumberOfGoalsAggregatorTest {
 
         numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
 
+        assertEquals(numberOfMatchesToAdd, numberOfGoalsView.getNoGoals());
         assertEquals(expectedCount, numberOfGoalsView.getOneGoal());
         assertEquals(expectedCount, numberOfGoalsView.getTwoGoalsHalfTime());
         assertEquals(expectedCount, numberOfGoalsView.getThreeGoals());

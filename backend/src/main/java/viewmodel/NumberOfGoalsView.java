@@ -2,24 +2,32 @@ package viewmodel;
 
 public class NumberOfGoalsView implements ViewModel{
 
+    private long noGoals;
     private long oneGoal;
     private long twoGoals;
     private long threeGoals;
     private long fourOrMoreGoals;
+    private long noGoalsHalfTime;
     private long oneGoalHalfTime;
     private long twoGoalsHalfTime;
     private long threeGoalsHalfTime;
     private long fourOrMoreGoalsHalfTime;
 
-    public NumberOfGoalsView(long oneGoal, long twoGoals, long threeGoals, long fourOrMoreGoals, long oneGoalHalfTime, long twoGoalsHalfTime, long threeGoalsHalfTime, long fourOrMoreGoalsHalfTime) {
+    public NumberOfGoalsView(long noGoals, long oneGoal, long twoGoals, long threeGoals, long fourOrMoreGoals, long noGoalsHalfTime, long oneGoalHalfTime, long twoGoalsHalfTime, long threeGoalsHalfTime, long fourOrMoreGoalsHalfTime) {
+        this.noGoals = noGoals;
         this.oneGoal = oneGoal;
         this.twoGoals = twoGoals;
         this.threeGoals = threeGoals;
         this.fourOrMoreGoals = fourOrMoreGoals;
+        this.noGoalsHalfTime = noGoalsHalfTime;
         this.oneGoalHalfTime = oneGoalHalfTime;
         this.twoGoalsHalfTime = twoGoalsHalfTime;
         this.threeGoalsHalfTime = threeGoalsHalfTime;
         this.fourOrMoreGoalsHalfTime = fourOrMoreGoalsHalfTime;
+    }
+
+    public long getNoGoals() {
+        return noGoals;
     }
 
     public long getOneGoal() {
@@ -36,6 +44,10 @@ public class NumberOfGoalsView implements ViewModel{
 
     public long getFourOrMoreGoals() {
         return fourOrMoreGoals;
+    }
+
+    public long getNoGoalsHalfTime() {
+        return noGoalsHalfTime;
     }
 
     public long getOneGoalHalfTime() {
