@@ -7,6 +7,9 @@ import java.util.List;
 
 public class MatchOutcomeAggregator extends Aggregator {
 
+    public static final String HOME_TEAM_WIN = "H";
+    public static final String DRAW = "D";
+    public static final String AWAY_TEAM_WIN = "A";
     private List<Match> matches;
 
     public MatchOutcomeAggregator(List<Match> matches) {
@@ -16,12 +19,12 @@ public class MatchOutcomeAggregator extends Aggregator {
     public MatchOutcomeView getAggregatedCount() {
 
         return new MatchOutcomeView(
-                getCountOnFullTime("H"),
-                getCountOnFullTime("D"),
-                getCountOnFullTime("A"),
-                getCountOnHalfTime("H"),
-                getCountOnHalfTime("D"),
-                getCountOnHalfTime("A")
+                getCountOnFullTime(HOME_TEAM_WIN),
+                getCountOnFullTime(DRAW),
+                getCountOnFullTime(AWAY_TEAM_WIN),
+                getCountOnHalfTime(HOME_TEAM_WIN),
+                getCountOnHalfTime(DRAW),
+                getCountOnHalfTime(AWAY_TEAM_WIN)
         );
     }
 
