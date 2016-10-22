@@ -7,21 +7,38 @@ public class TeamGoalsCollecter {
 
     public static TeamGoalsModel getTeamGoalsScored(Match match) {
 
-        boolean isHomeTeamScored = match.getHomeTeamGoals() > 0;
-        boolean isAwayTeamScored = match.getAwayTeamGoals() > 0;
-        boolean isBothTeamsScored =  match.getHomeTeamGoals() > 0 && match.getAwayTeamGoals() > 0;
-        boolean isHomeTeamScoredOnHalfTime = match.getHomeTeamHalftimeGoals() > 0;
-        boolean isAwayTeamScoredOnHalfTime = match.getAwayTeamHalftimeGoals() > 0;
-        boolean isBothTeamsScoredOnHalfTime = match.getHomeTeamHalftimeGoals() > 0 && match.getAwayTeamHalftimeGoals() > 0;
-
         return new TeamGoalsModel(
-                isHomeTeamScored,
-                isAwayTeamScored,
-                isBothTeamsScored,
-                isHomeTeamScoredOnHalfTime,
-                isAwayTeamScoredOnHalfTime,
-                isBothTeamsScoredOnHalfTime
+                isHomeTeamScored(match),
+                isAwayTeamScored(match),
+                isBothTeamsScored(match),
+                isHomeTeamScoredOnHalfTime(match),
+                isAwayTeamScoredOnHalfTime(match),
+                isBothTeamsScoredOnHalfTime(match)
         );
+    }
+
+    public static boolean isBothTeamsScoredOnHalfTime(Match match) {
+        return match.getHomeTeamHalftimeGoals() > 0 && match.getAwayTeamHalftimeGoals() > 0;
+    }
+
+    public static boolean isAwayTeamScoredOnHalfTime(Match match) {
+        return match.getAwayTeamHalftimeGoals() > 0;
+    }
+
+    public static boolean isHomeTeamScoredOnHalfTime(Match match) {
+        return match.getHomeTeamHalftimeGoals() > 0;
+    }
+
+    public static boolean isBothTeamsScored(Match match) {
+        return match.getHomeTeamGoals() > 0 && match.getAwayTeamGoals() > 0;
+    }
+
+    public static boolean isAwayTeamScored(Match match) {
+        return match.getAwayTeamGoals() > 0;
+    }
+
+    public static boolean isHomeTeamScored(Match match) {
+        return match.getHomeTeamGoals() > 0;
     }
 
 }
