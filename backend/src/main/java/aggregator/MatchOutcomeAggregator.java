@@ -15,65 +15,30 @@ public class MatchOutcomeAggregator extends Aggregator {
 
     public MatchOutcomeView getAggregatedCount() {
 
-        long[] countOfMatchOutcomeFullTime = getCountFullTime();
-        long[] countOfTeamGoalsHalfTime = getCountHalfTime();
-
-        return mapArrayToViewModel(countOfMatchOutcomeFullTime, countOfTeamGoalsHalfTime);
-
-    }
-
-    private MatchOutcomeView mapArrayToViewModel(long[] countOfMatchOutcomeFullTime, long[] countOfTeamGoalsHalfTime) {
         return new MatchOutcomeView(
-                countOfMatchOutcomeFullTime[0],
-                countOfMatchOutcomeFullTime[1],
-                countOfMatchOutcomeFullTime[2],
-                countOfTeamGoalsHalfTime[0],
-                countOfTeamGoalsHalfTime[1],
-                countOfTeamGoalsHalfTime[2]
+                getCountOnFullTime("H"),
+                getCountOnFullTime("D"),
+                getCountOnFullTime("A"),
+                getCountOnHalfTime("H"),
+                getCountOnHalfTime("D"),
+                getCountOnHalfTime("A")
         );
     }
 
-    private long[] getCountFullTime() {
+    public long getCountOnFullTime(String matchOutcome) {
 
-        long countMatchesWhereHomeTeamWon = matches.stream()
-                .filter(match -> match.getFinalOutcome().equals("H"))
-                .count();
-
-        long countMatchesWhereOutcomeWasDraw = matches.stream()
-                .filter(match -> match.getFinalOutcome().equals("D"))
-                .count();
-
-        long countMatchesWhereAwayTeamWon = matches.stream()
-                .filter(match -> match.getFinalOutcome().equals("A"))
-                .count();
-
-        return new long[] {
-                countMatchesWhereHomeTeamWon,
-                countMatchesWhereOutcomeWasDraw,
-                countMatchesWhereAwayTeamWon
-        };
+        return matches.stream()
+                .filter(
+                        match -> match.getFinalOutcome().equals(matchOutcome)
+                ).count();
     }
 
-    private long[] getCountHalfTime() {
+    public long getCountOnHalfTime(String halfTimeOutcome) {
 
-        long countMatchesWhereHomeTeamWonOnHalfTime = matches.stream()
-                .filter(match -> match.getHalfTimeOutcome().equals("H"))
-                .count();
-
-        long countMatchesWhereHalfTimeOutcomeWasDraw = matches.stream()
-                .filter(match -> match.getHalfTimeOutcome().equals("D"))
-                .count();
-
-        long countMatchesWhereAwayTeamWonOnHalfTime = matches.stream()
-                .filter(match -> match.getHalfTimeOutcome().equals("A"))
-                .count();
-
-        return new long[] {
-                countMatchesWhereHomeTeamWonOnHalfTime,
-                countMatchesWhereHalfTimeOutcomeWasDraw,
-                countMatchesWhereAwayTeamWonOnHalfTime
-        };
-
+        return matches.stream()
+                .filter(
+                        match -> match.getHalfTimeOutcome().equals(halfTimeOutcome)
+                ).count();
     }
 
 }

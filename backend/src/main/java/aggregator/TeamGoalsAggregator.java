@@ -1,6 +1,5 @@
 package aggregator;
 
-import aggregator.Aggregator;
 import collecter.TeamGoalsCollecter;
 import collecter.model.TeamGoalsModel;
 import model.Match;
