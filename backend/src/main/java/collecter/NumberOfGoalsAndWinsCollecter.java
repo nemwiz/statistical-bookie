@@ -12,35 +12,35 @@ public class NumberOfGoalsAndWinsCollecter {
         NumberOfGoalsModel numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
 
         return new NumberOfGoalsAndWinsModel(
-                matchesWithOneGoal(match, Constants.HOME_TEAM_WIN, numberOfGoalsModel),
-                matchesWithTwoGoals(match, Constants.HOME_TEAM_WIN, numberOfGoalsModel),
-                matchesWithThreeGoals(match, Constants.HOME_TEAM_WIN, numberOfGoalsModel),
-                matchesWithFourOrMoreGoals(match, Constants.HOME_TEAM_WIN, numberOfGoalsModel),
-                matchesWithOneGoal(match, Constants.DRAW, numberOfGoalsModel),
-                matchesWithTwoGoals(match, Constants.DRAW, numberOfGoalsModel),
-                matchesWithThreeGoals(match, Constants.DRAW, numberOfGoalsModel),
-                matchesWithFourOrMoreGoals(match, Constants.DRAW, numberOfGoalsModel),
-                matchesWithOneGoal(match, Constants.AWAY_TEAM_WIN, numberOfGoalsModel),
-                matchesWithTwoGoals(match, Constants.AWAY_TEAM_WIN, numberOfGoalsModel),
-                matchesWithThreeGoals(match, Constants.AWAY_TEAM_WIN, numberOfGoalsModel),
-                matchesWithFourOrMoreGoals(match, Constants.AWAY_TEAM_WIN, numberOfGoalsModel)
+                matchWithOutcomeAndOneGoal(match, Constants.HOME_TEAM_WIN, numberOfGoalsModel),
+                matchWithOutcomeAndTwoGoals(match, Constants.HOME_TEAM_WIN, numberOfGoalsModel),
+                matchWithOutcomeAndThreeGoals(match, Constants.HOME_TEAM_WIN, numberOfGoalsModel),
+                matchWithOutcomeAndFourOrMoreGoals(match, Constants.HOME_TEAM_WIN, numberOfGoalsModel),
+                matchWithOutcomeAndOneGoal(match, Constants.DRAW, numberOfGoalsModel),
+                matchWithOutcomeAndTwoGoals(match, Constants.DRAW, numberOfGoalsModel),
+                matchWithOutcomeAndThreeGoals(match, Constants.DRAW, numberOfGoalsModel),
+                matchWithOutcomeAndFourOrMoreGoals(match, Constants.DRAW, numberOfGoalsModel),
+                matchWithOutcomeAndOneGoal(match, Constants.AWAY_TEAM_WIN, numberOfGoalsModel),
+                matchWithOutcomeAndTwoGoals(match, Constants.AWAY_TEAM_WIN, numberOfGoalsModel),
+                matchWithOutcomeAndThreeGoals(match, Constants.AWAY_TEAM_WIN, numberOfGoalsModel),
+                matchWithOutcomeAndFourOrMoreGoals(match, Constants.AWAY_TEAM_WIN, numberOfGoalsModel)
         );
 
     }
 
-    public static boolean matchesWithOneGoal(Match match, String finalOutcome, NumberOfGoalsModel numberOfGoalsModel) {
+    public static boolean matchWithOutcomeAndOneGoal(Match match, String finalOutcome, NumberOfGoalsModel numberOfGoalsModel) {
         return match.getFinalOutcome().equals(finalOutcome) && numberOfGoalsModel.isOneGoalsScored();
     }
 
-    public static boolean matchesWithTwoGoals(Match match, String finalOutcome, NumberOfGoalsModel numberOfGoalsModel) {
+    public static boolean matchWithOutcomeAndTwoGoals(Match match, String finalOutcome, NumberOfGoalsModel numberOfGoalsModel) {
         return match.getFinalOutcome().equals(finalOutcome) && numberOfGoalsModel.isTwoGoalsScored();
     }
 
-    public static boolean matchesWithThreeGoals(Match match, String finalOutcome, NumberOfGoalsModel numberOfGoalsModel) {
+    public static boolean matchWithOutcomeAndThreeGoals(Match match, String finalOutcome, NumberOfGoalsModel numberOfGoalsModel) {
         return match.getFinalOutcome().equals(finalOutcome) && numberOfGoalsModel.isThreeGoalsScored();
     }
 
-    public static boolean matchesWithFourOrMoreGoals(Match match, String finalOutcome, NumberOfGoalsModel numberOfGoalsModel) {
+    public static boolean matchWithOutcomeAndFourOrMoreGoals(Match match, String finalOutcome, NumberOfGoalsModel numberOfGoalsModel) {
         return match.getFinalOutcome().equals(finalOutcome) && numberOfGoalsModel.isFourOrMoreGoalsScored();
     }
 
