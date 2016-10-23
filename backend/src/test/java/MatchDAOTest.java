@@ -43,7 +43,7 @@ public class MatchDAOTest {
 //
 //    }
 //
-//    @Test
+//    @Counter
 //    public void ensureMatchesAreNotEmpty() {
 //
 //        List<Match> matchList = matchDAO.getMatchesByTeamName("Chelsea");

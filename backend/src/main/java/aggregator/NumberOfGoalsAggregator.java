@@ -8,6 +8,8 @@ import viewmodel.NumberOfGoalsView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static helper.Counter.count;
+
 public class NumberOfGoalsAggregator extends Aggregator{
 
     private List<Match> matches;
@@ -54,25 +56,30 @@ public class NumberOfGoalsAggregator extends Aggregator{
 
     private long[] getCountFullTime() {
 
-        long countOfLastMatchesWithNoGoals = matchesWithNumberOfGoals.stream()
-                .filter(match -> !match.isOneGoalsScored())
-                .count();
-        long countOfLastMatchesWithOneGoal = matchesWithNumberOfGoals.stream()
-                .filter(
-                        NumberOfGoalsModel::isOneGoalsScored
-                ).count();
-        long countOfLastMatchesWithTwoGoals = matchesWithNumberOfGoals.stream()
-                .filter(
-                        NumberOfGoalsModel::isTwoGoalsScored
-                ).count();
-        long countOfLastMatchesWithThreeGoals = matchesWithNumberOfGoals.stream()
-                .filter(
-                        NumberOfGoalsModel::isThreeGoalsScored
-                ).count();
-        long countOfLastMatchesWithFourOrMoreGoals = matchesWithNumberOfGoals.stream()
-                .filter(
-                        NumberOfGoalsModel::isFourOrMoreGoalsScored
-                ).count();
+        long countOfLastMatchesWithNoGoals = 0;
+        long countOfLastMatchesWithOneGoal = 0;
+        long countOfLastMatchesWithTwoGoals = 0;
+        long countOfLastMatchesWithThreeGoals = 0;
+        long countOfLastMatchesWithFourOrMoreGoals = 0;
+
+        for(NumberOfGoalsModel numberOfGoalsModel : matchesWithNumberOfGoals) {
+
+            countOfLastMatchesWithNoGoals =
+                    count(matchesWithNumberOfGoals, !numberOfGoalsModel.isOneGoalsScored());
+
+            countOfLastMatchesWithOneGoal =
+                    count(matchesWithNumberOfGoals, numberOfGoalsModel.isOneGoalsScored());
+
+            countOfLastMatchesWithTwoGoals =
+                    count(matchesWithNumberOfGoals, numberOfGoalsModel.isTwoGoalsScored());
+
+            countOfLastMatchesWithThreeGoals =
+                    count(matchesWithNumberOfGoals, numberOfGoalsModel.isThreeGoalsScored());
+
+            countOfLastMatchesWithFourOrMoreGoals =
+                    count(matchesWithNumberOfGoals, numberOfGoalsModel.isFourOrMoreGoalsScored());
+
+        }
 
         return new long[]{
                 countOfLastMatchesWithNoGoals,
@@ -85,25 +92,29 @@ public class NumberOfGoalsAggregator extends Aggregator{
 
     private long[] getCountHalfTime() {
 
-        long countOfLastMatchesWithNoGoalsOnHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(match -> !match.isOneGoalsScoredOnHalfTime())
-                .count();
-        long countOfLastMatchesWithOneGoalOnHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(
-                        NumberOfGoalsModel::isOneGoalsScoredOnHalfTime
-                ).count();
-        long countOfLastMatchesWithTwoGoalsOnHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(
-                        NumberOfGoalsModel::isTwoGoalsScoredOnHalfTime
-                ).count();
-        long countOfLastMatchesWithThreeGoalsOnHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(
-                        NumberOfGoalsModel::isThreeGoalsScoredOnHalfTime
-                ).count();
-        long countOfLastMatchesWithFourOrMoreGoalsOnHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(
-                        NumberOfGoalsModel::isFourOrMoreGoalsScoredOnHalfTime
-                ).count();
+        long countOfLastMatchesWithNoGoalsOnHalfTime = 0;
+        long countOfLastMatchesWithOneGoalOnHalfTime = 0;
+        long countOfLastMatchesWithTwoGoalsOnHalfTime = 0;
+        long countOfLastMatchesWithThreeGoalsOnHalfTime = 0;
+        long countOfLastMatchesWithFourOrMoreGoalsOnHalfTime = 0;
+
+        for(NumberOfGoalsModel numberOfGoalsModel : matchesWithNumberOfGoals) {
+
+            countOfLastMatchesWithNoGoalsOnHalfTime =
+                    count(matchesWithNumberOfGoals, !numberOfGoalsModel.isOneGoalsScoredOnHalfTime());
+
+            countOfLastMatchesWithOneGoalOnHalfTime =
+                    count(matchesWithNumberOfGoals, numberOfGoalsModel.isOneGoalsScoredOnHalfTime());
+
+            countOfLastMatchesWithTwoGoalsOnHalfTime =
+                    count(matchesWithNumberOfGoals, numberOfGoalsModel.isTwoGoalsScoredOnHalfTime());
+
+            countOfLastMatchesWithThreeGoalsOnHalfTime =
+                    count(matchesWithNumberOfGoals, numberOfGoalsModel.isThreeGoalsScoredOnHalfTime());
+
+            countOfLastMatchesWithFourOrMoreGoalsOnHalfTime =
+                    count(matchesWithNumberOfGoals, numberOfGoalsModel.isFourOrMoreGoalsScoredOnHalfTime());
+        }
 
         return new long[]{
                 countOfLastMatchesWithNoGoalsOnHalfTime,
