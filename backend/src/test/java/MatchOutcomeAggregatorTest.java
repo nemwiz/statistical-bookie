@@ -1,4 +1,5 @@
 import aggregator.MatchOutcomeAggregator;
+import helper.Constants;
 import model.Match;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,13 +8,10 @@ import viewmodel.MatchOutcomeView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static helper.Constants.*;
 import static junit.framework.TestCase.assertEquals;
 
 public class MatchOutcomeAggregatorTest {
-
-    private static String HOME_TEAM_WIN = "H";
-    private static String DRAW = "D";
-    private static String AWAY_TEAM_WIN = "A";
 
     private MatchOutcomeAggregator matchOutcomeAggregator;
     private MatchOutcomeView matchOutcomeView;

@@ -10,9 +10,9 @@ public class MatchDetailOutcomeView implements ViewModel {
     private long halfTimeWasDrawAndAwayTeamWonInTheEnd;
     private long awayTeamWonOnHalfTimeAndWonInTheEnd;
     private long awayTeamWonOnHalfTimeAndDrewInTheEnd;
-    private long awayTeamWonOnHalfTimeAndHomeTeamWonInTheEnd;
+    private long awayTeamWonOnHalfTimeAndLostInTheEnd;
 
-    public MatchDetailOutcomeView(long homeTeamWonOnHalfTimeAndWonInTheEnd, long homeTeamWonOnHalfTimeAndDrewInTheEnd, long homeTeamWonOnHalfTimeAndLostInTheEnd, long halfTimeWasDrawAndHomeTeamWonInTheEnd, long halfTimeWasDrawAndWasDrawInTheEnd, long halfTimeWasDrawAndAwayTeamWonInTheEnd, long awayTeamWonOnHalfTimeAndWonInTheEnd, long awayTeamWonOnHalfTimeAndDrewInTheEnd, long awayTeamWonOnHalfTimeAndHomeTeamWonInTheEnd) {
+    public MatchDetailOutcomeView(long homeTeamWonOnHalfTimeAndWonInTheEnd, long homeTeamWonOnHalfTimeAndDrewInTheEnd, long homeTeamWonOnHalfTimeAndLostInTheEnd, long halfTimeWasDrawAndHomeTeamWonInTheEnd, long halfTimeWasDrawAndWasDrawInTheEnd, long halfTimeWasDrawAndAwayTeamWonInTheEnd, long awayTeamWonOnHalfTimeAndWonInTheEnd, long awayTeamWonOnHalfTimeAndDrewInTheEnd, long awayTeamWonOnHalfTimeAndLostInTheEnd) {
         this.homeTeamWonOnHalfTimeAndWonInTheEnd = homeTeamWonOnHalfTimeAndWonInTheEnd;
         this.homeTeamWonOnHalfTimeAndDrewInTheEnd = homeTeamWonOnHalfTimeAndDrewInTheEnd;
         this.homeTeamWonOnHalfTimeAndLostInTheEnd = homeTeamWonOnHalfTimeAndLostInTheEnd;
@@ -21,7 +21,7 @@ public class MatchDetailOutcomeView implements ViewModel {
         this.halfTimeWasDrawAndAwayTeamWonInTheEnd = halfTimeWasDrawAndAwayTeamWonInTheEnd;
         this.awayTeamWonOnHalfTimeAndWonInTheEnd = awayTeamWonOnHalfTimeAndWonInTheEnd;
         this.awayTeamWonOnHalfTimeAndDrewInTheEnd = awayTeamWonOnHalfTimeAndDrewInTheEnd;
-        this.awayTeamWonOnHalfTimeAndHomeTeamWonInTheEnd = awayTeamWonOnHalfTimeAndHomeTeamWonInTheEnd;
+        this.awayTeamWonOnHalfTimeAndLostInTheEnd = awayTeamWonOnHalfTimeAndLostInTheEnd;
     }
 
     public long getHomeTeamWonOnHalfTimeAndWonInTheEnd() {
@@ -56,8 +56,8 @@ public class MatchDetailOutcomeView implements ViewModel {
         return awayTeamWonOnHalfTimeAndDrewInTheEnd;
     }
 
-    public long getAwayTeamWonOnHalfTimeAndHomeTeamWonInTheEnd() {
-        return awayTeamWonOnHalfTimeAndHomeTeamWonInTheEnd;
+    public long getAwayTeamWonOnHalfTimeAndLostInTheEnd() {
+        return awayTeamWonOnHalfTimeAndLostInTheEnd;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class MatchDetailOutcomeView implements ViewModel {
                 ", halfTimeWasDrawAndAwayTeamWonInTheEnd=" + halfTimeWasDrawAndAwayTeamWonInTheEnd +
                 ", awayTeamWonOnHalfTimeAndWonInTheEnd=" + awayTeamWonOnHalfTimeAndWonInTheEnd +
                 ", awayTeamWonOnHalfTimeAndDrewInTheEnd=" + awayTeamWonOnHalfTimeAndDrewInTheEnd +
-                ", awayTeamWonOnHalfTimeAndHomeTeamWonInTheEnd=" + awayTeamWonOnHalfTimeAndHomeTeamWonInTheEnd +
+                ", awayTeamWonOnHalfTimeAndLostInTheEnd=" + awayTeamWonOnHalfTimeAndLostInTheEnd +
                 '}';
     }
 }
