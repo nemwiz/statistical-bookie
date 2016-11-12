@@ -2,6 +2,7 @@ import com.meltmedia.dropwizard.mongo.MongoBundle;
 import controller.MainController;
 import dao.MatchDAO;
 import dao.MorphiaDatastore;
+import fixture.FixtureScrapper;
 import healthchecks.DatabaseHealthCheck;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -29,6 +30,9 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
     }
 
     public void run(StatsBookieConfiguration statsBookieConfiguration, Environment environment) throws Exception {
+
+//        FixtureScrapper fixtureScrapper = new FixtureScrapper();
+//        fixtureScrapper.main();
 
         MorphiaDatastore morphiaDatastore = new MorphiaDatastore(mongoBundle.getClient(), mongoBundle.getDB().getName());
 

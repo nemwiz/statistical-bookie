@@ -51,17 +51,16 @@ public class TeamGoalsAggregator extends Aggregator {
     private long[] getCountFullTime() {
 
         long countMatchesWhereHomeTeamScored = matchesWithTeamGoals.stream()
-                .filter(
-                        TeamGoalsModel::isHomeTeamScored
-                ).count();
+                .filter(TeamGoalsModel::isHomeTeamScored)
+                .count();
+
         long countMatchesWhereAwayTeamScored = matchesWithTeamGoals.stream()
-                .filter(
-                        TeamGoalsModel::isAwayTeamScored
-                ).count();
+                .filter(TeamGoalsModel::isAwayTeamScored)
+                .count();
+
         long countMatchesWhereBothTeamsHaveScored = matchesWithTeamGoals.stream()
-                .filter(
-                        TeamGoalsModel::isBothTeamsScored
-                ).count();
+                .filter(TeamGoalsModel::isBothTeamsScored)
+                .count();
 
         return new long[]{
                 countMatchesWhereHomeTeamScored,
@@ -73,17 +72,16 @@ public class TeamGoalsAggregator extends Aggregator {
     private long[] getCountHalfTime() {
 
         long countMatchesWhereHomeTeamScoredOnHalfTime = matchesWithTeamGoals.stream()
-                .filter(
-                        TeamGoalsModel::isHomeTeamScoredOnHalfTime
-                ).count();
+                .filter(TeamGoalsModel::isHomeTeamScoredOnHalfTime)
+                .count();
+
         long countMatchesWhereAwayTeamScoredOnHalfTime = matchesWithTeamGoals.stream()
-                .filter(
-                        TeamGoalsModel::isAwayTeamScoredOnHalfTime
-                ).count();
+                .filter(TeamGoalsModel::isAwayTeamScoredOnHalfTime)
+                .count();
+
         long countMatchesWhereBothTeamsHaveScoredOnHalfTime = matchesWithTeamGoals.stream()
-                .filter(
-                        TeamGoalsModel::isBothTeamsScoredOnHalfTime
-                ).count();
+                .filter(TeamGoalsModel::isBothTeamsScoredOnHalfTime)
+                .count();
 
         return new long[]{
                 countMatchesWhereHomeTeamScoredOnHalfTime,
