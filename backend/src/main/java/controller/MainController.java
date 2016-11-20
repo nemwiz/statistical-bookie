@@ -15,6 +15,7 @@ public class MainController {
     private MatchOutcomeAggregator matchOutcomeAggregator;
     private MatchDetailOutcomeAggregator matchDetailOutcomeAggregator;
     private NumberOfGoalsAndWinsAggregator numberOfGoalsAndWinsAggregator;
+    private HalfTimeWithMoreGoalsAggregator halfTimeWithMoreGoalsAggregator;
 
     public MainController(MatchDAO matchDAO) {
         this.matchDAO = matchDAO;
@@ -29,18 +30,21 @@ public class MainController {
         matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
         matchDetailOutcomeAggregator = new MatchDetailOutcomeAggregator(matches);
         numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
+        halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator(matches);
 
         NumberOfGoalsView numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
         TeamGoalsView teamGoalsView = teamGoalsAggregator.getAggregatedCount();
         MatchOutcomeView matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
         MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
         NumberOfGoalsAndWinsView numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
+        HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();
 
         System.out.println(numberOfGoalsView);
         System.out.println(teamGoalsView);
         System.out.println(matchOutcomeView);
         System.out.println(matchDetailOutcomeView);
         System.out.println(numberOfGoalsAndWinsView);
+        System.out.println(halfTimeWithMoreGoalsView);
 
         return this.matchDAO.getMatchesByTeamName(homeTeamName);
     }
