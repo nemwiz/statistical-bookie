@@ -49,4 +49,30 @@ public class MainController {
         return this.matchDAO.getMatchesByTeamName(homeTeamName);
     }
 
+    public AggregatedMatchesMetaView getAggregatedMatches(String homeTeamName) {
+
+        List<Match> matches = this.matchDAO.getMatchesByTeamName(homeTeamName);
+
+        numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
+        teamGoalsAggregator = new TeamGoalsAggregator(matches);
+        matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
+        matchDetailOutcomeAggregator = new MatchDetailOutcomeAggregator(matches);
+        numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
+        halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator(matches);
+
+        NumberOfGoalsView numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
+        TeamGoalsView teamGoalsView = teamGoalsAggregator.getAggregatedCount();
+        MatchOutcomeView matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
+        MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
+        NumberOfGoalsAndWinsView numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
+        HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();
+
+       return new AggregatedMatchesMetaView(numberOfGoalsView,
+               teamGoalsView,
+               matchOutcomeView,
+               matchDetailOutcomeView,
+               numberOfGoalsAndWinsView,
+               halfTimeWithMoreGoalsView);
+    }
+
 }
