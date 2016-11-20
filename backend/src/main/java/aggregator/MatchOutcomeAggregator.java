@@ -1,5 +1,6 @@
 package aggregator;
 
+import collecter.NumberOfGoalsCollecter;
 import helper.Constants;
 import model.Match;
 import viewmodel.MatchOutcomeView;
@@ -22,7 +23,11 @@ public class MatchOutcomeAggregator extends Aggregator {
                 getCountOnFullTime(Constants.AWAY_TEAM_WIN),
                 getCountOnHalfTime(Constants.HOME_TEAM_WIN),
                 getCountOnHalfTime(Constants.DRAW),
-                getCountOnHalfTime(Constants.AWAY_TEAM_WIN)
+                getCountOnHalfTime(Constants.AWAY_TEAM_WIN),
+                getCountHomeTeamWinsInSecondHalfTime(),
+                getCountAwayTeamWinsInSecondHalfTime(),
+                getCountDrawsInSecondHalfTime()
+
         );
     }
 
@@ -40,6 +45,48 @@ public class MatchOutcomeAggregator extends Aggregator {
                 .filter(
                         match -> match.getHalfTimeOutcome().equals(halfTimeOutcome)
                 ).count();
+    }
+
+    private long getCountHomeTeamWinsInSecondHalfTime() {
+        return matches.stream()
+                .filter(this::isHomeTeamWonInSecondHalfTime)
+                .count();
+    }
+
+    private long getCountAwayTeamWinsInSecondHalfTime() {
+        return matches.stream()
+                .filter(this::isAwayTeamWonInSecondHalfTime)
+                .count();
+    }
+
+    private long getCountDrawsInSecondHalfTime() {
+        return matches.stream()
+                .filter(this::isDrawInSecondHalfTime)
+                .count();
+    }
+
+    private boolean isHomeTeamWonInSecondHalfTime(Match match) {
+
+        int homeTeamGoalsScoredInSecondHalfTime = NumberOfGoalsCollecter.getHomeTeamGoalsScoredInSecondHalfTime(match);
+        int awayTeamGoalsScoredInSecondHalfTime = NumberOfGoalsCollecter.getAwayTeamGoalsScoredInSecondHalfTime(match);
+
+        return homeTeamGoalsScoredInSecondHalfTime > awayTeamGoalsScoredInSecondHalfTime;
+    }
+
+    private boolean isAwayTeamWonInSecondHalfTime(Match match) {
+
+        int homeTeamGoalsScoredInSecondHalfTime = NumberOfGoalsCollecter.getHomeTeamGoalsScoredInSecondHalfTime(match);
+        int awayTeamGoalsScoredInSecondHalfTime = NumberOfGoalsCollecter.getAwayTeamGoalsScoredInSecondHalfTime(match);
+
+        return homeTeamGoalsScoredInSecondHalfTime < awayTeamGoalsScoredInSecondHalfTime;
+    }
+
+    private boolean isDrawInSecondHalfTime(Match match) {
+
+        int homeTeamGoalsScoredInSecondHalfTime = NumberOfGoalsCollecter.getHomeTeamGoalsScoredInSecondHalfTime(match);
+        int awayTeamGoalsScoredInSecondHalfTime = NumberOfGoalsCollecter.getAwayTeamGoalsScoredInSecondHalfTime(match);
+
+        return homeTeamGoalsScoredInSecondHalfTime == awayTeamGoalsScoredInSecondHalfTime;
     }
 
 }
