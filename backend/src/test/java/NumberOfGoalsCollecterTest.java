@@ -73,7 +73,7 @@ public class NumberOfGoalsCollecterTest {
     }
 
     @Test
-    public void homeTeamGoalsInSecondHalfTime(){
+    public void homeTeamGoalsInSecondHalfTime() {
 
         int homeTeamHalfTimeGoals = 3;
         int homeTeamFullTimeGoals = 6;
@@ -86,7 +86,22 @@ public class NumberOfGoalsCollecterTest {
     }
 
     @Test
-    public void awayTeamGoalsInSecondHalfTime(){
+    public void getSumOfGoalsInSecondHalfTime() {
+
+        int homeTeamHalfTimeGoals = 2;
+        int homeTeamFullTimeGoals = 5;
+        int awayTeamFullTimeGoals = 3;
+        matchHelper.setUpMatchHalfTimeGoals(homeTeamHalfTimeGoals, 0);
+        matchHelper.setUpMatchGoals(homeTeamFullTimeGoals, awayTeamFullTimeGoals);
+
+        int numberOfGoalsScoredInSecondHalfTime = NumberOfGoalsCollecter.sumGoalsInSecondHalfTime(match);
+        int secondHalfTimeGoals = (homeTeamFullTimeGoals - homeTeamHalfTimeGoals) + awayTeamFullTimeGoals;
+
+        assertEquals(numberOfGoalsScoredInSecondHalfTime, secondHalfTimeGoals);
+    }
+
+    @Test
+    public void awayTeamGoalsInSecondHalfTime() {
 
         int awayTeamHalfTimeGoals = 12;
         int awayTeamFullTimeGoals = 16;
@@ -111,7 +126,6 @@ public class NumberOfGoalsCollecterTest {
         assertFalse(numberOfGoalsModel.isTwoGoalsScored());
         assertFalse(numberOfGoalsModel.isThreeGoalsScored());
         assertFalse(numberOfGoalsModel.isFourOrMoreGoalsScored());
-
     }
 
     @Test
@@ -160,6 +174,83 @@ public class NumberOfGoalsCollecterTest {
         assertTrue(numberOfGoalsModel.isThreeGoalsScored());
         assertTrue(numberOfGoalsModel.isFourOrMoreGoalsScored());
 
+    }
+
+    @Test
+    public void isOneGoalScoredIsSetToTrueAndOtherPropertiesToFalseWhenOnlyOneGoalIsScoredInSecondHalfTime() {
+        
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(2),
+                MatchHelper.awayTeamHalfTimeGoals(1)
+        );
+
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(3),
+                MatchHelper.awayTeamGoals(1));
+
+        numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
+
+        assertTrue(numberOfGoalsModel.isOneGoalsScoredInSecondHalfTime());
+        assertFalse(numberOfGoalsModel.isTwoGoalsScoredInSecondHalfTime());
+        assertFalse(numberOfGoalsModel.isThreeGoalsScoredInSecondHalfTime());
+        assertFalse(numberOfGoalsModel.isFourOrMoreGoalsScoredInSecondHalfTime());
+    }
+
+    @Test
+    public void isTwoGoalScoredIsSetToTrueAndOtherPropertiesToFalseWhenOnlyOneGoalIsScoredInSecondHalfTime() {
+
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(2),
+                MatchHelper.awayTeamHalfTimeGoals(1)
+        );
+
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(2),
+                MatchHelper.awayTeamGoals(3));
+
+        numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
+
+        assertTrue(numberOfGoalsModel.isOneGoalsScoredInSecondHalfTime());
+        assertTrue(numberOfGoalsModel.isTwoGoalsScoredInSecondHalfTime());
+        assertFalse(numberOfGoalsModel.isThreeGoalsScoredInSecondHalfTime());
+        assertFalse(numberOfGoalsModel.isFourOrMoreGoalsScoredInSecondHalfTime());
+    }
+
+    @Test
+    public void isThreeGoalScoredIsSetToTrueAndOtherPropertiesToFalseWhenOnlyOneGoalIsScoredInSecondHalfTime() {
+
+        setHalfTimeGoalsToZero();
+
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(3),
+                MatchHelper.awayTeamGoals(0));
+
+        numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
+
+        assertTrue(numberOfGoalsModel.isOneGoalsScoredInSecondHalfTime());
+        assertTrue(numberOfGoalsModel.isTwoGoalsScoredInSecondHalfTime());
+        assertTrue(numberOfGoalsModel.isThreeGoalsScoredInSecondHalfTime());
+        assertFalse(numberOfGoalsModel.isFourOrMoreGoalsScoredInSecondHalfTime());
+    }
+
+    @Test
+    public void isTFourOrMoreGoalScoredIsSetToTrueAndOtherPropertiesToFalseWhenOnlyOneGoalIsScoredInSecondHalfTime() {
+
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(1),
+                MatchHelper.awayTeamHalfTimeGoals(1)
+        );
+
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(2),
+                MatchHelper.awayTeamGoals(5));
+
+        numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
+
+        assertTrue(numberOfGoalsModel.isOneGoalsScoredInSecondHalfTime());
+        assertTrue(numberOfGoalsModel.isTwoGoalsScoredInSecondHalfTime());
+        assertTrue(numberOfGoalsModel.isThreeGoalsScoredInSecondHalfTime());
+        assertTrue(numberOfGoalsModel.isFourOrMoreGoalsScoredInSecondHalfTime());
     }
 
     @Test
@@ -227,11 +318,23 @@ public class NumberOfGoalsCollecterTest {
     }
 
     @Test
-    public void allHalfTimePropertiesAreFalseWhenNumberOfGoalsOnHalfTimeIsZero() {
+    public void allHalfTimePropertiesAreFalseWhenNumberOfGoalsIsZero() {
 
-        matchHelper.setUpMatchHalfTimeGoals(
-                MatchHelper.homeTeamHalfTimeGoals(0),
-                MatchHelper.awayTeamHalfTimeGoals(0));
+        setHalfTimeGoalsToZero();
+
+        numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
+
+        assertFalse(numberOfGoalsModel.isOneGoalsScoredOnHalfTime());
+        assertFalse(numberOfGoalsModel.isTwoGoalsScoredOnHalfTime());
+        assertFalse(numberOfGoalsModel.isThreeGoalsScoredOnHalfTime());
+        assertFalse(numberOfGoalsModel.isFourOrMoreGoalsScoredOnHalfTime());
+    }
+
+    @Test
+    public void allSecondHalfTimePropertiesAreFalseWhenNumberOfGoalsIsZero() {
+
+        setHalfTimeGoalsToZero();
+        setFullTimeGoalsToZero();
 
         numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
 
@@ -244,9 +347,7 @@ public class NumberOfGoalsCollecterTest {
     @Test
     public void allPropertiesAreSetToFalseWhenNumberOfGoalsIsZero() {
 
-        matchHelper.setUpMatchGoals(
-                MatchHelper.homeTeamGoals(0),
-                MatchHelper.awayTeamGoals(0));
+        setFullTimeGoalsToZero();
 
         numberOfGoalsModel = NumberOfGoalsCollecter.getNumberOfGoals(match);
 
@@ -278,6 +379,22 @@ public class NumberOfGoalsCollecterTest {
         assertTrue(numberOfGoalsModel.isTwoGoalsScored());
         assertTrue(numberOfGoalsModel.isThreeGoalsScored());
         assertFalse(numberOfGoalsModel.isFourOrMoreGoalsScored());
+        assertTrue(numberOfGoalsModel.isOneGoalsScoredInSecondHalfTime());
+        assertFalse(numberOfGoalsModel.isTwoGoalsScoredInSecondHalfTime());
+        assertFalse(numberOfGoalsModel.isThreeGoalsScoredInSecondHalfTime());
+        assertFalse(numberOfGoalsModel.isFourOrMoreGoalsScoredInSecondHalfTime());
+    }
+
+    private void setHalfTimeGoalsToZero() {
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(0),
+                MatchHelper.awayTeamHalfTimeGoals(0));
+    }
+
+    private void setFullTimeGoalsToZero() {
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(0),
+                MatchHelper.awayTeamGoals(0));
     }
 
 }
