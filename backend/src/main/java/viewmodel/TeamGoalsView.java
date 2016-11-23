@@ -8,14 +8,20 @@ public class TeamGoalsView implements ViewModel{
     private long homeTeamScoredHalfTime;
     private long awayTeamScoredHalfTime;
     private long bothTeamsScoredHalfTime;
+    private long homeTeamScoredInSecondHalfTime;
+    private long awayTeamScoredInSecondHalfTime;
+    private long bothTeamsScoredInSecondHalfTime;
 
-    public TeamGoalsView(long homeTeamScored, long awayTeamScored, long bothTeamsScored, long homeTeamScoredHalfTime, long awayTeamScoredHalfTime, long bothTeamsScoredHalfTime) {
+    public TeamGoalsView(long homeTeamScored, long awayTeamScored, long bothTeamsScored, long homeTeamScoredHalfTime, long awayTeamScoredHalfTime, long bothTeamsScoredHalfTime, long homeTeamScoredInSecondHalfTime, long awayTeamScoredInSecondHalfTime, long bothTeamsScoredInSecondHalfTime) {
         this.homeTeamScored = homeTeamScored;
         this.awayTeamScored = awayTeamScored;
         this.bothTeamsScored = bothTeamsScored;
         this.homeTeamScoredHalfTime = homeTeamScoredHalfTime;
         this.awayTeamScoredHalfTime = awayTeamScoredHalfTime;
         this.bothTeamsScoredHalfTime = bothTeamsScoredHalfTime;
+        this.homeTeamScoredInSecondHalfTime = homeTeamScoredInSecondHalfTime;
+        this.awayTeamScoredInSecondHalfTime = awayTeamScoredInSecondHalfTime;
+        this.bothTeamsScoredInSecondHalfTime = bothTeamsScoredInSecondHalfTime;
     }
 
     public long getHomeTeamScored() {
@@ -42,6 +48,18 @@ public class TeamGoalsView implements ViewModel{
         return bothTeamsScoredHalfTime;
     }
 
+    public long getHomeTeamScoredInSecondHalfTime() {
+        return homeTeamScoredInSecondHalfTime;
+    }
+
+    public long getAwayTeamScoredInSecondHalfTime() {
+        return awayTeamScoredInSecondHalfTime;
+    }
+
+    public long getBothTeamsScoredInSecondHalfTime() {
+        return bothTeamsScoredInSecondHalfTime;
+    }
+
     @Override
     public String toString() {
         return "TeamGoalsView{" +
@@ -51,6 +69,9 @@ public class TeamGoalsView implements ViewModel{
                 ", homeTeamScoredHalfTime=" + homeTeamScoredHalfTime +
                 ", awayTeamScoredHalfTime=" + awayTeamScoredHalfTime +
                 ", bothTeamsScoredHalfTime=" + bothTeamsScoredHalfTime +
+                ", homeTeamScoredInSecondHalfTime=" + homeTeamScoredInSecondHalfTime +
+                ", awayTeamScoredInSecondHalfTime=" + awayTeamScoredInSecondHalfTime +
+                ", bothTeamsScoredInSecondHalfTime=" + bothTeamsScoredInSecondHalfTime +
                 '}';
     }
 }

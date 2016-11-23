@@ -23,18 +23,27 @@ public class TeamGoalsAggregator extends Aggregator {
         aggregateMatches();
         long[] countOfTeamGoalsFullTime = getCountFullTime();
         long[] countOfTeamGoalsHalfTime = getCountHalfTime();
+        long[] countOfTeamGoalsInSecondHalfTime = getCountSecondHalfTime();
 
-        return mapArraysToViewModel(countOfTeamGoalsFullTime, countOfTeamGoalsHalfTime);
+        return mapArraysToViewModel(
+                countOfTeamGoalsFullTime,
+                countOfTeamGoalsHalfTime,
+                countOfTeamGoalsInSecondHalfTime);
     }
 
-    private TeamGoalsView mapArraysToViewModel(long[] countOfTeamGoalsFullTime, long[] countOfTeamGoalsHalfTime) {
+    private TeamGoalsView mapArraysToViewModel(long[] countOfTeamGoalsFullTime,
+                                               long[] countOfTeamGoalsHalfTime,
+                                               long[] countOfTeamsGoalsInSecondHalfTime) {
         return new TeamGoalsView(
                 countOfTeamGoalsFullTime[0],
                 countOfTeamGoalsFullTime[1],
                 countOfTeamGoalsFullTime[2],
                 countOfTeamGoalsHalfTime[0],
                 countOfTeamGoalsHalfTime[1],
-                countOfTeamGoalsHalfTime[2]
+                countOfTeamGoalsHalfTime[2],
+                countOfTeamsGoalsInSecondHalfTime[0],
+                countOfTeamsGoalsInSecondHalfTime[1],
+                countOfTeamsGoalsInSecondHalfTime[2]
         );
     }
 
@@ -87,6 +96,27 @@ public class TeamGoalsAggregator extends Aggregator {
                 countMatchesWhereHomeTeamScoredOnHalfTime,
                 countMatchesWhereAwayTeamScoredOnHalfTime,
                 countMatchesWhereBothTeamsHaveScoredOnHalfTime
+        };
+    }
+    
+    private long[] getCountSecondHalfTime() {
+
+        long countMatchesWhereHomeTeamScoredInSecondHalfTime = matchesWithTeamGoals.stream()
+                .filter(TeamGoalsModel::isHomeTeamScoredInSecondHalfTime)
+                .count();
+
+        long countMatchesWhereAwayTeamScoredInSecondHalfTime = matchesWithTeamGoals.stream()
+                .filter(TeamGoalsModel::isAwayTeamScoredInSecondHalfTime)
+                .count();
+
+        long countMatchesWhereBothTeamsHaveScoredInSecondHalfTime = matchesWithTeamGoals.stream()
+                .filter(TeamGoalsModel::isBothTeamsScoredInSecondHalfTime)
+                .count();
+
+        return new long[]{
+                countMatchesWhereHomeTeamScoredInSecondHalfTime,
+                countMatchesWhereAwayTeamScoredInSecondHalfTime,
+                countMatchesWhereBothTeamsHaveScoredInSecondHalfTime
         };
     }
 }
