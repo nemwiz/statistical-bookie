@@ -21,4 +21,12 @@ public abstract class Aggregator {
         return null;
     }
 
+    private ViewModel mapArrayToViewModel(
+            long[] countOfMatchFullTime,
+            long[] countOfMatchHalfTime,
+            long[] countOfSecondHalfTime) {
+
+        return null;
+    }
+
 }

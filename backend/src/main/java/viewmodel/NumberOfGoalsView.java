@@ -12,8 +12,13 @@ public class NumberOfGoalsView implements ViewModel{
     private long twoGoalsHalfTime;
     private long threeGoalsHalfTime;
     private long fourOrMoreGoalsHalfTime;
+    private long noGoalsInSecondHalfTime;
+    private long oneGoalInSecondHalfTime;
+    private long twoGoalsInSecondHalfTime;
+    private long threeGoalsInSecondHalfTime;
+    private long fourOrMoreGoalsInSecondHalfTime;
 
-    public NumberOfGoalsView(long noGoals, long oneGoal, long twoGoals, long threeGoals, long fourOrMoreGoals, long noGoalsHalfTime, long oneGoalHalfTime, long twoGoalsHalfTime, long threeGoalsHalfTime, long fourOrMoreGoalsHalfTime) {
+    public NumberOfGoalsView(long noGoals, long oneGoal, long twoGoals, long threeGoals, long fourOrMoreGoals, long noGoalsHalfTime, long oneGoalHalfTime, long twoGoalsHalfTime, long threeGoalsHalfTime, long fourOrMoreGoalsHalfTime, long noGoalsInSecondHalfTime, long oneGoalInSecondHalfTime, long twoGoalsInSecondHalfTime, long threeGoalsInSecondHalfTime, long fourOrMoreGoalsInSecondHalfTime) {
         this.noGoals = noGoals;
         this.oneGoal = oneGoal;
         this.twoGoals = twoGoals;
@@ -24,6 +29,11 @@ public class NumberOfGoalsView implements ViewModel{
         this.twoGoalsHalfTime = twoGoalsHalfTime;
         this.threeGoalsHalfTime = threeGoalsHalfTime;
         this.fourOrMoreGoalsHalfTime = fourOrMoreGoalsHalfTime;
+        this.noGoalsInSecondHalfTime = noGoalsInSecondHalfTime;
+        this.oneGoalInSecondHalfTime = oneGoalInSecondHalfTime;
+        this.twoGoalsInSecondHalfTime = twoGoalsInSecondHalfTime;
+        this.threeGoalsInSecondHalfTime = threeGoalsInSecondHalfTime;
+        this.fourOrMoreGoalsInSecondHalfTime = fourOrMoreGoalsInSecondHalfTime;
     }
 
     public long getNoGoals() {
@@ -66,6 +76,26 @@ public class NumberOfGoalsView implements ViewModel{
         return fourOrMoreGoalsHalfTime;
     }
 
+    public long getNoGoalsInSecondHalfTime() {
+        return noGoalsInSecondHalfTime;
+    }
+
+    public long getOneGoalInSecondHalfTime() {
+        return oneGoalInSecondHalfTime;
+    }
+
+    public long getTwoGoalsInSecondHalfTime() {
+        return twoGoalsInSecondHalfTime;
+    }
+
+    public long getThreeGoalsInSecondHalfTime() {
+        return threeGoalsInSecondHalfTime;
+    }
+
+    public long getFourOrMoreGoalsInSecondHalfTime() {
+        return fourOrMoreGoalsInSecondHalfTime;
+    }
+
     @Override
     public String toString() {
         return "NumberOfGoalsView{" +
@@ -79,6 +109,11 @@ public class NumberOfGoalsView implements ViewModel{
                 ", twoGoalsHalfTime=" + twoGoalsHalfTime +
                 ", threeGoalsHalfTime=" + threeGoalsHalfTime +
                 ", fourOrMoreGoalsHalfTime=" + fourOrMoreGoalsHalfTime +
+                ", noGoalsInSecondHalfTime=" + noGoalsInSecondHalfTime +
+                ", oneGoalInSecondHalfTime=" + oneGoalInSecondHalfTime +
+                ", twoGoalsInSecondHalfTime=" + twoGoalsInSecondHalfTime +
+                ", threeGoalsInSecondHalfTime=" + threeGoalsInSecondHalfTime +
+                ", fourOrMoreGoalsInSecondHalfTime=" + fourOrMoreGoalsInSecondHalfTime +
                 '}';
     }
 }

@@ -8,7 +8,7 @@ import viewmodel.NumberOfGoalsView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NumberOfGoalsAggregator extends Aggregator{
+public class NumberOfGoalsAggregator extends Aggregator {
 
     private List<Match> matches;
     private List<NumberOfGoalsModel> matchesWithNumberOfGoals;
@@ -20,15 +20,18 @@ public class NumberOfGoalsAggregator extends Aggregator{
     public NumberOfGoalsView getAggregatedCount() {
 
         aggregateMatches();
-        long [] countOfFullTimeGoals = getCountFullTime();
-        long [] countOfHalfTimeGoals = getCountHalfTime();
+        long[] countOfFullTimeGoals = getCountFullTime();
+        long[] countOfHalfTimeGoals = getCountHalfTime();
+        long[] countOfSecondHalfTimeGoals = getCountSecondHalfTime();
 
-        return mapArraysToViewModel(countOfFullTimeGoals, countOfHalfTimeGoals);
+        return mapArraysToViewModel(countOfFullTimeGoals, countOfHalfTimeGoals, countOfSecondHalfTimeGoals);
 
 
     }
 
-    private NumberOfGoalsView mapArraysToViewModel(long[] countOfFullTimeGoals, long[] countOfHalfTimeGoals) {
+    private NumberOfGoalsView mapArraysToViewModel(long[] countOfFullTimeGoals,
+                                                   long[] countOfHalfTimeGoals,
+                                                   long[] countOfSecondHalfTimeGoals) {
         return new NumberOfGoalsView(
                 countOfFullTimeGoals[0],
                 countOfFullTimeGoals[1],
@@ -39,7 +42,12 @@ public class NumberOfGoalsAggregator extends Aggregator{
                 countOfHalfTimeGoals[1],
                 countOfHalfTimeGoals[2],
                 countOfHalfTimeGoals[3],
-                countOfHalfTimeGoals[4]
+                countOfHalfTimeGoals[4],
+                countOfSecondHalfTimeGoals[0],
+                countOfSecondHalfTimeGoals[1],
+                countOfSecondHalfTimeGoals[2],
+                countOfSecondHalfTimeGoals[3],
+                countOfSecondHalfTimeGoals[4]
         );
     }
 
@@ -113,5 +121,37 @@ public class NumberOfGoalsAggregator extends Aggregator{
                 countOfLastMatchesWithFourOrMoreGoalsOnHalfTime};
 
     }
+
+    private long[] getCountSecondHalfTime() {
+
+        long countWhenNoGoalsScoredInSecondHalfTime = matchesWithNumberOfGoals.stream()
+                .filter(matches -> !matches.isOneGoalsScoredInSecondHalfTime())
+                .count();
+
+        long countWhenOneGoalsScoredInSecondHalfTime = matchesWithNumberOfGoals.stream()
+                .filter(NumberOfGoalsModel::isOneGoalsScoredInSecondHalfTime)
+                .count();
+
+        long countWhenTwoGoalsScoredInSecondHalfTime = matchesWithNumberOfGoals.stream()
+                .filter(NumberOfGoalsModel::isTwoGoalsScoredInSecondHalfTime)
+                .count();
+
+        long countWhenThreeGoalsScoredInSecondHalfTime = matchesWithNumberOfGoals.stream()
+                .filter(NumberOfGoalsModel::isThreeGoalsScoredInSecondHalfTime)
+                .count();
+
+        long countWhenFourOrMoreGoalsScoredInSecondHalfTime = matchesWithNumberOfGoals.stream()
+                .filter(NumberOfGoalsModel::isFourOrMoreGoalsScoredInSecondHalfTime)
+                .count();
+
+        return new long[]{
+                countWhenNoGoalsScoredInSecondHalfTime,
+                countWhenOneGoalsScoredInSecondHalfTime,
+                countWhenTwoGoalsScoredInSecondHalfTime,
+                countWhenThreeGoalsScoredInSecondHalfTime,
+                countWhenFourOrMoreGoalsScoredInSecondHalfTime
+        };
+    }
+
 
 }
