@@ -7,14 +7,20 @@ public class TeamGoalsModel {
     private boolean homeTeamScoredOnHalfTime;
     private boolean awayTeamScoredOnHalfTime;
     private boolean bothTeamsScoredOnHalfTime;
+    private boolean homeTeamScoredInSecondHalfTime;
+    private boolean awayTeamScoredInSecondHalfTime;
+    private boolean bothTeamsScoredInSecondHalfTime;
 
-    public TeamGoalsModel(boolean homeTeamScored, boolean awayTeamScored, boolean bothTeamsScored, boolean homeTeamScoredOnHalfTime, boolean awayTeamScoredOnHalfTime, boolean bothTeamsScoredOnHalfTime) {
+    public TeamGoalsModel(boolean homeTeamScored, boolean awayTeamScored, boolean bothTeamsScored, boolean homeTeamScoredOnHalfTime, boolean awayTeamScoredOnHalfTime, boolean bothTeamsScoredOnHalfTime, boolean homeTeamScoredInSecondHalfTime, boolean awayTeamScoredInSecondHalfTime, boolean bothTeamsScoredInSecondHalfTime) {
         this.homeTeamScored = homeTeamScored;
         this.awayTeamScored = awayTeamScored;
         this.bothTeamsScored = bothTeamsScored;
         this.homeTeamScoredOnHalfTime = homeTeamScoredOnHalfTime;
         this.awayTeamScoredOnHalfTime = awayTeamScoredOnHalfTime;
         this.bothTeamsScoredOnHalfTime = bothTeamsScoredOnHalfTime;
+        this.homeTeamScoredInSecondHalfTime = homeTeamScoredInSecondHalfTime;
+        this.awayTeamScoredInSecondHalfTime = awayTeamScoredInSecondHalfTime;
+        this.bothTeamsScoredInSecondHalfTime = bothTeamsScoredInSecondHalfTime;
     }
 
     public boolean isHomeTeamScored() {
@@ -39,5 +45,17 @@ public class TeamGoalsModel {
 
     public boolean isBothTeamsScoredOnHalfTime() {
         return bothTeamsScoredOnHalfTime;
+    }
+
+    public boolean isHomeTeamScoredInSecondHalfTime() {
+        return homeTeamScoredInSecondHalfTime;
+    }
+
+    public boolean isAwayTeamScoredInSecondHalfTime() {
+        return awayTeamScoredInSecondHalfTime;
+    }
+
+    public boolean isBothTeamsScoredInSecondHalfTime() {
+        return bothTeamsScoredInSecondHalfTime;
     }
 }

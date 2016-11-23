@@ -180,6 +180,114 @@ public class TeamGoalsCollecterTest {
     }
 
     @Test
+    public void homeTeamSecondHalfTimeScoredIsSetToTrueWhenHomeTeamHasScoredInSecondHalftime() {
+
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(1),
+                MatchHelper.awayTeamHalfTimeGoals(2)
+        );
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(3),
+                MatchHelper.awayTeamGoals(2)
+        );
+
+        teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
+
+        assertTrue(teamGoalsModel.isHomeTeamScoredInSecondHalfTime());
+
+    }
+
+    @Test
+    public void homeTeamSecondHalfTimeScoredIsSetToFalseWhenHomeTeamHasZeroGoalsInSecondHalftime() {
+
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(1),
+                MatchHelper.awayTeamHalfTimeGoals(2)
+        );
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(1),
+                MatchHelper.awayTeamGoals(2)
+        );
+
+        teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
+
+        assertFalse(teamGoalsModel.isHomeTeamScoredInSecondHalfTime());
+
+    }
+
+    @Test
+    public void awayTeamSecondHalfTimeScoredIsSetToTrueWhenAwayTeamHasGoalsScoredInSecondHalftime() {
+
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(0),
+                MatchHelper.awayTeamHalfTimeGoals(2)
+        );
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(1),
+                MatchHelper.awayTeamGoals(3)
+        );
+
+        teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
+
+        assertTrue(teamGoalsModel.isAwayTeamScoredInSecondHalfTime());
+
+    }
+
+    @Test
+    public void awayTeamSecondHalfTimeScoredIsSetToFalseWhenAwayTeamHasZeroGoalsInSecondHalftime() {
+
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(1),
+                MatchHelper.awayTeamHalfTimeGoals(1)
+        );
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(3),
+                MatchHelper.awayTeamGoals(1)
+        );
+
+        teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
+
+        assertFalse(teamGoalsModel.isAwayTeamScoredInSecondHalfTime());
+
+    }
+
+    @Test
+    public void bothTeamsScoredInSecondHalfTimeIsSetToTrueWhenBothTeamsHaveGoalsInSecondHalfTime() {
+
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(1),
+                MatchHelper.awayTeamHalfTimeGoals(1)
+        );
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(3),
+                MatchHelper.awayTeamGoals(5)
+        );
+
+        teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
+
+        assertTrue(teamGoalsModel.isBothTeamsScoredInSecondHalfTime());
+
+    }
+
+    @Test
+    public void bothTeamsScoredInSecondHalfTimeIsSetToFalseWhenOnlyOneTeamHasGoalsScoredInSecondHalfTime() {
+
+        matchHelper.setUpMatchHalfTimeGoals(
+                MatchHelper.homeTeamHalfTimeGoals(1),
+                MatchHelper.awayTeamHalfTimeGoals(1)
+        );
+        matchHelper.setUpMatchGoals(
+                MatchHelper.homeTeamGoals(1),
+                MatchHelper.awayTeamGoals(5)
+        );
+
+        teamGoalsModel = TeamGoalsCollecter.getTeamGoalsScored(match);
+
+        assertFalse(teamGoalsModel.isBothTeamsScoredInSecondHalfTime());
+
+    }
+
+    @Test
     public void allPropertiesAreSetToTrueWhenBothTeamsHaveGoalsOnHalfTimeAndEndOfMatch() {
 
         matchHelper.setUpMatchGoals(
@@ -220,6 +328,9 @@ public class TeamGoalsCollecterTest {
         assertFalse(teamGoalsModel.isHomeTeamScoredOnHalfTime());
         assertFalse(teamGoalsModel.isAwayTeamScoredOnHalfTime());
         assertFalse(teamGoalsModel.isBothTeamsScoredOnHalfTime());
+        assertFalse(teamGoalsModel.isHomeTeamScoredInSecondHalfTime());
+        assertFalse(teamGoalsModel.isAwayTeamScoredInSecondHalfTime());
+        assertFalse(teamGoalsModel.isBothTeamsScoredInSecondHalfTime());
 
     }
 
