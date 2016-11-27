@@ -2,7 +2,7 @@ import aggregator.NumberOfGoalsAggregator;
 import model.Match;
 import org.junit.Before;
 import org.junit.Test;
-import viewmodel.NumberOfGoalsView;
+import viewmodel.NumberOfGoalsMetaView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import static junit.framework.TestCase.assertEquals;
 public class NumberOfGoalsAggregatorTest {
 
     private NumberOfGoalsAggregator numberOfGoalsAggregator;
-    private NumberOfGoalsView numberOfGoalsView;
+    private NumberOfGoalsMetaView numberOfGoalsView;
     private List<Match> matches;
     private int expectedCount;
     private int numberOfGoalsScoredOnMatch;
@@ -32,8 +32,8 @@ public class NumberOfGoalsAggregatorTest {
 
         numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, numberOfGoalsView.getNoGoals());
-        assertEquals(expectedCount, numberOfGoalsView.getNoGoalsHalfTime());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getNoGoals());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getNoGoalsHalfTime());
 
 
     }
@@ -48,8 +48,8 @@ public class NumberOfGoalsAggregatorTest {
 
         numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, numberOfGoalsView.getOneGoal());
-        assertEquals(expectedCount, numberOfGoalsView.getOneGoalHalfTime());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getOneGoal());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getOneGoalHalfTime());
 
     }
 
@@ -63,8 +63,8 @@ public class NumberOfGoalsAggregatorTest {
 
         numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, numberOfGoalsView.getTwoGoals());
-        assertEquals(expectedCount, numberOfGoalsView.getTwoGoalsHalfTime());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getTwoGoals());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getTwoGoalsHalfTime());
 
     }
 
@@ -78,8 +78,8 @@ public class NumberOfGoalsAggregatorTest {
 
         numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, numberOfGoalsView.getThreeGoals());
-        assertEquals(expectedCount, numberOfGoalsView.getThreeGoalsHalfTime());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getThreeGoals());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getThreeGoalsHalfTime());
 
 
     }
@@ -94,8 +94,8 @@ public class NumberOfGoalsAggregatorTest {
 
         numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, numberOfGoalsView.getFourOrMoreGoals());
-        assertEquals(expectedCount, numberOfGoalsView.getFourOrMoreGoalsHalfTime());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getFourOrMoreGoals());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getFourOrMoreGoalsHalfTime());
 
 
     }
@@ -111,11 +111,11 @@ public class NumberOfGoalsAggregatorTest {
 
         numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
 
-        assertEquals(numberOfMatchesToAdd, numberOfGoalsView.getNoGoals());
-        assertEquals(expectedCount, numberOfGoalsView.getOneGoal());
-        assertEquals(expectedCount, numberOfGoalsView.getTwoGoalsHalfTime());
-        assertEquals(expectedCount, numberOfGoalsView.getThreeGoals());
-        assertEquals(expectedCount, numberOfGoalsView.getFourOrMoreGoalsHalfTime());
+        assertEquals(numberOfMatchesToAdd, numberOfGoalsView.getBothTeams().getNoGoals());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getOneGoal());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getTwoGoalsHalfTime());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getThreeGoals());
+        assertEquals(expectedCount, numberOfGoalsView.getBothTeams().getFourOrMoreGoalsHalfTime());
 
 
     }

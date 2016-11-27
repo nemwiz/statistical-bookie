@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AggregatedMatchesMetaView {
 
     @JsonProperty
-    NumberOfGoalsView numberOfGoalsView;
+    NumberOfGoalsMetaView numberOfGoalsMetaView;
     @JsonProperty
     TeamGoalsView teamGoalsView;
     @JsonProperty
@@ -17,8 +17,8 @@ public class AggregatedMatchesMetaView {
     @JsonProperty
     HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView;
 
-    public AggregatedMatchesMetaView(NumberOfGoalsView numberOfGoalsView, TeamGoalsView teamGoalsView, MatchOutcomeView matchOutcomeView, MatchDetailOutcomeView matchDetailOutcomeView, NumberOfGoalsAndWinsView numberOfGoalsAndWinsView, HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView) {
-        this.numberOfGoalsView = numberOfGoalsView;
+    public AggregatedMatchesMetaView(NumberOfGoalsMetaView numberOfGoalsMetaView, TeamGoalsView teamGoalsView, MatchOutcomeView matchOutcomeView, MatchDetailOutcomeView matchDetailOutcomeView, NumberOfGoalsAndWinsView numberOfGoalsAndWinsView, HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView) {
+        this.numberOfGoalsMetaView = numberOfGoalsMetaView;
         this.teamGoalsView = teamGoalsView;
         this.matchOutcomeView = matchOutcomeView;
         this.matchDetailOutcomeView = matchDetailOutcomeView;

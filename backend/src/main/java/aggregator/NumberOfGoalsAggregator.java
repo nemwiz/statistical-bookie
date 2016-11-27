@@ -2,7 +2,9 @@ package aggregator;
 
 import collecter.NumberOfGoalsCollecter;
 import collecter.model.NumberOfGoalsModel;
+import helper.Constants;
 import model.Match;
+import viewmodel.NumberOfGoalsMetaView;
 import viewmodel.NumberOfGoalsView;
 
 import java.util.ArrayList;
@@ -17,15 +19,45 @@ public class NumberOfGoalsAggregator extends Aggregator {
         this.matches = matches;
     }
 
-    public NumberOfGoalsView getAggregatedCount() {
+    public NumberOfGoalsMetaView getAggregatedCount() {
 
         aggregateMatches();
         long[] countOfFullTimeGoals = getCountFullTime();
         long[] countOfHalfTimeGoals = getCountHalfTime();
         long[] countOfSecondHalfTimeGoals = getCountSecondHalfTime();
 
-        return mapArraysToViewModel(countOfFullTimeGoals, countOfHalfTimeGoals, countOfSecondHalfTimeGoals);
+        NumberOfGoalsView bothTeamsNumberOfGoals = mapArraysToViewModel(
+                countOfFullTimeGoals,
+                countOfHalfTimeGoals,
+                countOfSecondHalfTimeGoals);
 
+
+        aggregateMatchesPerTeam(Constants.HOME_TEAM);
+        long[] countOfFullTimeGoalsHomeTeam = getCountFullTime();
+        long[] countOfHalfTimeGoalsHomeTeam = getCountHalfTime();
+        long[] countOfSecondHalfTimeGoalsHomeTeam = getCountSecondHalfTime();
+
+        NumberOfGoalsView homeTeamNumberOfGoals = mapArraysToViewModel(
+                countOfFullTimeGoalsHomeTeam, 
+                countOfHalfTimeGoalsHomeTeam,
+                countOfSecondHalfTimeGoalsHomeTeam);
+
+        aggregateMatchesPerTeam(Constants.AWAY_TEAM);
+        long[] countOfFullTimeGoalsAwayTeam = getCountFullTime();
+        long[] countOfHalfTimeGoalsAwayTeam = getCountHalfTime();
+        long[] countOfSecondHalfTimeGoalsAwayTeam = getCountSecondHalfTime();
+
+        NumberOfGoalsView awayTeamNumberOfGoals = mapArraysToViewModel(
+                countOfFullTimeGoalsAwayTeam,
+                countOfHalfTimeGoalsAwayTeam,
+                countOfSecondHalfTimeGoalsAwayTeam);
+
+
+        return new NumberOfGoalsMetaView(
+                bothTeamsNumberOfGoals,
+                homeTeamNumberOfGoals,
+                awayTeamNumberOfGoals
+        );
 
     }
 
@@ -56,6 +88,15 @@ public class NumberOfGoalsAggregator extends Aggregator {
         matches.forEach(
                 match -> matchesWithNumberOfGoals.add(
                         NumberOfGoalsCollecter.getNumberOfGoals(match)
+                )
+        );
+    }
+    
+    private void aggregateMatchesPerTeam(String team) {
+        matchesWithNumberOfGoals = new ArrayList<>();
+        matches.forEach(
+                match -> matchesWithNumberOfGoals.add(
+                        NumberOfGoalsCollecter.getNumberOfGoalsPerTeam(match, team)
                 )
         );
     }

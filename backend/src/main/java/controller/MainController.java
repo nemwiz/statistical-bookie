@@ -32,14 +32,14 @@ public class MainController {
         numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
         halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator(matches);
 
-        NumberOfGoalsView numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
+        NumberOfGoalsMetaView numberOfGoalsMetaView = numberOfGoalsAggregator.getAggregatedCount();
         TeamGoalsView teamGoalsView = teamGoalsAggregator.getAggregatedCount();
         MatchOutcomeView matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
         MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
         NumberOfGoalsAndWinsView numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
         HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();
 
-        System.out.println(numberOfGoalsView);
+        System.out.println(numberOfGoalsMetaView);
         System.out.println(teamGoalsView);
         System.out.println(matchOutcomeView);
         System.out.println(matchDetailOutcomeView);
@@ -60,14 +60,14 @@ public class MainController {
         numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
         halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator(matches);
 
-        NumberOfGoalsView numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
+        NumberOfGoalsMetaView numberOfGoalsMetaView = numberOfGoalsAggregator.getAggregatedCount();
         TeamGoalsView teamGoalsView = teamGoalsAggregator.getAggregatedCount();
         MatchOutcomeView matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
         MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
         NumberOfGoalsAndWinsView numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
         HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();
 
-       return new AggregatedMatchesMetaView(numberOfGoalsView,
+       return new AggregatedMatchesMetaView(numberOfGoalsMetaView,
                teamGoalsView,
                matchOutcomeView,
                matchDetailOutcomeView,
