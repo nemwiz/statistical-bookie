@@ -1,19 +1,17 @@
 package aggregator;
 
 import collecter.NumberOfGoalsCollecter;
-import collecter.model.NumberOfGoalsModel;
 import helper.Constants;
 import model.Match;
 import viewmodel.NumberOfGoalsMetaView;
 import viewmodel.NumberOfGoalsView;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class NumberOfGoalsAggregator extends Aggregator {
 
     private List<Match> matches;
-    private List<NumberOfGoalsModel> matchesWithNumberOfGoals;
 
     public NumberOfGoalsAggregator(List<Match> matches) {
         this.matches = matches;
@@ -21,37 +19,32 @@ public class NumberOfGoalsAggregator extends Aggregator {
 
     public NumberOfGoalsMetaView getAggregatedCount() {
 
-        aggregateMatches();
-        long[] countOfFullTimeGoals = getCountFullTime();
-        long[] countOfHalfTimeGoals = getCountHalfTime();
-        long[] countOfSecondHalfTimeGoals = getCountSecondHalfTime();
+        long[] countOfFullTimeGoals = getCountFullTime(this.matches, Constants.BOTH_TEAMS);
+        long[] countOfHalfTimeGoals = getCountHalfTime(this.matches, Constants.BOTH_TEAMS);
+        long[] countOfSecondHalfTimeGoals = getCountSecondHalfTime(this.matches, Constants.BOTH_TEAMS);
 
         NumberOfGoalsView bothTeamsNumberOfGoals = mapArraysToViewModel(
                 countOfFullTimeGoals,
                 countOfHalfTimeGoals,
                 countOfSecondHalfTimeGoals);
 
-
-        aggregateMatchesPerTeam(Constants.HOME_TEAM);
-        long[] countOfFullTimeGoalsHomeTeam = getCountFullTime();
-        long[] countOfHalfTimeGoalsHomeTeam = getCountHalfTime();
-        long[] countOfSecondHalfTimeGoalsHomeTeam = getCountSecondHalfTime();
+        long[] countOfFullTimeGoalsHomeTeam = getCountFullTime(this.matches, Constants.HOME_TEAM);
+        long[] countOfHalfTimeGoalsHomeTeam = getCountHalfTime(this.matches, Constants.HOME_TEAM);
+        long[] countOfSecondHalfTimeGoalsHomeTeam = getCountSecondHalfTime(this.matches, Constants.HOME_TEAM);
 
         NumberOfGoalsView homeTeamNumberOfGoals = mapArraysToViewModel(
-                countOfFullTimeGoalsHomeTeam, 
+                countOfFullTimeGoalsHomeTeam,
                 countOfHalfTimeGoalsHomeTeam,
                 countOfSecondHalfTimeGoalsHomeTeam);
 
-        aggregateMatchesPerTeam(Constants.AWAY_TEAM);
-        long[] countOfFullTimeGoalsAwayTeam = getCountFullTime();
-        long[] countOfHalfTimeGoalsAwayTeam = getCountHalfTime();
-        long[] countOfSecondHalfTimeGoalsAwayTeam = getCountSecondHalfTime();
+        long[] countOfFullTimeGoalsAwayTeam = getCountFullTime(this.matches, Constants.AWAY_TEAM);
+        long[] countOfHalfTimeGoalsAwayTeam = getCountHalfTime(this.matches, Constants.AWAY_TEAM);
+        long[] countOfSecondHalfTimeGoalsAwayTeam = getCountSecondHalfTime(this.matches, Constants.AWAY_TEAM);
 
         NumberOfGoalsView awayTeamNumberOfGoals = mapArraysToViewModel(
                 countOfFullTimeGoalsAwayTeam,
                 countOfHalfTimeGoalsAwayTeam,
                 countOfSecondHalfTimeGoalsAwayTeam);
-
 
         return new NumberOfGoalsMetaView(
                 bothTeamsNumberOfGoals,
@@ -83,115 +76,134 @@ public class NumberOfGoalsAggregator extends Aggregator {
         );
     }
 
-    private void aggregateMatches() {
-        matchesWithNumberOfGoals = new ArrayList<>();
-        matches.forEach(
-                match -> matchesWithNumberOfGoals.add(
-                        NumberOfGoalsCollecter.getNumberOfGoals(match)
-                )
-        );
-    }
-    
-    private void aggregateMatchesPerTeam(String team) {
-        matchesWithNumberOfGoals = new ArrayList<>();
-        matches.forEach(
-                match -> matchesWithNumberOfGoals.add(
-                        NumberOfGoalsCollecter.getNumberOfGoalsPerTeam(match, team)
-                )
-        );
-    }
+    private long[] getCountFullTime(List<Match> matches, String team) {
 
-    private long[] getCountFullTime() {
+        Function<Match, Integer> sumTeamGoalsFunction;
 
-        long countOfLastMatchesWithNoGoals = matchesWithNumberOfGoals.stream()
-                .filter(matches -> !matches.isOneGoalsScored())
-                .count();
+        switch (team) {
+            case Constants.HOME_TEAM:
+                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsOfHomeTeam(match);
+                break;
+            case Constants.AWAY_TEAM:
+                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsOfAwayTeam(match);
+                break;
+            case Constants.BOTH_TEAMS:
+                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsFullTime(match);
+                break;
+            default:
+                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsFullTime(match);
+                break;
+        }
 
-        long countOfLastMatchesWithOneGoal = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isOneGoalsScored)
-                .count();
+        long noGoalsFullTime = countMatchesWhereNumberOfGoalsIsZero(matches, sumTeamGoalsFunction);
 
-        long countOfLastMatchesWithTwoGoals = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isTwoGoalsScored)
-                .count();
+        long oneGoalFullTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.ONE_GOAL);
 
-        long countOfLastMatchesWithThreeGoals = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isThreeGoalsScored)
-                .count();
+        long twoGoalsFullTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.TWO_GOALS);
 
-        long countOfLastMatchesWithFourOrMoreGoals = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isFourOrMoreGoalsScored)
-                .count();
+        long threeGoalsFullTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.THREE_GOALS);
+
+        long fourOrMoreGoalsFullTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.FOUR_GOALS);
 
         return new long[]{
-                countOfLastMatchesWithNoGoals,
-                countOfLastMatchesWithOneGoal,
-                countOfLastMatchesWithTwoGoals,
-                countOfLastMatchesWithThreeGoals,
-                countOfLastMatchesWithFourOrMoreGoals};
+                noGoalsFullTime,
+                oneGoalFullTime,
+                twoGoalsFullTime,
+                threeGoalsFullTime,
+                fourOrMoreGoalsFullTime};
 
     }
 
-    private long[] getCountHalfTime() {
+    private long[] getCountHalfTime(List<Match> matches, String team) {
 
-        long countOfLastMatchesWithNoGoalsOnHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(matches -> !matches.isOneGoalsScoredOnHalfTime())
-                .count();
+        Function<Match, Integer> sumTeamGoalsFunction;
 
-        long countOfLastMatchesWithOneGoalOnHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isOneGoalsScoredOnHalfTime)
-                .count();
+        switch (team) {
+            case Constants.HOME_TEAM:
+                sumTeamGoalsFunction = match -> match.getHomeTeamHalftimeGoals();
+                break;
+            case Constants.AWAY_TEAM:
+                sumTeamGoalsFunction = match -> match.getAwayTeamHalftimeGoals();
+                break;
+            case Constants.BOTH_TEAMS:
+                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsHalfTime(match);
+                break;
+            default:
+                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsHalfTime(match);
+                break;
+        }
 
-        long countOfLastMatchesWithTwoGoalsOnHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isTwoGoalsScoredOnHalfTime)
-                .count();
+        long noGoalsOnHalfTime = countMatchesWhereNumberOfGoalsIsZero(matches, sumTeamGoalsFunction);
 
-        long countOfLastMatchesWithThreeGoalsOnHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isThreeGoalsScoredOnHalfTime)
-                .count();
+        long oneGoalOnHalfTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.ONE_GOAL);
 
-        long countOfLastMatchesWithFourOrMoreGoalsOnHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isFourOrMoreGoalsScoredOnHalfTime)
-                .count();
+        long twoGoalsOnHalfTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.TWO_GOALS);
+
+        long threeGoalsOnHalfTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.THREE_GOALS);
+
+        long fourOrMoreGoalsOnHalfTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.FOUR_GOALS);
 
         return new long[]{
-                countOfLastMatchesWithNoGoalsOnHalfTime,
-                countOfLastMatchesWithOneGoalOnHalfTime,
-                countOfLastMatchesWithTwoGoalsOnHalfTime,
-                countOfLastMatchesWithThreeGoalsOnHalfTime,
-                countOfLastMatchesWithFourOrMoreGoalsOnHalfTime};
+                noGoalsOnHalfTime,
+                oneGoalOnHalfTime,
+                twoGoalsOnHalfTime,
+                threeGoalsOnHalfTime,
+                fourOrMoreGoalsOnHalfTime};
 
     }
 
-    private long[] getCountSecondHalfTime() {
+    private long[] getCountSecondHalfTime(List<Match> matches, String team) {
 
-        long countWhenNoGoalsScoredInSecondHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(matches -> !matches.isOneGoalsScoredInSecondHalfTime())
-                .count();
+        Function<Match, Integer> sumTeamGoalsFunction;
 
-        long countWhenOneGoalsScoredInSecondHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isOneGoalsScoredInSecondHalfTime)
-                .count();
+        switch (team) {
+            case Constants.HOME_TEAM:
+                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.getHomeTeamGoalsScoredInSecondHalfTime(match);
+                break;
+            case Constants.AWAY_TEAM:
+                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.getAwayTeamGoalsScoredInSecondHalfTime(match);
+                break;
+            case Constants.BOTH_TEAMS:
+                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsInSecondHalfTime(match);
+                break;
+            default:
+                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsInSecondHalfTime(match);
+                break;
+        }
 
-        long countWhenTwoGoalsScoredInSecondHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isTwoGoalsScoredInSecondHalfTime)
-                .count();
+        long noGoalsScoredInSecondHalfTime = countMatchesWhereNumberOfGoalsIsZero(matches, sumTeamGoalsFunction);
 
-        long countWhenThreeGoalsScoredInSecondHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isThreeGoalsScoredInSecondHalfTime)
-                .count();
+        long oneGoalsScoredInSecondHalfTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.ONE_GOAL);
 
-        long countWhenFourOrMoreGoalsScoredInSecondHalfTime = matchesWithNumberOfGoals.stream()
-                .filter(NumberOfGoalsModel::isFourOrMoreGoalsScoredInSecondHalfTime)
-                .count();
+        long twoGoalsScoredInSecondHalfTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.TWO_GOALS);
+
+        long threeGoalsScoredInSecondHalfTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.THREE_GOALS);
+
+        long fourOrMoreGoalsScoredInSecondHalfTime = countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(matches, sumTeamGoalsFunction, Constants.FOUR_GOALS);
 
         return new long[]{
-                countWhenNoGoalsScoredInSecondHalfTime,
-                countWhenOneGoalsScoredInSecondHalfTime,
-                countWhenTwoGoalsScoredInSecondHalfTime,
-                countWhenThreeGoalsScoredInSecondHalfTime,
-                countWhenFourOrMoreGoalsScoredInSecondHalfTime
+                noGoalsScoredInSecondHalfTime,
+                oneGoalsScoredInSecondHalfTime,
+                twoGoalsScoredInSecondHalfTime,
+                threeGoalsScoredInSecondHalfTime,
+                fourOrMoreGoalsScoredInSecondHalfTime
         };
+    }
+
+    private long countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(List<Match> matches, Function<Match, Integer> sumTeamGoalsFunction, int goalLimit) {
+
+        return matches.stream()
+                .map(match -> sumTeamGoalsFunction.apply(match))
+                .filter(numberOfGoals -> numberOfGoals >= goalLimit)
+                .count();
+    }
+
+    private long countMatchesWhereNumberOfGoalsIsZero(List<Match> matches, Function<Match, Integer> sumTeamGoalsFunction) {
+
+        return matches.stream()
+                .map(match -> sumTeamGoalsFunction.apply(match))
+                .filter(numberOfGoals -> numberOfGoals < Constants.ONE_GOAL)
+                .count();
     }
 
 
