@@ -6,6 +6,7 @@ import model.Match;
 import viewmodel.*;
 
 import java.util.List;
+import java.util.Map;
 
 public class MainController {
 
@@ -16,6 +17,7 @@ public class MainController {
     private MatchDetailOutcomeAggregator matchDetailOutcomeAggregator;
     private NumberOfGoalsAndWinsAggregator numberOfGoalsAndWinsAggregator;
     private HalfTimeWithMoreGoalsAggregator halfTimeWithMoreGoalsAggregator;
+    private ExactResultAggregator exactResultAggregator;
 
     public MainController(MatchDAO matchDAO) {
         this.matchDAO = matchDAO;
@@ -31,6 +33,7 @@ public class MainController {
         matchDetailOutcomeAggregator = new MatchDetailOutcomeAggregator(matches);
         numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
         halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator(matches);
+        exactResultAggregator = new ExactResultAggregator(matches);
 
         NumberOfGoalsMetaView numberOfGoalsMetaView = numberOfGoalsAggregator.getAggregatedCount();
         TeamGoalsView teamGoalsView = teamGoalsAggregator.getAggregatedCount();
@@ -38,6 +41,7 @@ public class MainController {
         MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
         NumberOfGoalsAndWinsView numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
         HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();
+        Map<String, Long> exactResultsView = exactResultAggregator.aggregate();
 
         System.out.println(numberOfGoalsMetaView);
         System.out.println(teamGoalsView);
@@ -45,6 +49,7 @@ public class MainController {
         System.out.println(matchDetailOutcomeView);
         System.out.println(numberOfGoalsAndWinsView);
         System.out.println(halfTimeWithMoreGoalsView);
+        System.out.println("ExactResultsView " + exactResultsView.toString());
 
         return this.matchDAO.getMatchesByTeamName(homeTeamName);
     }
@@ -59,6 +64,7 @@ public class MainController {
         matchDetailOutcomeAggregator = new MatchDetailOutcomeAggregator(matches);
         numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
         halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator(matches);
+        exactResultAggregator = new ExactResultAggregator(matches);
 
         NumberOfGoalsMetaView numberOfGoalsMetaView = numberOfGoalsAggregator.getAggregatedCount();
         TeamGoalsView teamGoalsView = teamGoalsAggregator.getAggregatedCount();
@@ -66,13 +72,15 @@ public class MainController {
         MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
         NumberOfGoalsAndWinsView numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
         HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();
+        Map<String, Long> exactResultsView = exactResultAggregator.aggregate();
 
        return new AggregatedMatchesMetaView(numberOfGoalsMetaView,
                teamGoalsView,
                matchOutcomeView,
                matchDetailOutcomeView,
                numberOfGoalsAndWinsView,
-               halfTimeWithMoreGoalsView);
+               halfTimeWithMoreGoalsView,
+               exactResultsView);
     }
 
 }
