@@ -22,11 +22,6 @@ public class NumberOfGoalsPerMatchResource {
         this.mainController = mainController;
     }
 
-//    @GET
-//    @Timed
-//    public NumberOfGoalsModel getNumberOfGoalsFromLastMatches(@QueryParam("homeTeamName") String homeTeamName) {
-//        return mainController.getNumberOfGoalsFromLastMatches(homeTeamName);
-//    }
 
     @GET
     @Timed

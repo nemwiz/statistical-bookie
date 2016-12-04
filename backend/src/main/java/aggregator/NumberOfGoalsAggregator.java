@@ -82,16 +82,16 @@ public class NumberOfGoalsAggregator extends Aggregator {
 
         switch (team) {
             case Constants.HOME_TEAM:
-                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsOfHomeTeam(match);
+                sumTeamGoalsFunction = NumberOfGoalsCollecter::sumGoalsOfHomeTeam;
                 break;
             case Constants.AWAY_TEAM:
-                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsOfAwayTeam(match);
+                sumTeamGoalsFunction = NumberOfGoalsCollecter::sumGoalsOfAwayTeam;
                 break;
             case Constants.BOTH_TEAMS:
-                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsFullTime(match);
+                sumTeamGoalsFunction = NumberOfGoalsCollecter::sumGoalsFullTime;
                 break;
             default:
-                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsFullTime(match);
+                sumTeamGoalsFunction = NumberOfGoalsCollecter::sumGoalsFullTime;
                 break;
         }
 
@@ -120,16 +120,16 @@ public class NumberOfGoalsAggregator extends Aggregator {
 
         switch (team) {
             case Constants.HOME_TEAM:
-                sumTeamGoalsFunction = match -> match.getHomeTeamHalftimeGoals();
+                sumTeamGoalsFunction = Match::getHomeTeamHalftimeGoals;
                 break;
             case Constants.AWAY_TEAM:
-                sumTeamGoalsFunction = match -> match.getAwayTeamHalftimeGoals();
+                sumTeamGoalsFunction = Match::getAwayTeamHalftimeGoals;
                 break;
             case Constants.BOTH_TEAMS:
-                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsHalfTime(match);
+                sumTeamGoalsFunction = NumberOfGoalsCollecter::sumGoalsHalfTime;
                 break;
             default:
-                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsHalfTime(match);
+                sumTeamGoalsFunction = NumberOfGoalsCollecter::sumGoalsHalfTime;
                 break;
         }
 
@@ -158,16 +158,16 @@ public class NumberOfGoalsAggregator extends Aggregator {
 
         switch (team) {
             case Constants.HOME_TEAM:
-                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.getHomeTeamGoalsScoredInSecondHalfTime(match);
+                sumTeamGoalsFunction = NumberOfGoalsCollecter::getHomeTeamGoalsScoredInSecondHalfTime;
                 break;
             case Constants.AWAY_TEAM:
-                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.getAwayTeamGoalsScoredInSecondHalfTime(match);
+                sumTeamGoalsFunction = NumberOfGoalsCollecter::getAwayTeamGoalsScoredInSecondHalfTime;
                 break;
             case Constants.BOTH_TEAMS:
-                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsInSecondHalfTime(match);
+                sumTeamGoalsFunction = NumberOfGoalsCollecter::sumGoalsInSecondHalfTime;
                 break;
             default:
-                sumTeamGoalsFunction = match -> NumberOfGoalsCollecter.sumGoalsInSecondHalfTime(match);
+                sumTeamGoalsFunction = NumberOfGoalsCollecter::sumGoalsInSecondHalfTime;
                 break;
         }
 
@@ -193,7 +193,7 @@ public class NumberOfGoalsAggregator extends Aggregator {
     private long countMatchesWhereNumberOfGoalsIsEqualToOrAboveGoalLimit(List<Match> matches, Function<Match, Integer> sumTeamGoalsFunction, int goalLimit) {
 
         return matches.stream()
-                .map(match -> sumTeamGoalsFunction.apply(match))
+                .map(sumTeamGoalsFunction)
                 .filter(numberOfGoals -> numberOfGoals >= goalLimit)
                 .count();
     }
@@ -201,7 +201,7 @@ public class NumberOfGoalsAggregator extends Aggregator {
     private long countMatchesWhereNumberOfGoalsIsZero(List<Match> matches, Function<Match, Integer> sumTeamGoalsFunction) {
 
         return matches.stream()
-                .map(match -> sumTeamGoalsFunction.apply(match))
+                .map(sumTeamGoalsFunction)
                 .filter(numberOfGoals -> numberOfGoals < Constants.ONE_GOAL)
                 .count();
     }
