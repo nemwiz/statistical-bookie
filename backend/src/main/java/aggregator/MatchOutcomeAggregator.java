@@ -31,7 +31,7 @@ public class MatchOutcomeAggregator extends Aggregator {
         );
     }
 
-    public long getCountOnFullTime(String matchOutcome) {
+    private long getCountOnFullTime(String matchOutcome) {
 
         return matches.stream()
                 .filter(
@@ -39,7 +39,7 @@ public class MatchOutcomeAggregator extends Aggregator {
                 ).count();
     }
 
-    public long getCountOnHalfTime(String halfTimeOutcome) {
+    private long getCountOnHalfTime(String halfTimeOutcome) {
 
         return matches.stream()
                 .filter(
