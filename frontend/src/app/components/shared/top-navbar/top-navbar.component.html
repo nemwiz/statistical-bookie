@@ -7,7 +7,7 @@
     <div class="collapse navbar-toggleable-sm" id="navbarResponsive">
       <ul class="nav navbar-nav float-md-right menu-items-container">
         <li *ngFor="let menuItem of menuItems" class="nav-item">
-          <a class="nav-link" href="#">{{menuItem}}</a>
+          <a class="nav-link" [routerLink]="menuItem.route">{{menuItem.name}}</a>
         </li>
       </ul>
     </div>
