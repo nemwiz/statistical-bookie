@@ -7,6 +7,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { LeagueLogoComponent } from './components/league-logo/league-logo.component';
 import { TopNavbarComponent } from './components/shared/top-navbar/top-navbar.component';
 import { AboutComponent } from './components/about/about.component';
+import {MatchService} from './services/match.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { AboutComponent } from './components/about/about.component';
     FormsModule,
     HttpModule,
   ],
-  providers: [],
+  providers: [MatchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

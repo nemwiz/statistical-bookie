@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LeagueLogo} from '../../interfaces/league-logo';
 import {Paths} from '../../common/paths';
+import {MatchService} from '../../services/match.service';
 
 @Component({
   selector: 'landing-page',
@@ -15,10 +16,15 @@ export class LandingPageComponent implements OnInit {
     {leagueName: 'German Bundesliga', logoUrl: this.getLogoPathFromBase('bundesliga-logo.png')}
   ];
 
-  constructor() {
+  constructor(private matchService: MatchService) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.matchService.getMatches('Chelsea')
+      .subscribe( data => {
+        console.log(data);
+      });
+  }
 
   private getLogoPathFromBase(imageName:string):string {
     return Paths.logosBasePath + imageName;
