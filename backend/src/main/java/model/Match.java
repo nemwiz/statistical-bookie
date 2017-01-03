@@ -8,6 +8,7 @@ public class Match {
 
     @Id
     private int id;
+    private String countryName;
     private String leagueName;
     private String date;
     private String homeTeam;
@@ -36,6 +37,10 @@ public class Match {
 
     public long getId() {
         return id;
+    }
+
+    public String getCountryName() {
+        return countryName;
     }
 
     public String getLeagueName() {
@@ -128,6 +133,10 @@ public class Match {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     public void setLeagueName(String leagueName) {
