@@ -1,0 +1,15 @@
+<table class="responstable">
+
+  <tr>
+    <th>Date</th>
+    <th>Home team</th>
+    <th>Away team</th>
+  </tr>
+
+  <tr *ngFor="let fixture of fixtures">
+    <td>{{fixture.fixtureDate}}</td>
+    <td>{{fixture.homeTeamName}}</td>
+    <td>{{fixture.awayTeamName}}</td>
+  </tr>
+
+</table>

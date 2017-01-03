@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 // Operators
 import 'rxjs/add/operator/map';
 
-let BACKEND_API: string = 'http://localhost:5000/';
+let BACKEND_API: string = 'http://localhost:5000/api/';
 
 @Injectable()
 export abstract class BaseService {

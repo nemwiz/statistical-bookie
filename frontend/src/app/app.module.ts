@@ -9,7 +9,9 @@ import {TopNavbarComponent} from './components/shared/top-navbar/top-navbar.comp
 import {AboutComponent} from './components/about/about.component';
 import {MatchService} from './services/match.service';
 import {RouterModule} from '@angular/router';
-import {AppRoutes} from './components/shared/routes'
+import {AppRoutes} from './components/shared/routes';
+import { FixturesPageComponent } from './components/fixtures-page/fixtures-page.component'
+import {FixturesService} from './services/fixtures.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import {AppRoutes} from './components/shared/routes'
     LeagueLogoComponent,
     TopNavbarComponent,
     AboutComponent,
+    FixturesPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,7 @@ import {AppRoutes} from './components/shared/routes'
     HttpModule,
     RouterModule.forRoot(AppRoutes.routes)
   ],
-  providers: [MatchService],
+  providers: [MatchService, FixturesService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
