@@ -1,4 +1,12 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:400,500);
+@import '../../../../assets/variables.scss';
+
+.navbar {
+  background-color: $base-gray;
+}
+
+.navbar-brand {
+  color: $base-accent;
+}
 
 .menu-items-container {
   font-family: 'Raleway', Arial, sans-serif;
@@ -23,7 +31,7 @@
   padding: 0.5em 0.8em;
   margin: 0.2em 0;
   display: block;
-  color: rgba(255, 255, 255, 0.5);
+  color: $base-color;
   position: relative;
   text-decoration: none;
 }
@@ -55,7 +63,7 @@
 }
 .menu-items-container a:hover,
 .menu-items-container .current a {
-  color: #ffffff;
+  color: $base-white;
 }
 .menu-items-container a:hover:before,
 .menu-items-container .current a:before,
