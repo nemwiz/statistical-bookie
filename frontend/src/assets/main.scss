@@ -1,0 +1,9 @@
+@import 'variables.scss';
+
+body {
+  background-color: $base-white;
+}
+
+.scrollable-content {
+  margin-top: $top-navbar-height;
+}
