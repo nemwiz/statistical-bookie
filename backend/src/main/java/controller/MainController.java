@@ -54,9 +54,9 @@ public class MainController {
         return this.matchDAO.getMatchesByTeamName(homeTeamName);
     }
 
-    public AggregatedMatchesMetaView getAggregatedMatches(String homeTeamName) {
+    public AggregatedMatchesMetaView getMatchesByTeamNames(String homeTeamName, String awayTeamName) {
 
-        List<Match> matches = this.matchDAO.getMatchesByTeamName(homeTeamName);
+        List<Match> matches = this.matchDAO.getMatchesByTeamNames(homeTeamName, awayTeamName);
 
         numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
         teamGoalsAggregator = new TeamGoalsAggregator(matches);
@@ -74,13 +74,12 @@ public class MainController {
         HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();
         Map<String, Long> exactResultsView = exactResultAggregator.aggregate();
 
-       return new AggregatedMatchesMetaView(numberOfGoalsMetaView,
-               teamGoalsView,
-               matchOutcomeView,
-               matchDetailOutcomeView,
-               numberOfGoalsAndWinsView,
-               halfTimeWithMoreGoalsView,
-               exactResultsView);
+        return new AggregatedMatchesMetaView(numberOfGoalsMetaView,
+                teamGoalsView,
+                matchOutcomeView,
+                matchDetailOutcomeView,
+                numberOfGoalsAndWinsView,
+                halfTimeWithMoreGoalsView,
+                exactResultsView);
     }
-
 }

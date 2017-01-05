@@ -24,7 +24,7 @@ public class MatchDAO {
 
     }
 
-    public List<Match> getMatchesFromBothTeams(String homeTeamName, String awayTeamName) {
+    public List<Match> getMatchesByTeamNames(String homeTeamName, String awayTeamName) {
 
         return this.datastore.getDatastore().createQuery(Match.class)
                 .field("homeTeam").contains(homeTeamName)

@@ -9,9 +9,12 @@
     </tr>
 
     <tr *ngFor="let fixture of fixtures">
-      <td>{{fixture.fixtureDate}}</td>
+
+      <td><a [routerLink]="['/match/', fixture.homeTeamName, fixture.awayTeamName]">{{fixture.fixtureDate}}</a></td>
+
       <td>{{fixture.homeTeamName}}</td>
       <td>{{fixture.awayTeamName}}</td>
+
     </tr>
 
   </table>

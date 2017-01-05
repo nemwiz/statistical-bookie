@@ -12,7 +12,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/match")
+@Path("/matches")
 @Produces(MediaType.APPLICATION_JSON)
 public class NumberOfGoalsPerMatchResource {
 
@@ -29,11 +29,14 @@ public class NumberOfGoalsPerMatchResource {
         return mainController.getMatches(homeTeamName);
     }
 
-    @Path("/aggregate")
+
+    @Path("/aggregate/")
     @GET
     @Timed
-    public AggregatedMatchesMetaView getMetaView(@QueryParam("homeTeamName") String homeTeamName) {
-        return mainController.getAggregatedMatches(homeTeamName);
+    public AggregatedMatchesMetaView getMatchesByTeams(
+            @QueryParam("homeTeam") String homeTeam,
+            @QueryParam("awayTeam") String awayTeam) {
+        return mainController.getMatchesByTeamNames(homeTeam, awayTeam);
     }
 
 }

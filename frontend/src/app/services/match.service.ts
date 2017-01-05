@@ -6,13 +6,15 @@ import {BaseService} from './base.service';
 @Injectable()
 export class MatchService extends BaseService {
 
+  private BASE_ENDPOINT: string = 'matches';
+  
   constructor(http: Http) {
     super(http);
   }
 
-  getMatches(teamName: string): Observable<any> {
-    let query = 'match?homeTeamName=' + teamName;
-    return this.get<any>(query);
+  getMatchesByTeams(homeTeamName: string, awayTeamName: string): Observable<any> {
+    let endpoint = `${this.BASE_ENDPOINT}/aggregate/?homeTeam=${homeTeamName}&awayTeam=${awayTeamName}`;
+    return this.get<any>(endpoint);
   }
 
 }

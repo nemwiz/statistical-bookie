@@ -12,6 +12,7 @@ import {FixturesPageComponent} from './components/fixtures-page/fixtures-page.co
 import {FixturesService} from './services/fixtures.service';
 import { LeaguesPageComponent } from './components/leagues-page/leagues-page.component';
 import { NotFoundPageComponent } from './components/shared/not-found-page/not-found-page.component';
+import { AggregatedMatchComponent } from './components/aggregated-match/aggregated-match.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NotFoundPageComponent } from './components/shared/not-found-page/not-fo
     FixturesPageComponent,
     LeaguesPageComponent,
     NotFoundPageComponent,
+    AggregatedMatchComponent,
   ],
   imports: [
     BrowserModule,
