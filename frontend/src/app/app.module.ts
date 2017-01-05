@@ -11,6 +11,7 @@ import {AppRoutes} from './components/shared/routes';
 import {FixturesPageComponent} from './components/fixtures-page/fixtures-page.component';
 import {FixturesService} from './services/fixtures.service';
 import { LeaguesPageComponent } from './components/leagues-page/leagues-page.component';
+import { NotFoundPageComponent } from './components/shared/not-found-page/not-found-page.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { LeaguesPageComponent } from './components/leagues-page/leagues-page.com
     TopNavbarComponent,
     FixturesPageComponent,
     LeaguesPageComponent,
+    NotFoundPageComponent,
   ],
   imports: [
     BrowserModule,
