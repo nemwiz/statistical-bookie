@@ -1,0 +1,11 @@
+<div *ngFor="let country of leagues">
+  <div>
+    <span>{{country.countryName}}</span>
+    <p *ngFor="let league of country.leagues">
+      <a [routerLink]="['/fixtures/', country.countryName, league]">
+      {{league}}
+        </a>
+    </p>
+  </div>
+
+</div>

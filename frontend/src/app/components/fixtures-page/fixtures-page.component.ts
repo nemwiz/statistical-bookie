@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FixturesService} from '../../services/fixtures.service';
+import {ActivatedRoute} from '@angular/router';
 import {Fixture} from '../../interfaces/fixture';
 
 @Component({
@@ -9,17 +10,26 @@ import {Fixture} from '../../interfaces/fixture';
 })
 export class FixturesPageComponent implements OnInit {
 
-  fixtures: Fixture[];
-  
-  constructor(private fixturesService: FixturesService) { }
+  fixtures:Fixture[];
+  countryName: string;
+  leagueName: string;
+
+  constructor(private fixturesService:FixturesService,
+              private route:ActivatedRoute) {
+    route.params.subscribe(params => {
+      this.countryName = params['countryName'];
+      this.leagueName = params['leagueName'];
+    });
+  }
 
   ngOnInit() {
-    
+
     this.fixturesService
-      .getFixtures()
+      .getFixtures(this.countryName, this.leagueName)
       .subscribe(fixtures => {
         this.fixtures = fixtures;
       });
+
   }
 
 }

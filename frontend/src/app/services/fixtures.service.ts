@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BaseService} from './base.service';
-import { Http } from '@angular/http';
+import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Fixture} from '../interfaces/fixture';
 
@@ -13,9 +13,9 @@ export class FixturesService extends BaseService {
     super(http);
   }
 
-  getFixtures(): Observable<Fixture[]> {
-    let endpoint = 'fixtures';
-    return this.get(this.BASE_ENDPOINT);
+  getFixtures(countryName: string, leagueName: string): Observable<Fixture[]> {
+    let endpoint = `${this.BASE_ENDPOINT}/${countryName}/${leagueName}`;
+    return this.get(endpoint);
   }
 
 }

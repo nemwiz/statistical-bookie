@@ -1,3 +1,5 @@
+@import '../../../assets/variables.scss';
+
 // Default options for table style
 $table-breakpoint: 480px;
 $table-background-color: #FFF;
@@ -99,3 +101,30 @@ $table-header-border: 1px solid #FFF;
   $header-text-color: $table-header-text-color,
   $header-border: $table-header-border);
 
+
+.countries-container {
+  border: 1px solid $base-gray;
+  margin-top: $top-navbar-height + 20px;
+}
+
+.country-tab {
+  background-color: $base-accent;
+  padding-left: 40px;
+  height: 45px;
+}
+
+.country-flag {
+  display: inline-block;
+}
+
+.country-flag img {
+  height: 45px;
+  width: 26px;
+}
+
+.country-name {
+  display: inline-block;
+  color: $base-white;
+  font-size: 18px;
+  font-weight: bold;
+}

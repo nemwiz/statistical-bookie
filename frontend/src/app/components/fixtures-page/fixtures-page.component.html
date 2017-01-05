@@ -1,15 +1,19 @@
-<table class="responstable">
+<div class="container countries-container">
 
-  <tr>
-    <th>Date</th>
-    <th>Home team</th>
-    <th>Away team</th>
-  </tr>
+  <table class="responstable">
 
-  <tr *ngFor="let fixture of fixtures">
-    <td>{{fixture.fixtureDate}}</td>
-    <td>{{fixture.homeTeamName}}</td>
-    <td>{{fixture.awayTeamName}}</td>
-  </tr>
+    <tr>
+      <th>Date</th>
+      <th>Home team</th>
+      <th>Away team</th>
+    </tr>
 
-</table>
+    <tr *ngFor="let fixture of fixtures">
+      <td>{{fixture.fixtureDate}}</td>
+      <td>{{fixture.homeTeamName}}</td>
+      <td>{{fixture.awayTeamName}}</td>
+    </tr>
+
+  </table>
+
+</div>
