@@ -9,32 +9,14 @@ import {MenuItem} from '../../../interfaces/top-navbar-menu-item';
 })
 export class TopNavbarComponent implements OnInit {
 
-  menuItems:MenuItem[] = [];
+  menuItems:MenuItem[] = [
+    {name: 'Home', route:'/home'},
+    {name: 'Fixtures', route:'/fixtures'}
+  ];
 
-  constructor() {
-    AppRoutes.routes.forEach(route => {
-
-      if (route.path != '') {
-        this.convertRoutesToMenuItemFormat(route.path);
-      }
-
-    });
-  }
+  constructor() {}
 
   ngOnInit() {
-  }
-
-  private convertRoutesToMenuItemFormat(routeName: string) {
-
-    this.menuItems.push({
-      name: this.capitalizeFirstLetter(routeName),
-      route: '/' + routeName
-    })
-
-  }
-
-  private capitalizeFirstLetter(route:string):string {
-    return route[0].toUpperCase() + route.slice(1);
   }
 
 }
