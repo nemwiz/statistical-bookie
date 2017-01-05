@@ -6,6 +6,7 @@ import model.Fixture;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -20,10 +21,13 @@ public class FixturesResource {
         this.fixturesController = fixturesController;
     }
 
+    @Path("/{countryName}/{leagueName}")
     @GET
     @Timed
-    public List<Fixture> returnAllFixtures() {
-        return this.fixturesController.getFixtures();
+    public List<Fixture> getFixturesByCountryAndLeague(
+            @PathParam("countryName") String countryName,
+            @PathParam("leagueName") String leagueName) {
+        return this.fixturesController.getFixturesByCountryAndLeague(countryName, leagueName);
     }
 
 }

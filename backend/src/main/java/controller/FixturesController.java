@@ -13,7 +13,7 @@ public class FixturesController {
         this.fixturesDAO = fixturesDAO;
     }
 
-    public List<Fixture> getFixtures() {
-        return this.fixturesDAO.getFixtures();
+    public List<Fixture> getFixturesByCountryAndLeague(String countryName, String leagueName) {
+        return this.fixturesDAO.getFixturesByCountryAndLeague(countryName, leagueName);
     }
 }
