@@ -6,7 +6,7 @@ import org.mongodb.morphia.Morphia;
 
 public class MorphiaDatastore {
 
-    private static final String MODEL_PACKAGE_PATH = "src.main.java.model";
+    private static final String MODEL_PACKAGE_PATH = "src.main.java";
 
     private MongoClient mongoClient;
     private Morphia morphia;

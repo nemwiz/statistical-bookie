@@ -4,13 +4,13 @@ import controller.MainController;
 import dao.FixturesDAO;
 import dao.MatchDAO;
 import dao.MorphiaDatastore;
-import fixture.FixtureScrapper;
 import healthchecks.DatabaseHealthCheck;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import resource.FixturesResource;
 import resource.NumberOfGoalsPerMatchResource;
+import scrapper.FixtureScrapper;
 
 public class StatsBookie extends Application<StatsBookieConfiguration> {
 
@@ -36,8 +36,8 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
 
     public void run(StatsBookieConfiguration statsBookieConfiguration, Environment environment) throws Exception {
 
-//        FixtureScrapper fixtureScrapper = new FixtureScrapper();
-//        fixtureScrapper.main();
+        FixtureScrapper fixtureScrapper = new FixtureScrapper();
+        fixtureScrapper.main();
 
         MorphiaDatastore morphiaDatastore = new MorphiaDatastore(mongoBundle.getClient(), mongoBundle.getDB().getName());
 
