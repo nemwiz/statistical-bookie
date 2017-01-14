@@ -1,7 +1,15 @@
 package scrapper.csv.model;
 
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+
+@Entity(value = "matches", noClassnameStored = true)
 public class DatabaseMatch {
 
+    @Id
+    private ObjectId id;
+    private String divisionCode;
     private String leagueName;
     private String countryName;
     private String date;
@@ -14,7 +22,8 @@ public class DatabaseMatch {
     private int awayTeamHalftimeGoals;
     private String halfTimeOutcome;
 
-    public DatabaseMatch(String leagueName, String countryName, String date, String homeTeam, String awayTeam, int homeTeamGoals, int awayTeamGoals, String finalOutcome, int homeTeamHalftimeGoals, int awayTeamHalftimeGoals, String halfTimeOutcome) {
+    public DatabaseMatch(String divisionCode, String leagueName, String countryName, String date, String homeTeam, String awayTeam, int homeTeamGoals, int awayTeamGoals, String finalOutcome, int homeTeamHalftimeGoals, int awayTeamHalftimeGoals, String halfTimeOutcome) {
+        this.divisionCode = divisionCode;
         this.leagueName = leagueName;
         this.countryName = countryName;
         this.date = date;
@@ -26,6 +35,14 @@ public class DatabaseMatch {
         this.homeTeamHalftimeGoals = homeTeamHalftimeGoals;
         this.awayTeamHalftimeGoals = awayTeamHalftimeGoals;
         this.halfTimeOutcome = halfTimeOutcome;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public String getDivisionCode() {
+        return divisionCode;
     }
 
     public String getLeagueName() {
@@ -75,7 +92,9 @@ public class DatabaseMatch {
     @Override
     public String toString() {
         return "DatabaseMatch{" +
-                "leagueName='" + leagueName + '\'' +
+                "id=" + id +
+                ", divisionCode='" + divisionCode + '\'' +
+                ", leagueName='" + leagueName + '\'' +
                 ", countryName='" + countryName + '\'' +
                 ", date='" + date + '\'' +
                 ", homeTeam='" + homeTeam + '\'' +

@@ -6,8 +6,6 @@ import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import scrapper.csv.model.CsvMatch;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -42,6 +40,12 @@ public class CsvFileParser {
         out.println("Parsing from url " + url);
 
         try {
+            Thread.sleep(21000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
             InputStream input = new URL(url).openStream();
             this.csvParser.parse(input);
         } catch (IOException e) {
@@ -49,18 +53,5 @@ public class CsvFileParser {
         }
         return rowProcessor.getBeans();
     }
-
-    public List<CsvMatch> parse() {
-
-        try {
-            this.csvParser.parse(new FileReader("/home/nemanja/Desktop/F1.csv"));
-            System.out.println(this.rowProcessor.getBeans());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return this.rowProcessor.getBeans();
-    }
-
-
 
 }

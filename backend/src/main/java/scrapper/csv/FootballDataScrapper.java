@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class FootballDataScrapper {
 
-    public static final int MONTH_OF_JULY = 7;
+    private static final int MONTH_OF_JULY = 7;
     private Random random;
 
     private static final String FOOTBALL_DATA_MAIN_URL = "http://www.football-data.co.uk/";
@@ -29,6 +29,12 @@ public class FootballDataScrapper {
     public List<String> getUrlsForEachCountry() {
 
         List<String> countriesUrls = new ArrayList<>();
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         try {
             Document historyDataHtml = Jsoup
@@ -62,6 +68,66 @@ public class FootballDataScrapper {
         return element -> element.getElementsByTag("b").hasText();
     }
 
+    public List<String> getUrlsToCsvFiles(List<String> countryUrls) {
+
+        List<String> csvFileUrls = new ArrayList<>();
+
+        countryUrls.forEach(url -> {
+
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                Document countryAndLeaguesHtml = Jsoup
+                        .connect(url)
+                        .userAgent(getRandomUserAgent())
+                        .get();
+
+                Elements htmlElements = countryAndLeaguesHtml.getElementsByTag("a");
+
+                htmlElements.stream()
+                        .filter(this::isCurrentSeason)
+                        .map(element -> FOOTBALL_DATA_MAIN_URL + element.attr("href"))
+                        .forEach(csvFileUrls::add);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+
+        return csvFileUrls;
+    }
+
+    /*
+    Can be used to scrape all seasons that are available
+     */
+
+    private boolean isAllSeasons(Element element) {
+        return element.attr("href").contains("mmz");
+    }
+
+    private boolean isCurrentSeason(Element element) {
+        return element.attr("href").contains("mmz") && element.attr("href").contains(getCurrentSeasonYear());
+    }
+
+    private String getCurrentSeasonYear() {
+
+        String currentSeason = DateTime.now().year().getAsShortText().substring(2, 4);
+
+        if (DateTime.now().monthOfYear().get() >= MONTH_OF_JULY) {
+            String nextSeason = String.valueOf(DateTime.now().year().get() + 1).substring(2, 4);
+            return currentSeason + nextSeason;
+        } else {
+            String previousSeason = String.valueOf(DateTime.now().year().get() - 1).substring(2, 4);
+            return previousSeason + currentSeason;
+        }
+
+    }
+
     private String getRandomUserAgent() {
 
         String[] userAgents = new String[]{
@@ -78,48 +144,6 @@ public class FootballDataScrapper {
 
 
         return userAgents[this.random.nextInt(userAgents.length)];
-
-    }
-
-    public List<String> getUrlsToCsvFiles(List<String> countryUrls) {
-
-        List<String> csvFileUrls = new ArrayList<>();
-
-        countryUrls.forEach(url -> {
-
-            try {
-                Document countryAndLeaguesHtml = Jsoup
-                        .connect(url)
-                        .userAgent(getRandomUserAgent())
-                        .get();
-
-                Elements htmlElements = countryAndLeaguesHtml.getElementsByTag("a");
-
-                htmlElements.stream()
-                        .filter(element -> element.attr("href").contains("mmz") && element.attr("href").contains(getSeasonYears()))
-                        .map(element -> FOOTBALL_DATA_MAIN_URL + element.attr("href"))
-                        .forEach(csvFileUrls::add);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        });
-
-        return csvFileUrls;
-    }
-
-    private String getSeasonYears() {
-
-        String currentSeason = DateTime.now().year().getAsShortText().substring(2, 4);
-
-        if (DateTime.now().monthOfYear().get() >= MONTH_OF_JULY) {
-            String nextSeason = String.valueOf(DateTime.now().year().get() + 1).substring(2,4);
-            return currentSeason + nextSeason;
-        } else {
-            String previousSeason = String.valueOf(DateTime.now().year().get() - 1).substring(2,4);
-            return previousSeason + currentSeason;
-        }
 
     }
 

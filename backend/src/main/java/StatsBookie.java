@@ -10,7 +10,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import resource.FixturesResource;
 import resource.NumberOfGoalsPerMatchResource;
-import scrapper.FixtureScrapper;
+import scrapper.HistoricalMatchesScrapper;
 
 public class StatsBookie extends Application<StatsBookieConfiguration> {
 
@@ -36,9 +36,6 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
 
     public void run(StatsBookieConfiguration statsBookieConfiguration, Environment environment) throws Exception {
 
-        FixtureScrapper fixtureScrapper = new FixtureScrapper();
-        fixtureScrapper.main();
-
         MorphiaDatastore morphiaDatastore = new MorphiaDatastore(mongoBundle.getClient(), mongoBundle.getDB().getName());
 
         MatchDAO matchDAO = new MatchDAO(morphiaDatastore);
@@ -46,6 +43,9 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
 
         final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(morphiaDatastore.getDatastore());
         environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
+
+        HistoricalMatchesScrapper historicalMatchesScrapper = new HistoricalMatchesScrapper(matchDAO);
+        historicalMatchesScrapper.scrapeMatchesFromCsvFilesOnFootballDataSite();
 
         final MainController mainController = new MainController(matchDAO);
         final FixturesController fixturesController = new FixturesController(fixturesDAO);

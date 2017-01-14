@@ -1,6 +1,7 @@
 package dao;
 
 import model.Match;
+import scrapper.csv.model.DatabaseMatch;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -33,6 +34,10 @@ public class MatchDAO {
                 .order("-date")
                 .asList();
 
+    }
+
+    public void insertMatchesIntoDatabase(List<DatabaseMatch> databaseMatches) {
+        this.datastore.getDatastore().save(databaseMatches);
     }
 
 }

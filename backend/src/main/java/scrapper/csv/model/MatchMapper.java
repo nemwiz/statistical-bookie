@@ -7,13 +7,15 @@ import java.util.stream.Collectors;
 
 public class MatchMapper {
 
-    private MatchMapper() {}
+    private MatchMapper() {
+    }
 
     public static List<DatabaseMatch> mapCsvMatchToDatabaseMatch(List<CsvMatch> csvMatches) {
 
         return csvMatches.stream()
                 .map(csvMatch ->
                         new DatabaseMatch(
+                                csvMatch.getDivisionName(),
                                 LeagueCodes.leagueCodeToLeagueNameMap.get(csvMatch.getDivisionName()),
                                 LeagueCodes.leagueCodeToCountryNameMap.get(csvMatch.getDivisionName()),
                                 csvMatch.getDate(),
