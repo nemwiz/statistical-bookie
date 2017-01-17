@@ -1,4 +1,4 @@
-package scrapper.csv;
+package scrapper.csv.helper;
 
 public enum Countries {
     England,

@@ -38,9 +38,14 @@ public class HistoricalMatchesScrapper {
                 .flatMap(Collection::stream)
                 .forEach(allMatchesParsedFromCsv::add);
 
+        allMatchesParsedFromCsv.stream()
+                .map(CsvMatch::getDivisionName)
+                .distinct()
+                .forEach(divisionName -> this.matchDAO.deleteMatchesForCurrentSeason(divisionName));
+
         List<DatabaseMatch> databaseMatches = MatchMapper.mapCsvMatchToDatabaseMatch(allMatchesParsedFromCsv);
 
-//        this.matchDAO.insertMatchesIntoDatabase(databaseMatches);
+        this.matchDAO.insertMatchesIntoDatabase(databaseMatches);
 
     }
 

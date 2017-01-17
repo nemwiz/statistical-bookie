@@ -1,6 +1,8 @@
 package dao;
 
 import model.Match;
+import org.mongodb.morphia.query.Query;
+import scrapper.csv.helper.ScrapperHelper;
 import scrapper.csv.model.DatabaseMatch;
 
 import javax.inject.Inject;
@@ -38,6 +40,19 @@ public class MatchDAO {
 
     public void insertMatchesIntoDatabase(List<DatabaseMatch> databaseMatches) {
         this.datastore.getDatastore().save(databaseMatches);
+    }
+
+    public boolean deleteMatchesForCurrentSeason(String divisionCode) {
+
+        Query<DatabaseMatch> removeMatchesQuery = this.datastore.getDatastore()
+                .createQuery(DatabaseMatch.class);
+
+                removeMatchesQuery.and(
+                        removeMatchesQuery.criteria("divisionCode").equal(divisionCode),
+                        removeMatchesQuery.criteria("seasonYear").equal(ScrapperHelper.getCurrentSeasonYearWithDash())
+                        );
+
+        return this.datastore.getDatastore().delete(removeMatchesQuery).wasAcknowledged();
     }
 
 }

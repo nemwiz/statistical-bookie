@@ -1,10 +1,11 @@
 package scrapper.csv;
 
-import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import scrapper.csv.helper.Countries;
+import scrapper.csv.helper.ScrapperHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import java.util.stream.Collectors;
 
 public class FootballDataScrapper {
 
-    private static final int MONTH_OF_JULY = 7;
     private Random random;
 
     private static final String FOOTBALL_DATA_MAIN_URL = "http://www.football-data.co.uk/";
@@ -111,21 +111,7 @@ public class FootballDataScrapper {
     }
 
     private boolean isCurrentSeason(Element element) {
-        return element.attr("href").contains("mmz") && element.attr("href").contains(getCurrentSeasonYear());
-    }
-
-    private String getCurrentSeasonYear() {
-
-        String currentSeason = DateTime.now().year().getAsShortText().substring(2, 4);
-
-        if (DateTime.now().monthOfYear().get() >= MONTH_OF_JULY) {
-            String nextSeason = String.valueOf(DateTime.now().year().get() + 1).substring(2, 4);
-            return currentSeason + nextSeason;
-        } else {
-            String previousSeason = String.valueOf(DateTime.now().year().get() - 1).substring(2, 4);
-            return previousSeason + currentSeason;
-        }
-
+        return element.attr("href").contains("mmz") && element.attr("href").contains(ScrapperHelper.getCurrentSeasonYear());
     }
 
     private String getRandomUserAgent() {

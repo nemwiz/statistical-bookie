@@ -13,6 +13,7 @@ public class DatabaseMatch {
     private String leagueName;
     private String countryName;
     private String date;
+    private String seasonYear;
     private String homeTeam;
     private String awayTeam;
     private int homeTeamGoals;
@@ -22,11 +23,15 @@ public class DatabaseMatch {
     private int awayTeamHalftimeGoals;
     private String halfTimeOutcome;
 
-    public DatabaseMatch(String divisionCode, String leagueName, String countryName, String date, String homeTeam, String awayTeam, int homeTeamGoals, int awayTeamGoals, String finalOutcome, int homeTeamHalftimeGoals, int awayTeamHalftimeGoals, String halfTimeOutcome) {
+    public DatabaseMatch() {
+    }
+
+    public DatabaseMatch(String divisionCode, String leagueName, String countryName, String date, String seasonYear, String homeTeam, String awayTeam, int homeTeamGoals, int awayTeamGoals, String finalOutcome, int homeTeamHalftimeGoals, int awayTeamHalftimeGoals, String halfTimeOutcome) {
         this.divisionCode = divisionCode;
         this.leagueName = leagueName;
         this.countryName = countryName;
         this.date = date;
+        this.seasonYear = seasonYear;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.homeTeamGoals = homeTeamGoals;
@@ -55,6 +60,10 @@ public class DatabaseMatch {
 
     public String getDate() {
         return date;
+    }
+
+    public String getSeasonYear() {
+        return seasonYear;
     }
 
     public String getHomeTeam() {
@@ -97,6 +106,7 @@ public class DatabaseMatch {
                 ", leagueName='" + leagueName + '\'' +
                 ", countryName='" + countryName + '\'' +
                 ", date='" + date + '\'' +
+                ", seasonYear='" + seasonYear + '\'' +
                 ", homeTeam='" + homeTeam + '\'' +
                 ", awayTeam='" + awayTeam + '\'' +
                 ", homeTeamGoals=" + homeTeamGoals +
