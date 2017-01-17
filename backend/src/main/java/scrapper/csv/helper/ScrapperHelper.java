@@ -8,7 +8,7 @@ public class ScrapperHelper {
 
     private static final int MONTH_OF_JULY = 7;
 
-    public static String getCurrentSeasonYear() {
+    public static String getCurrentSeasonYearShortFormat() {
 
         String currentSeason = DateTime.now().year().getAsShortText().substring(2, 4);
 
@@ -22,22 +22,20 @@ public class ScrapperHelper {
 
     }
 
-    public static String getCurrentSeasonYearWithDash() {
+    public static String getCurrentSeasonYearWithDash(LocalDate date) {
 
-        String currentSeason = String.valueOf(LocalDate.now().getYear());
+        String currentSeason = String.valueOf(date.getYear());
 
-        if (DateTime.now().monthOfYear().get() >= MONTH_OF_JULY) {
-            String nextSeason = String.valueOf(LocalDate.now().getYear() + 1);
+        if (date.getMonthValue() >= MONTH_OF_JULY) {
+            String nextSeason = String.valueOf(date.getYear() + 1);
             return addForwardSlash(currentSeason, nextSeason);
         } else {
-            String previousSeason = String.valueOf(LocalDate.now().getYear() - 1);
+            String previousSeason = String.valueOf(date.getYear() - 1);
             return addForwardSlash(previousSeason, currentSeason);
         }
-
     }
 
     private static String addForwardSlash(String season1, String season2) {
-
         return season1 + "/" + season2;
     }
 }

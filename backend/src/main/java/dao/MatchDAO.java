@@ -6,6 +6,7 @@ import scrapper.csv.helper.ScrapperHelper;
 import scrapper.csv.model.DatabaseMatch;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
 import java.util.List;
 
 public class MatchDAO {
@@ -49,7 +50,7 @@ public class MatchDAO {
 
                 removeMatchesQuery.and(
                         removeMatchesQuery.criteria("divisionCode").equal(divisionCode),
-                        removeMatchesQuery.criteria("seasonYear").equal(ScrapperHelper.getCurrentSeasonYearWithDash())
+                        removeMatchesQuery.criteria("seasonYear").equal(ScrapperHelper.getCurrentSeasonYearWithDash(LocalDate.now()))
                         );
 
         return this.datastore.getDatastore().delete(removeMatchesQuery).wasAcknowledged();

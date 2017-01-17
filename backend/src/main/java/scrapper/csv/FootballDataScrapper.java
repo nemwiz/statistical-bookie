@@ -111,7 +111,7 @@ public class FootballDataScrapper {
     }
 
     private boolean isCurrentSeason(Element element) {
-        return element.attr("href").contains("mmz") && element.attr("href").contains(ScrapperHelper.getCurrentSeasonYear());
+        return element.attr("href").contains("mmz") && element.attr("href").contains(ScrapperHelper.getCurrentSeasonYearShortFormat());
     }
 
     private String getRandomUserAgent() {

@@ -1,6 +1,7 @@
 package scrapper.csv.model;
 
 import scrapper.csv.helper.LeagueCodes;
+import scrapper.csv.helper.ScrapperHelper;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -39,24 +40,9 @@ public class MatchMapper {
     private static String getSeasonYearFromDate(String date) {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-
         LocalDate parsedDate = LocalDate.parse(date, dateTimeFormatter);
 
-        String currentSeason = String.valueOf(parsedDate.getYear());
-
-        if (parsedDate.getMonth().getValue() >= MONTH_OF_JULY) {
-            String nextSeason = String.valueOf(parsedDate.getYear() + 1);
-            return addForwardSlash(currentSeason, nextSeason);
-        } else {
-            String previousSeason = String.valueOf(parsedDate.getYear() - 1);
-            return addForwardSlash(previousSeason, currentSeason);
-        }
-
-    }
-
-    private static String addForwardSlash(String season1, String season2) {
-
-        return season1 + "/" + season2;
+        return ScrapperHelper.getCurrentSeasonYearWithDash(parsedDate);
     }
 
 }
