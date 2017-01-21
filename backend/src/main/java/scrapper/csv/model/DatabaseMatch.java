@@ -9,7 +9,7 @@ public class DatabaseMatch {
 
     @Id
     private ObjectId id;
-    private String divisionCode;
+    private String leagueCode;
     private String leagueName;
     private String countryName;
     private String date;
@@ -26,8 +26,8 @@ public class DatabaseMatch {
     public DatabaseMatch() {
     }
 
-    public DatabaseMatch(String divisionCode, String leagueName, String countryName, String date, String seasonYear, String homeTeam, String awayTeam, int homeTeamGoals, int awayTeamGoals, String finalOutcome, int homeTeamHalftimeGoals, int awayTeamHalftimeGoals, String halfTimeOutcome) {
-        this.divisionCode = divisionCode;
+    public DatabaseMatch(String leagueCode, String leagueName, String countryName, String date, String seasonYear, String homeTeam, String awayTeam, int homeTeamGoals, int awayTeamGoals, String finalOutcome, int homeTeamHalftimeGoals, int awayTeamHalftimeGoals, String halfTimeOutcome) {
+        this.leagueCode = leagueCode;
         this.leagueName = leagueName;
         this.countryName = countryName;
         this.date = date;
@@ -46,8 +46,8 @@ public class DatabaseMatch {
         return id;
     }
 
-    public String getDivisionCode() {
-        return divisionCode;
+    public String getLeagueCode() {
+        return leagueCode;
     }
 
     public String getLeagueName() {
@@ -102,7 +102,7 @@ public class DatabaseMatch {
     public String toString() {
         return "DatabaseMatch{" +
                 "id=" + id +
-                ", divisionCode='" + divisionCode + '\'' +
+                ", leagueCode='" + leagueCode + '\'' +
                 ", leagueName='" + leagueName + '\'' +
                 ", countryName='" + countryName + '\'' +
                 ", date='" + date + '\'' +

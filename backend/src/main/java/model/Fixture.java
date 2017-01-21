@@ -9,10 +9,12 @@ public class Fixture {
     @Id
     private int fixtureId;
     private String countryName;
-    private String leagueName;
+    private int leagueId;
     private String homeTeamName;
     private String awayTeamName;
     private String fixtureDate;
+    private String seasonYears;
+    private String week;
 
     public int getFixtureId() {
         return fixtureId;
@@ -22,8 +24,8 @@ public class Fixture {
         return countryName;
     }
 
-    public String getLeagueName() {
-        return leagueName;
+    public int getLeagueId() {
+        return leagueId;
     }
 
     public String getHomeTeamName() {
@@ -36,5 +38,13 @@ public class Fixture {
 
     public String getFixtureDate() {
         return fixtureDate;
+    }
+
+    public String getSeasonYears() {
+        return seasonYears;
+    }
+
+    public String getWeek() {
+        return week;
     }
 }

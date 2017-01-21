@@ -8,8 +8,9 @@ import java.util.List;
 public class FixturesDAO {
 
     private MorphiaDatastore datastore;
-    private static final String COUNTRY = "countryName";
-    private static final String LEAGUE = "leagueName";
+    private static final String LEAGUE_ID = "leagueId";
+    private static final String SEASON_YEAR = "seasonYear";
+    private static final String WEEK = "week";
 
     @Inject
     public FixturesDAO(MorphiaDatastore datastore) {
@@ -21,12 +22,13 @@ public class FixturesDAO {
         this.datastore.getDatastore().save(fixtures);
     }
 
-    public List<Fixture> getFixturesByCountryAndLeague(String countryName, String leagueName) {
+    public List<Fixture> getUpcomingFixtures(int leagueId) {
+
+        // TODO Implement querying on current week and current season
 
         return this.datastore.getDatastore()
                 .createQuery(Fixture.class)
-                .field(COUNTRY).equal(countryName)
-                .field(LEAGUE).equal(leagueName)
+                .field(LEAGUE_ID).equal(leagueId)
                 .order("-fixtureDate")
                 .asList();
     }

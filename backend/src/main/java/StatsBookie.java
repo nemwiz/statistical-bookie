@@ -1,7 +1,9 @@
 import com.meltmedia.dropwizard.mongo.MongoBundle;
 import controller.FixturesController;
+import controller.LeaguesController;
 import controller.MainController;
 import dao.FixturesDAO;
+import dao.LeaguesDAO;
 import dao.MatchDAO;
 import dao.MorphiaDatastore;
 import healthchecks.DatabaseHealthCheck;
@@ -9,6 +11,7 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import resource.FixturesResource;
+import resource.LeaguesResource;
 import resource.NumberOfGoalsPerMatchResource;
 import scrapper.LiveScoreScrapper;
 
@@ -40,6 +43,7 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
 
         MatchDAO matchDAO = new MatchDAO(morphiaDatastore);
         FixturesDAO fixturesDAO = new FixturesDAO(morphiaDatastore);
+        LeaguesDAO leaguesDAO = new LeaguesDAO(morphiaDatastore);
 
         final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(morphiaDatastore.getDatastore());
         environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
@@ -52,12 +56,15 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
 
         final MainController mainController = new MainController(matchDAO);
         final FixturesController fixturesController = new FixturesController(fixturesDAO);
+        final LeaguesController leaguesController = new LeaguesController(leaguesDAO);
 
         final NumberOfGoalsPerMatchResource numberOfGoalsPerMatchResource = new NumberOfGoalsPerMatchResource(mainController);
         final FixturesResource fixturesResource = new FixturesResource(fixturesController);
+        final LeaguesResource leaguesResource = new LeaguesResource(leaguesController);
 
         environment.jersey().register(numberOfGoalsPerMatchResource);
         environment.jersey().register(fixturesResource);
+        environment.jersey().register(leaguesResource);
 
         environment.jersey().setUrlPattern(BASE_URL);
     }
