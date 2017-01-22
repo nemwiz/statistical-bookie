@@ -11,7 +11,7 @@ export class TopNavbarComponent implements OnInit {
 
   menuItems:MenuItem[] = [
     {name: 'Home', route:'/home'},
-    {name: 'Fixtures', route:'/fixtures'}
+    {name: 'Leagues', route:'/leagues'}
   ];
 
   constructor() {}

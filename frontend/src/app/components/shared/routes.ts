@@ -9,8 +9,8 @@ export class AppRoutes {
 
   public static routes:Routes = [
     {path: 'home', component: LandingPageComponent},
-    {path: 'fixtures', component: LeaguesPageComponent},
-    {path: 'fixtures/:countryName/:leagueName', component: FixturesPageComponent},
+    {path: 'leagues', component: LeaguesPageComponent},
+    {path: 'leagues/:leagueId/fixtures', component: FixturesPageComponent},
     {path: 'match/:homeTeam/:awayTeam', component: AggregatedMatchComponent},
     {path: '', component: LandingPageComponent},
     {path: '**', component: NotFoundPageComponent}

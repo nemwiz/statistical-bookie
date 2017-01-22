@@ -11,21 +11,19 @@ import {Fixture} from '../../interfaces/fixture';
 export class FixturesPageComponent implements OnInit {
 
   fixtures:Fixture[];
-  countryName: string;
-  leagueName: string;
+  leagueId: string;
 
   constructor(private fixturesService:FixturesService,
               private route:ActivatedRoute) {
     route.params.subscribe(params => {
-      this.countryName = params['countryName'];
-      this.leagueName = params['leagueName'];
+      this.leagueId = params['leagueId'];
     });
   }
 
   ngOnInit() {
 
     this.fixturesService
-      .getFixtures(this.countryName, this.leagueName)
+      .getUpcomingFixtures(this.leagueId)
       .subscribe(fixtures => {
         this.fixtures = fixtures;
       });

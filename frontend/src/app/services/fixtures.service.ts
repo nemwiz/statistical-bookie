@@ -8,13 +8,14 @@ import {Fixture} from '../interfaces/fixture';
 export class FixturesService extends BaseService {
 
   private BASE_ENDPOINT: string = 'fixtures';
+  private LEAGUES_ENDPOINT: string = 'leagues/';
 
   constructor(http: Http) {
     super(http);
   }
 
-  getFixtures(countryName: string, leagueName: string): Observable<Fixture[]> {
-    let endpoint = `${this.BASE_ENDPOINT}/${countryName}/${leagueName}`;
+  getUpcomingFixtures(leagueId: string): Observable<Fixture[]> {
+    let endpoint = `${this.LEAGUES_ENDPOINT}${leagueId}/${this.BASE_ENDPOINT}/upcoming`;
     return this.get(endpoint);
   }
 
