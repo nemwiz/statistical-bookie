@@ -13,6 +13,7 @@ import {FixturesService} from './services/fixtures.service';
 import { LeaguesPageComponent } from './components/leagues-page/leagues-page.component';
 import { NotFoundPageComponent } from './components/shared/not-found-page/not-found-page.component';
 import { AggregatedMatchComponent } from './components/aggregated-match/aggregated-match.component';
+import {LeaguesService} from './services/leagues.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { AggregatedMatchComponent } from './components/aggregated-match/aggregat
     HttpModule,
     RouterModule.forRoot(AppRoutes.routes)
   ],
-  providers: [MatchService, FixturesService],
+  providers: [MatchService, FixturesService, LeaguesService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

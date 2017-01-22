@@ -1,11 +1,28 @@
-<div *ngFor="let country of leagues">
-  <div>
-    <span>{{country.countryName}}</span>
-    <p *ngFor="let league of country.leagues">
-      <a [routerLink]="['/fixtures/', country.countryName, league]">
-      {{league}}
+<div *ngFor="let country of leaguesGroupedByCountry">
+
+  <div class="country-and-leagues-container">
+    <div class="col-xs-12">
+      <img src="{{flagsPath}}{{country.leagues[0].countryCode}}.svg" class="country-flag">
+      <div class="country-name">{{country.countryName}}</div>
+    </div>
+
+    <div class="league-container col-md-3 col-sm-6 col-xs-12" *ngFor="let league of country.leagues">
+
+      <figure class="logo-container">
+        <img src="{{logosPath}}converted-{{league.leagueCode}}.png" />
+        <figcaption>
+          <h3><span>{{league.leagueName}}</span></h3>
+        </figcaption>
+        <a [routerLink]="['/leagues/', league.leagueId, 'fixtures']">
+          <!--{{league}}-->
         </a>
-    </p>
+      </figure>
+
+
+
+    </div>
+
   </div>
+
 
 </div>

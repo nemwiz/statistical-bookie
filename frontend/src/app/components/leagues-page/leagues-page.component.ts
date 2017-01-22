@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {League} from '../../interfaces/league';
+import {LeaguesService} from '../../services/leagues.service';
+import * as lodash from 'lodash';
 
 @Component({
   selector: 'leagues-page',
@@ -7,30 +10,36 @@ import {Component, OnInit} from '@angular/core';
 })
 export class LeaguesPageComponent implements OnInit {
 
-  leagues = [
-    {
-      countryName: 'United Kingdom',
-      countryFlagUrl: '',
-      leagues: [
-        'Premier league',
-        'Championship',
-        'League One'
-      ]
-    },
-    {
-      countryName: 'Spain',
-      countryFlagUrl: '',
-      leagues: [
-        'La Liga',
-        'La Liga 2'
-      ]
-    }
-  ];
+  flagsPath: string = '../../../assets/images/flags/';
+  logosPath: string = '../../../assets/images/logos/';
+  leagues: League[] = [];
+  leaguesGroupedByCountry: any = [];
 
-  constructor() {
+  constructor(private leagueService: LeaguesService) {
   }
 
   ngOnInit() {
+
+    this.leagueService
+      .getLeaguesWithCountries()
+      .subscribe(leagues => {
+        this.leagues = leagues;
+        this.groupLeaguesByCountry(leagues);
+      });
+
+  }
+
+  private groupLeaguesByCountry(leagues: League[]) {
+
+    let groupByCountry = lodash.groupBy(leagues, 'countryName');
+
+   for (let property in groupByCountry) {
+     if (groupByCountry.hasOwnProperty(property)) {
+       this.leaguesGroupedByCountry.push({countryName: property, leagues: groupByCountry[property]})
+       console.log(property, groupByCountry[property]);
+     }
+   }
+
   }
 
 }

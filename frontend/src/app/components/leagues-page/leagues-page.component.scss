@@ -1,0 +1,124 @@
+@import '../../../assets/variables.scss';
+
+.country-and-leagues-container {
+  text-align: center;
+  margin-top: 10px;
+  border-top: 1px solid darkblue;
+
+  .country-flag {
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+  }
+
+  .country-name {
+    font-size: 18px;
+    padding: 10px;
+    display: inline-block;
+  }
+
+  .league-container {
+    display: inline-block;
+    float: none;
+    height: 50px;
+
+    .logo-container {
+      background-color: #222222;
+      color: #ffffff;
+      display: inline-block;
+      font-family: 'Monsterrat', sans-serif;
+      font-size: 16px;
+      margin: 8px;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+      width: 100%;
+    }
+
+    .logo-container * {
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-transition: all 0.45s ease;
+      transition: all 0.45s ease;
+    }
+
+    .logo-container:after {
+      background-color: #B46E3C;
+      bottom: 0;
+      content: '';
+      height: 0%;
+      right: 0;
+      position: absolute;
+      width: 10px;
+      -webkit-transition: all 0.45s ease;
+      transition: all 0.45s ease;
+    }
+
+    .logo-container img {
+      vertical-align: top;
+      max-width: 100%;
+      backface-visibility: hidden;
+    }
+
+    .logo-container figcaption {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      align-items: center;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1em;
+      opacity: 0;
+    }
+
+    .logo-container h3 {
+      font-size: 1em;
+      font-weight: 400;
+      letter-spacing: 1px;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .logo-container h3 span {
+      display: block;
+      font-weight: 700;
+    }
+
+    .logo-container a {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+    }
+
+    .logo-container:hover > img,
+    .logo-container.hover > img {
+      opacity: 0.1;
+    }
+
+    .logo-container:hover:after,
+    .logo-container.hover:after {
+      height: 100%;
+    }
+
+    .logo-container:hover figcaption,
+    .logo-container.hover figcaption {
+      opacity: 1;
+    }
+
+  }
+
+  a {
+    text-decoration: none;
+    color: #0d3349;
+  }
+
+}
+
+
