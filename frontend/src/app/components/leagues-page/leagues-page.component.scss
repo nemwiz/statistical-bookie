@@ -23,8 +23,7 @@
     height: 50px;
 
     .logo-container {
-      background-color: #222222;
-      color: #ffffff;
+      color: #000000;
       display: inline-block;
       font-family: 'Monsterrat', sans-serif;
       font-size: 16px;
@@ -32,7 +31,7 @@
       overflow: hidden;
       position: relative;
       text-align: center;
-      width: 100%;
+      width: 80%;
     }
 
     .logo-container * {
@@ -58,6 +57,7 @@
       vertical-align: top;
       max-width: 100%;
       backface-visibility: hidden;
+      height:80px;
     }
 
     .logo-container figcaption {
@@ -119,6 +119,37 @@
     color: #0d3349;
   }
 
+}
+
+.league-search {
+  position:relative;
+}
+
+.league-search-input {
+  background: #2b303b;
+  border: none;
+  font-size: 10pt;
+  color: #FFFFFF;
+  padding-left: 45px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  height:35px;
+  width: 260px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+.league-search-input:focus {
+  width: 100%;
+}
+
+.icon{
+  position: absolute;
+  top: 15%;
+  margin-left: 17px;
+  z-index: 1;
+  color: #FFFFFF;
 }
 
 

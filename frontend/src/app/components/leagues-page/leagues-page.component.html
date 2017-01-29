@@ -1,4 +1,19 @@
-<div *ngFor="let country of leaguesGroupedByCountry">
+
+<form [formGroup]="leaguesSearchForm"
+      (ngSubmit)="onSubmit(leaguesSearchForm.value)"
+      class="ui form">
+  <div class="league-search">
+    <!--<label for="leagueSearchInput">Seach</label>-->
+    <span class="icon"><i class="fa fa-search"></i></span>
+    <input class="league-search-input"
+           type="text"
+           id="leagueSearchInput"
+           placeholder="Search"
+           [formControl]="leaguesSearchForm.controls['leagueSearchInput']">
+  </div>
+</form>
+
+<div *ngFor="let country of visibleLeagues">
 
   <div class="country-and-leagues-container">
     <div class="col-xs-12">
