@@ -13,6 +13,7 @@ import io.dropwizard.setup.Environment;
 import resource.FixturesResource;
 import resource.LeaguesResource;
 import resource.NumberOfGoalsPerMatchResource;
+import scrapper.HistoricalMatchesScrapper;
 import scrapper.LiveScoreScrapper;
 
 public class StatsBookie extends Application<StatsBookieConfiguration> {

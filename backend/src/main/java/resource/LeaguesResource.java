@@ -32,6 +32,13 @@ public class LeaguesResource {
         return this.leaguesController.getAllLeagues();
     }
 
+    @GET
+    @Timed
+    @Path("{leagueId}/leaguetable")
+    public String getLeagueTable() {
+        return this.leaguesController.getLeagueTable();
+    }
+
     @Path("{leagueId}/fixtures/upcoming")
     @GET
     @Timed

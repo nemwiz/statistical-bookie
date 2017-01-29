@@ -16,4 +16,8 @@ public class LeaguesController {
     public List<League> getAllLeagues() {
         return this.leaguesDAO.getAllLeagues();
     }
+
+    public String getLeagueTable() {
+        return "League table";
+    }
 }

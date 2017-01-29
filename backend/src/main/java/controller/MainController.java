@@ -18,6 +18,7 @@ public class MainController {
     private NumberOfGoalsAndWinsAggregator numberOfGoalsAndWinsAggregator;
     private HalfTimeWithMoreGoalsAggregator halfTimeWithMoreGoalsAggregator;
     private ExactResultAggregator exactResultAggregator;
+    private LeagueTableAggregator leagueTableAggregator;
 
     public MainController(MatchDAO matchDAO) {
         this.matchDAO = matchDAO;
@@ -26,6 +27,7 @@ public class MainController {
     public List<Match> getMatches(String homeTeamName) {
 
         List<Match> matches = this.matchDAO.getMatchesByTeamName(homeTeamName);
+        List<Match> currentSeasonMatches = this.matchDAO.getAllMatchesForCurrentSeason();
 
         numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
         teamGoalsAggregator = new TeamGoalsAggregator(matches);
@@ -34,6 +36,7 @@ public class MainController {
         numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
         halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator(matches);
         exactResultAggregator = new ExactResultAggregator(matches);
+        leagueTableAggregator = new LeagueTableAggregator(currentSeasonMatches);
 
         NumberOfGoalsMetaView numberOfGoalsMetaView = numberOfGoalsAggregator.getAggregatedCount();
         TeamGoalsView teamGoalsView = teamGoalsAggregator.getAggregatedCount();
@@ -42,6 +45,7 @@ public class MainController {
         NumberOfGoalsAndWinsView numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
         HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();
         Map<String, Long> exactResultsView = exactResultAggregator.aggregate();
+        leagueTableAggregator.aggregate();
 
         System.out.println(numberOfGoalsMetaView);
         System.out.println(teamGoalsView);

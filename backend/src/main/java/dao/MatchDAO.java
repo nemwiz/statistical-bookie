@@ -43,17 +43,25 @@ public class MatchDAO {
         this.datastore.getDatastore().save(databaseMatches);
     }
 
-    public boolean deleteMatchesForCurrentSeason(String divisionCode) {
+    public boolean deleteMatchesForCurrentSeason(String leagueCode) {
 
         Query<DatabaseMatch> removeMatchesQuery = this.datastore.getDatastore()
                 .createQuery(DatabaseMatch.class);
 
                 removeMatchesQuery.and(
-                        removeMatchesQuery.criteria("divisionCode").equal(divisionCode),
+                        removeMatchesQuery.criteria("leagueCode").equal(leagueCode),
                         removeMatchesQuery.criteria("seasonYear").equal(ScrapperHelper.getCurrentSeasonYearWithDash(LocalDate.now()))
                         );
 
         return this.datastore.getDatastore().delete(removeMatchesQuery).wasAcknowledged();
+    }
+
+    public List<Match> getAllMatchesForCurrentSeason() {
+
+        return this.datastore.getDatastore().createQuery(Match.class)
+                .field("seasonYear").contains(ScrapperHelper.getCurrentSeasonYearWithDash(LocalDate.now()))
+                .asList();
+
     }
 
 }
