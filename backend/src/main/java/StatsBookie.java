@@ -52,8 +52,8 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
 //        HistoricalMatchesScrapper historicalMatchesScrapper = new HistoricalMatchesScrapper(matchDAO);
 //        historicalMatchesScrapper.scrapeMatchesFromCsvFilesOnFootballDataSite();
 
-//        LiveScoreScrapper liveScoreScrapper = new LiveScoreScrapper();
-//        liveScoreScrapper.main();
+        LiveScoreScrapper liveScoreScrapper = new LiveScoreScrapper();
+        liveScoreScrapper.main();
 
         final MainController mainController = new MainController(matchDAO);
         final FixturesController fixturesController = new FixturesController(fixturesDAO);
