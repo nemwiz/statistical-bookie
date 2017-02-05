@@ -1,0 +1,8 @@
+mongo:
+  seeds:
+  - host: localhost
+    port: 28008
+  database: stats
+#  credentials:
+#    userName: example
+#    password: example

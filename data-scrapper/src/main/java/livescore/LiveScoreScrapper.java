@@ -1,3 +1,5 @@
+package livescore;
+
 import com.ui4j.api.browser.Page;
 import model.GoalDetails;
 import org.jsoup.Jsoup;

@@ -1,23 +1,40 @@
-import com.mongodb.MongoClient;
+import com.meltmedia.dropwizard.mongo.MongoBundle;
 import dao.MatchDAO;
 import dao.MorphiaDatastore;
+import healthchecks.DatabaseHealthCheck;
+import io.dropwizard.Application;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
 
-public class DataScrapperApp {
+public class DataScrapperApp extends Application<DataScrapperConfiguration>{
 
-    private static String MONGO_DB_HOST = "localhost";
-    private static int MONGO_DB_PORT = 28008;
-    private static String MONGO_DB_NAME = "stats";
+    private static String APP_NAME = "data-scrapper-app";
+    private MongoBundle<DataScrapperConfiguration> mongoBundle;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        new DataScrapperApp().run(args);
+    }
 
-        MongoClient mongoClient = new MongoClient(MONGO_DB_HOST, MONGO_DB_PORT);
-        MorphiaDatastore morphiaDatastore = new MorphiaDatastore(mongoClient, MONGO_DB_NAME);
+    @Override
+    public String getName() {
+        return APP_NAME;
+    }
+
+    @Override
+    public void initialize(Bootstrap<DataScrapperConfiguration> bootstrap) {
+        bootstrap.addBundle(mongoBundle = MongoBundle.<DataScrapperConfiguration>builder()
+                .withConfiguration(DataScrapperConfiguration::getMongo)
+                .build());
+    }
+
+    public void run(DataScrapperConfiguration dataScrapperConfiguration, Environment environment) throws Exception {
+
+        MorphiaDatastore morphiaDatastore = new MorphiaDatastore(mongoBundle.getClient(), mongoBundle.getDB().getName());
 
         MatchDAO matchDAO = new MatchDAO(morphiaDatastore);
 
-        LiveScoreScrapper liveScoreScrapper = new LiveScoreScrapper();
-        liveScoreScrapper.main();
+        final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(morphiaDatastore.getDatastore());
+        environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
 
     }
-
 }
