@@ -1,12 +1,12 @@
 import org.junit.Before;
 import org.junit.Test;
-import scrapper.csv.helper.ScrapperHelper;
+import helper.SeasonsAndDates;
 
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
 
-public class ScrapperHelperTest {
+public class SeasonsAndDatesTest {
 
     private String currentSeason;
     private String nextSeason;
@@ -25,7 +25,7 @@ public class ScrapperHelperTest {
     public void aSeasonYearStringWithoutSlashIsReturnedDependingOnWhichMonthCurrentlyIs() {
 
         String expectedResult;
-        String actualResult = ScrapperHelper.getCurrentSeasonYearShortFormat();
+        String actualResult = SeasonsAndDates.getCurrentSeasonYearShortFormat();
 
         if (LocalDate.now().getMonthValue() > MONTH_OF_JULY) {
             expectedResult = currentSeason.substring(2, 4) + nextSeason.substring(2, 4);
@@ -40,7 +40,7 @@ public class ScrapperHelperTest {
     public void aSeasonYearStringWithSlashIsReturnedDependingOnWhichMonthCurrentlyIs() {
 
         String expectedResult;
-        String actualResult = ScrapperHelper.getCurrentSeasonYearWithDash(LocalDate.now());
+        String actualResult = SeasonsAndDates.getCurrentSeasonYearWithDash(LocalDate.now());
 
         if (LocalDate.now().getMonthValue() > MONTH_OF_JULY) {
             expectedResult = currentSeason + "/" + nextSeason;

@@ -1,10 +1,10 @@
-package scrapper.csv.helper;
+package helper;
 
 import org.joda.time.DateTime;
 
 import java.time.LocalDate;
 
-public class ScrapperHelper {
+public class SeasonsAndDates {
 
     private static final int MONTH_OF_JULY = 7;
 
