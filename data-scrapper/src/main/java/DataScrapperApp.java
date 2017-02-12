@@ -5,6 +5,7 @@ import healthchecks.DatabaseHealthCheck;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import livescore.LiveScoreScrapper;
 
 public class DataScrapperApp extends Application<DataScrapperConfiguration>{
 
@@ -35,6 +36,9 @@ public class DataScrapperApp extends Application<DataScrapperConfiguration>{
 
         final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(morphiaDatastore.getDatastore());
         environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
+
+        LiveScoreScrapper liveScoreScrapper = new LiveScoreScrapper();
+        liveScoreScrapper.main();
 
     }
 }

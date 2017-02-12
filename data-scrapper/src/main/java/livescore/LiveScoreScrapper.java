@@ -1,10 +1,8 @@
 package livescore;
 
 import com.ui4j.api.browser.Page;
-import model.GoalDetails;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +12,10 @@ import static com.ui4j.api.browser.BrowserFactory.getWebKit;
 public class LiveScoreScrapper {
 
     private static String BASE_URL = "http://www.livescore.com";
+    private static String DATA_TYPE = "data-type";
+    private static String HOME_TEAM = "H";
+    private static String AWAY_TEAM = "A";
+    private static String DRAW = "D";
 
     public void main() {
         try (Page page = getWebKit().navigate("http://www.livescore.com/soccer/england/premier-league/")) {
@@ -24,29 +26,76 @@ public class LiveScoreScrapper {
 
             List<String> individualMatchUrls = new ArrayList<>();
 
-            document.getElementsByAttributeValue("data-type", "container").
-                    forEach(element -> element.getElementsByTag("a")
-                            .forEach(aTag -> individualMatchUrls.add(BASE_URL + aTag.getElementsByClass("scorelink").attr("href"))));
+//            document.getElementsByAttributeValue(DATA_TYPE, "container").
+//                    forEach(element -> element.getElementsByTag("a")
+//                            .forEach(aTag -> individualMatchUrls.add(BASE_URL + aTag.getElementsByClass("scorelink").attr("href"))));
+//
+//            individualMatchUrls.remove(BASE_URL);
+//            individualMatchUrls.remove(BASE_URL);
+//
+//            System.out.println("individualMatchUrls = " + individualMatchUrls);
 
-            individualMatchUrls.remove(BASE_URL);
+            individualMatchUrls.add("http://www.livescore.com/soccer/england/premier-league/stoke-city-vs-crystal-palace/1-2252428/");
 
-            Page detailPage = getWebKit().navigate(individualMatchUrls.get(2));
+            individualMatchUrls.forEach(url -> {
 
-            String detailPageHtml = detailPage.getDocument().getBody().getInnerHTML();
+                System.out.println("url = " + url);
 
-            System.out.println("detailPageHtml = " + detailPageHtml);
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-            Document detailDocument = Jsoup.parse(detailPageHtml);
+                Page detailPage = getWebKit().navigate(url);
 
-            System.out.println("home team = " + detailDocument.getElementsByAttributeValue("data-type", "home-team").text());
-            System.out.println("away team = " + detailDocument.getElementsByAttributeValue("data-type", "away-team").text());
-            System.out.println("homeTeamScore = " + detailDocument.getElementsByAttributeValue("data-type", "score").get(0).getElementsByAttributeValue("data-type", "home").text());
-            System.out.println("awayTeamScore = " + detailDocument.getElementsByAttributeValue("data-type", "score").get(0).getElementsByAttributeValue("data-type", "away").text());
-            System.out.println("header score = " + detailDocument.getElementsByAttributeValue("data-type", "header-score").get(0).getElementsByAttributeValue("data-type", "score").text());
+                String detailPageHtml = detailPage.getDocument().getBody().getInnerHTML();
 
-            detailDocument.getElementsByAttributeValue("data-type", "incident")
-                    .forEach(element -> incidentToMatchDetail(element));
+                System.out.println("detailPageHtml = " + detailPageHtml);
 
+                Document detailDocument = Jsoup.parse(detailPageHtml);
+
+                String homeTeam = detailDocument.getElementsByAttributeValue(DATA_TYPE, "home-team").text();
+                String awayTeam = detailDocument.getElementsByAttributeValue(DATA_TYPE, "away-team").text();
+
+                int homeTeamGoals = Integer.parseInt(detailDocument.getElementsByAttributeValue(DATA_TYPE, "score").get(0).getElementsByAttributeValue(DATA_TYPE, "home").text());
+                int awayTeamGoals = Integer.parseInt(detailDocument.getElementsByAttributeValue(DATA_TYPE, "score").get(0).getElementsByAttributeValue(DATA_TYPE, "away").text());
+
+                String finalOutcome = determineOutcome(homeTeamGoals, awayTeamGoals);
+
+                String halfTimeScore = detailDocument.getElementsByAttributeValue(DATA_TYPE, "header-score").get(0).getElementsByAttributeValue(DATA_TYPE, "score").text();
+
+                int homeTeamHalfTimeGoals = 0;
+                int awayTeamHalfTimeGoals = 0;
+                String halfTimeOutCome = DRAW;
+
+                if (halfTimeScore.length() > 2) {
+
+                    String halfTimeScoreFormatted = formatHalfTimeScoreString(halfTimeScore);
+
+                    homeTeamHalfTimeGoals = Integer.parseInt(halfTimeScoreFormatted.substring(0,1));
+                    awayTeamHalfTimeGoals = Integer.parseInt(halfTimeScoreFormatted.substring(halfTimeScoreFormatted.length() - 1, halfTimeScoreFormatted.length()));
+                    halfTimeOutCome = determineOutcome(homeTeamHalfTimeGoals, awayTeamHalfTimeGoals);
+                }
+
+
+                System.out.println("homeTeam = " + homeTeam);
+                System.out.println("awayTeam = " + awayTeam);
+                System.out.println("homeTeamGoals = " + homeTeamGoals);
+                System.out.println("awayTeamGoals = " + awayTeamGoals);
+                System.out.println("finalOutcome = " + finalOutcome);
+                System.out.println("halfTimeScore = " + halfTimeScore);
+                System.out.println("homeTeamHalfTimeGoals = " + homeTeamHalfTimeGoals);
+                System.out.println("awayTeamHalfTimeGoals = " + awayTeamHalfTimeGoals);
+                System.out.println("halfTimeOutCome = " + halfTimeOutCome);
+
+                MatchDetailsScrapper matchDetailsScrapper = new MatchDetailsScrapper();
+                matchDetailsScrapper.getMatchDetails(detailDocument);
+
+                System.out.println(" ");
+
+
+            });
 
 
         }
@@ -54,26 +103,12 @@ public class LiveScoreScrapper {
 
     }
 
-    private void incidentToMatchDetail(Element element) {
-
-        List<GoalDetails> goalDetails = new ArrayList<>();
-
-        int minuteOccured = Integer.parseInt(element.getElementsByAttributeValue("data-type", "time").text().replace("'",""));
-        String occuredByTeam = occuredByTeam(element);
-
-        if (isMatchDetailAGoal(element)) {
-        }
-
-        System.out.println("minute occured = " + element.getElementsByAttributeValue("data-type", "time").text().replace("'",""));
-        System.out.println("isOccuredByHomeTeam = " + (element.getElementsByAttributeValue("data-type", "home").get(0).getElementsByAttributeValue("data-type", "player-name").text().length() > 2));
-
+    private String determineOutcome(int homeTeamGoals, int awayTeamGoals) {
+        return homeTeamGoals > awayTeamGoals ? HOME_TEAM : awayTeamGoals > homeTeamGoals ? AWAY_TEAM : DRAW;
     }
 
-    private boolean isMatchDetailAGoal(Element element) {
-        return element.getElementsByAttributeValue("data-type", "middle").get(0).getElementsByAttributeValue("data-type", "score").text().length() > 2;
+    private String formatHalfTimeScoreString(String halfTimeScore) {
+        return halfTimeScore.replaceAll("[^0-9]+", " ").trim();
     }
 
-    private String occuredByTeam(Element element) {
-        return element.getElementsByAttributeValue("data-type", "home").get(0).getElementsByAttributeValue("data-type", "player-name").text().length() > 2 ? "H" : "A";
-    }
 }
