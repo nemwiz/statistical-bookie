@@ -1,4 +1,5 @@
 import com.meltmedia.dropwizard.mongo.MongoBundle;
+import dao.LeaguesDAO;
 import dao.MatchDAO;
 import dao.MorphiaDatastore;
 import healthchecks.DatabaseHealthCheck;
@@ -33,12 +34,13 @@ public class DataScrapperApp extends Application<DataScrapperConfiguration>{
         MorphiaDatastore morphiaDatastore = new MorphiaDatastore(mongoBundle.getClient(), mongoBundle.getDB().getName());
 
         MatchDAO matchDAO = new MatchDAO(morphiaDatastore);
+        LeaguesDAO leaguesDAO = new LeaguesDAO(morphiaDatastore);
 
         final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(morphiaDatastore.getDatastore());
         environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
 
         LiveScoreScrapper liveScoreScrapper = new LiveScoreScrapper();
-        liveScoreScrapper.main();
+        liveScoreScrapper.scrape();
 
     }
 }
