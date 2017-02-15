@@ -1,6 +1,10 @@
 package livescore;
 
+import com.ui4j.api.browser.BrowserEngine;
+import com.ui4j.api.browser.BrowserFactory;
 import com.ui4j.api.browser.Page;
+import dao.LeaguesDAO;
+import dao.model.League;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -12,36 +16,86 @@ import static com.ui4j.api.browser.BrowserFactory.getWebKit;
 public class LiveScoreScrapper {
 
     private static String BASE_URL = "http://www.livescore.com";
+    private static String BASE_URL_SOCCER = BASE_URL + "/soccer/";
     private static String DATA_TYPE = "data-type";
     private static String HOME_TEAM = "H";
     private static String AWAY_TEAM = "A";
     private static String DRAW = "D";
 
-    public void main() {
-        try (Page page = getWebKit().navigate("http://www.livescore.com/soccer/england/premier-league/")) {
+    private LeaguesDAO leaguesDAO;
 
-            String currentRound = getCurrentRound(page);
+    private BrowserEngine webkit;
+
+    public LiveScoreScrapper(LeaguesDAO leaguesDAO) {
+        this.leaguesDAO = leaguesDAO;
+    }
+
+    public void scrape() {
+
+        this.webkit = BrowserFactory.getWebKit();
+
+        List<League> leagues = this.leaguesDAO.getAllLeagues();
+
+        leagues.forEach(league -> scrapeLeague(
+                league.getLeagueCode(),
+                league.getLeagueName(),
+                league.getCountryName(),
+                league.getLiveScoreLink()));
+
+//        scrapeLeague(null, null, null, null);
+
+        this.webkit.shutdown();
+
+    }
+
+    public void scrapeLeague(String leagueCode, String leagueName, String countryName, String liveScoreLink) {
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Scraping league = " + leagueName);
+
+        String liveScoreLeagueLinkFull = BASE_URL_SOCCER + liveScoreLink;
+//        String liveScoreLeagueLinkFull = BASE_URL_SOCCER + "england/championship";
+
+
+        try (Page leaguePage = this.webkit.navigate(liveScoreLeagueLinkFull)) {
+
+            try {
+                // wait until redirect
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            // TODO get current round and navigate to round page
+            int currentRound = getCurrentRound(leaguePage);
             System.out.println("currentRound = " + currentRound);
 
-            String liveScoreCurrentLeaguePage = page.getDocument().queryAll(".content").toString();
+            String liveScoreCurrentLeaguePage = leaguePage.getDocument().queryAll(".content").toString();
             Document liveScorePageWithMatchesForCurrentRound = Jsoup.parse(liveScoreCurrentLeaguePage);
 
             List<String> individualMatchUrls = getUrlForEachMatch(liveScorePageWithMatchesForCurrentRound);
             System.out.println("individualMatchUrls = " + individualMatchUrls);
 
-//            scrapeIndividualMatch(individualMatchUrls);
+//            scrapeIndividualMatch(individualMatchUrls, currentRound);
+
+            leaguePage.close();
 
         }
 
 
     }
 
-    private String getCurrentRound(Page page) {
+    private int getCurrentRound(Page page) {
         page.getDocument().query(".cal-sel").get().getChildren().get(0).click();
 
         Document roundPicker = Jsoup.parse(page.getDocument().query(".abs").toString());
 
-        return roundPicker.getElementsByClass("item b").get(0).getElementsByTag("a").attr("data-id");
+        return Integer.parseInt(roundPicker.getElementsByClass("item b").get(0).getElementsByTag("a").attr("data-id"));
     }
 
     private List<String> getUrlForEachMatch(Document document) {
@@ -55,7 +109,7 @@ public class LiveScoreScrapper {
         return individualMatchUrls;
     }
 
-    private void scrapeIndividualMatch(List<String> individualMatchUrls) {
+    private void scrapeIndividualMatch(List<String> individualMatchUrls, int currentRound) {
         individualMatchUrls.forEach(url -> {
 
             System.out.println("url = " + url);

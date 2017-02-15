@@ -39,7 +39,7 @@ public class DataScrapperApp extends Application<DataScrapperConfiguration>{
         final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(morphiaDatastore.getDatastore());
         environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
 
-        LiveScoreScrapper liveScoreScrapper = new LiveScoreScrapper();
+        LiveScoreScrapper liveScoreScrapper = new LiveScoreScrapper(leaguesDAO);
         liveScoreScrapper.scrape();
 
     }
