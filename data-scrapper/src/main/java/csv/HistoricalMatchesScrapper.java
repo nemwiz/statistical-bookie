@@ -40,8 +40,10 @@ public class HistoricalMatchesScrapper {
 
         allMatchesParsedFromCsv.stream()
                 .map(CsvMatch::getDivisionName)
-                .distinct()
-                .forEach(divisionName -> this.matchDAO.deleteMatchesForCurrentSeason(divisionName));
+                .distinct();
+
+        // TODO Refactor this, matches shouldn't be deleted for fallback reasons
+//                .forEach(divisionName -> this.matchDAO.deleteMatchesForCurrentSeason(divisionName));
 
         List<DatabaseMatch> databaseMatches = MatchMapper.mapCsvMatchToDatabaseMatch(allMatchesParsedFromCsv);
 
