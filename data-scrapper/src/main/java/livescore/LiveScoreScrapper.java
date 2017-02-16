@@ -3,11 +3,17 @@ package livescore;
 import com.ui4j.api.browser.BrowserEngine;
 import com.ui4j.api.browser.BrowserFactory;
 import com.ui4j.api.browser.Page;
+import csv.helper.MilisecondsRandomizer;
+import csv.helper.ScrapperHelper;
+import csv.model.DatabaseMatch;
 import dao.LeaguesDAO;
+import dao.MatchDAO;
 import dao.model.League;
+import livescore.model.LiveScoreMatchDetail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,51 +21,60 @@ import static com.ui4j.api.browser.BrowserFactory.getWebKit;
 
 public class LiveScoreScrapper {
 
-    private static String BASE_URL = "http://www.livescore.com";
-    private static String BASE_URL_SOCCER = BASE_URL + "/soccer/";
-    private static String DATA_TYPE = "data-type";
-    private static String HOME_TEAM = "H";
-    private static String AWAY_TEAM = "A";
-    private static String DRAW = "D";
+    private static final String ROUND_INFIX = "#/round-";
+    private static final String BASE_URL = "http://www.livescore.com";
+    private static final String BASE_URL_SOCCER = BASE_URL + "/soccer/";
+    private static final String DATA_TYPE = "data-type";
+    private static final String HOME_TEAM = "H";
+    private static final String AWAY_TEAM = "A";
+    private static final String DRAW = "D";
 
+    private MatchDetailsScrapper matchDetailsScrapper;
     private LeaguesDAO leaguesDAO;
+    private MatchDAO matchDAO;
+    private MilisecondsRandomizer milisecondsRandomizer;
 
     private BrowserEngine webkit;
 
-    public LiveScoreScrapper(LeaguesDAO leaguesDAO) {
+    public LiveScoreScrapper(LeaguesDAO leaguesDAO, MatchDAO matchDAO) {
         this.leaguesDAO = leaguesDAO;
+        this.matchDAO = matchDAO;
+        this.matchDetailsScrapper = new MatchDetailsScrapper();
+        this.milisecondsRandomizer = new MilisecondsRandomizer(15000, 25000);
     }
 
-    public void scrape() {
+    public void scrape(boolean scrapeFromBeginningOfSeason) {
 
         this.webkit = BrowserFactory.getWebKit();
 
         List<League> leagues = this.leaguesDAO.getAllLeagues();
 
-        leagues.forEach(league -> scrapeLeague(
-                league.getLeagueCode(),
-                league.getLeagueName(),
-                league.getCountryName(),
-                league.getLiveScoreLink()));
+        leagues.forEach(league ->
+                scrapeLeague(
+                        league.getLeagueCode(),
+                        league.getLeagueName(),
+                        league.getCountryName(),
+                        league.getLiveScoreLink(),
+                        scrapeFromBeginningOfSeason));
 
-//        scrapeLeague(null, null, null, null);
+//        scrapeLeague("G1", "Greece Super league", "Greece", "greece/super-league/");
 
         this.webkit.shutdown();
 
     }
 
-    public void scrapeLeague(String leagueCode, String leagueName, String countryName, String liveScoreLink) {
+    private void scrapeLeague(String leagueCode, String leagueName, String countryName, String liveScoreLink, boolean scrapeFromBeginningOfSeason) {
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(this.milisecondsRandomizer.randomize());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        System.out.println("Scraping league = " + leagueName);
+        System.out.println("Scraping league = " + countryName + " " + leagueName);
 
         String liveScoreLeagueLinkFull = BASE_URL_SOCCER + liveScoreLink;
-//        String liveScoreLeagueLinkFull = BASE_URL_SOCCER + "england/championship";
+//        String liveScoreLeagueLinkFull = BASE_URL_SOCCER + "greece/super-league/";
 
 
         try (Page leaguePage = this.webkit.navigate(liveScoreLeagueLinkFull)) {
@@ -71,51 +86,59 @@ public class LiveScoreScrapper {
                 throw new RuntimeException(e);
             }
 
-            // TODO get current round and navigate to round page
             int currentRound = getCurrentRound(leaguePage);
             System.out.println("currentRound = " + currentRound);
+            int previousRound = currentRound - 1;
 
-            String liveScoreCurrentLeaguePage = leaguePage.getDocument().queryAll(".content").toString();
+            if (scrapeFromBeginningOfSeason) {
+                for (int i = 1; i < currentRound; i++) {
+                    navigateToRoundPage(liveScoreLeagueLinkFull, previousRound, leagueCode, leagueName, countryName);
+                }
+            } else {
+                navigateToRoundPage(liveScoreLeagueLinkFull, previousRound, leagueCode, leagueName, countryName);
+            }
+
+        }
+
+    }
+
+    private void navigateToRoundPage(String liveScoreLeagueLinkFull, int previousRound, String leagueCode, String leagueName, String countryName) {
+        String liveScoreCurrentLeaguePage = "";
+
+        String fullUrl = liveScoreLeagueLinkFull + ROUND_INFIX + previousRound;
+        System.out.println("fullUrl = " + fullUrl);
+
+        try (Page currentRoundPage = this.webkit.navigate(fullUrl)) {
+            try {
+                // wait until redirect
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            liveScoreCurrentLeaguePage = currentRoundPage.getDocument().queryAll(".content").toString();
             Document liveScorePageWithMatchesForCurrentRound = Jsoup.parse(liveScoreCurrentLeaguePage);
 
             List<String> individualMatchUrls = getUrlForEachMatch(liveScorePageWithMatchesForCurrentRound);
             System.out.println("individualMatchUrls = " + individualMatchUrls);
+            System.out.println("count = " + individualMatchUrls.size());
 
-//            scrapeIndividualMatch(individualMatchUrls, currentRound);
+            List<DatabaseMatch> databaseMatches = scrapeIndividualMatch(individualMatchUrls, previousRound, leagueCode, leagueName, countryName);
 
-            leaguePage.close();
-
+            this.matchDAO.insertMatchesIntoDatabase(databaseMatches);
         }
-
-
     }
 
-    private int getCurrentRound(Page page) {
-        page.getDocument().query(".cal-sel").get().getChildren().get(0).click();
+    private List<DatabaseMatch> scrapeIndividualMatch(List<String> individualMatchUrls, int currentRound, String leagueCode, String leagueName, String countryName) {
 
-        Document roundPicker = Jsoup.parse(page.getDocument().query(".abs").toString());
+        List<DatabaseMatch> databaseMatches = new ArrayList<>();
 
-        return Integer.parseInt(roundPicker.getElementsByClass("item b").get(0).getElementsByTag("a").attr("data-id"));
-    }
-
-    private List<String> getUrlForEachMatch(Document document) {
-
-        List<String> individualMatchUrls = new ArrayList<>();
-
-        document.getElementsByAttributeValue(DATA_TYPE, "container").
-                forEach(element -> element.getElementsByAttributeValue(DATA_TYPE, "evt")
-                        .forEach(aTag -> individualMatchUrls.add(BASE_URL + aTag.getElementsByClass("scorelink").attr("href"))));
-
-        return individualMatchUrls;
-    }
-
-    private void scrapeIndividualMatch(List<String> individualMatchUrls, int currentRound) {
         individualMatchUrls.forEach(url -> {
 
             System.out.println("url = " + url);
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(this.milisecondsRandomizer.randomize());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -127,6 +150,8 @@ public class LiveScoreScrapper {
             System.out.println("detailPageHtml = " + detailPageHtml);
 
             Document detailDocument = Jsoup.parse(detailPageHtml);
+
+            String seasonYear = ScrapperHelper.getCurrentSeasonYearWithDash(LocalDate.now());
 
             String homeTeam = detailDocument.getElementsByAttributeValue(DATA_TYPE, "home-team").text();
             String awayTeam = detailDocument.getElementsByAttributeValue(DATA_TYPE, "away-team").text();
@@ -151,7 +176,9 @@ public class LiveScoreScrapper {
                 halfTimeOutCome = determineOutcome(homeTeamHalfTimeGoals, awayTeamHalfTimeGoals);
             }
 
+            List<LiveScoreMatchDetail> matchDetails = this.matchDetailsScrapper.getMatchDetails(detailDocument);
 
+            System.out.println("seasonYear = " + seasonYear);
             System.out.println("homeTeam = " + homeTeam);
             System.out.println("awayTeam = " + awayTeam);
             System.out.println("homeTeamGoals = " + homeTeamGoals);
@@ -161,14 +188,49 @@ public class LiveScoreScrapper {
             System.out.println("homeTeamHalfTimeGoals = " + homeTeamHalfTimeGoals);
             System.out.println("awayTeamHalfTimeGoals = " + awayTeamHalfTimeGoals);
             System.out.println("halfTimeOutCome = " + halfTimeOutCome);
+            System.out.println("matchDetails = " + matchDetails);
 
-            MatchDetailsScrapper matchDetailsScrapper = new MatchDetailsScrapper();
-            matchDetailsScrapper.getMatchDetails(detailDocument);
+            DatabaseMatch databaseMatch = new DatabaseMatch(
+                    leagueCode,
+                    leagueName,
+                    countryName,
+                    currentRound,
+                    seasonYear,
+                    homeTeam,
+                    awayTeam,
+                    homeTeamGoals,
+                    awayTeamGoals,
+                    finalOutcome,
+                    homeTeamHalfTimeGoals,
+                    awayTeamHalfTimeGoals,
+                    halfTimeOutCome,
+                    matchDetails
+            );
 
-            System.out.println(" ");
-
+            databaseMatches.add(databaseMatch);
 
         });
+
+        return databaseMatches;
+    }
+
+    private int getCurrentRound(Page page) {
+        page.getDocument().query(".cal-sel").get().getChildren().get(0).click();
+
+        Document roundPicker = Jsoup.parse(page.getDocument().query(".abs").toString());
+
+        return Integer.parseInt(roundPicker.getElementsByClass("item b").get(0).getElementsByTag("a").attr("data-id"));
+    }
+
+    private List<String> getUrlForEachMatch(Document document) {
+
+        List<String> individualMatchUrls = new ArrayList<>();
+
+        document.getElementsByAttributeValue(DATA_TYPE, "container").
+                forEach(element -> element.getElementsByAttributeValue(DATA_TYPE, "evt")
+                        .forEach(aTag -> individualMatchUrls.add(BASE_URL + aTag.getElementsByClass("scorelink").attr("href"))));
+
+        return individualMatchUrls;
     }
 
     private String determineOutcome(int homeTeamGoals, int awayTeamGoals) {

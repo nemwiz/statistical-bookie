@@ -1,4 +1,5 @@
 import com.meltmedia.dropwizard.mongo.MongoBundle;
+import csv.HistoricalMatchesScrapper;
 import dao.LeaguesDAO;
 import dao.MatchDAO;
 import dao.MorphiaDatastore;
@@ -39,8 +40,12 @@ public class DataScrapperApp extends Application<DataScrapperConfiguration>{
         final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(morphiaDatastore.getDatastore());
         environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
 
-        LiveScoreScrapper liveScoreScrapper = new LiveScoreScrapper(leaguesDAO);
-        liveScoreScrapper.scrape();
+//        HistoricalMatchesScrapper historicalMatchesScrapper = new HistoricalMatchesScrapper(matchDAO, leaguesDAO);
+//        historicalMatchesScrapper.scrapeMatchesFromCsvFilesOnFootballDataSite();
+
+        LiveScoreScrapper liveScoreScrapper = new LiveScoreScrapper(leaguesDAO, matchDAO);
+        boolean scrapeFromBeginningOfSeason = true;
+        liveScoreScrapper.scrape(scrapeFromBeginningOfSeason);
 
     }
 }

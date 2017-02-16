@@ -1,8 +1,11 @@
 package csv.model;
 
+import livescore.model.LiveScoreMatchDetail;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
+
+import java.util.List;
 
 @Entity(value = "matches", noClassnameStored = true)
 public class DatabaseMatch {
@@ -12,6 +15,7 @@ public class DatabaseMatch {
     private String leagueCode;
     private String leagueName;
     private String countryName;
+    private int currentRound;
     private String date;
     private String seasonYear;
     private String homeTeam;
@@ -22,6 +26,7 @@ public class DatabaseMatch {
     private int homeTeamHalftimeGoals;
     private int awayTeamHalftimeGoals;
     private String halfTimeOutcome;
+    private List<LiveScoreMatchDetail> matchDetails;
 
     public DatabaseMatch() {
     }
@@ -42,6 +47,23 @@ public class DatabaseMatch {
         this.halfTimeOutcome = halfTimeOutcome;
     }
 
+    public DatabaseMatch(String leagueCode, String leagueName, String countryName, int currentRound, String seasonYear, String homeTeam, String awayTeam, int homeTeamGoals, int awayTeamGoals, String finalOutcome, int homeTeamHalftimeGoals, int awayTeamHalftimeGoals, String halfTimeOutcome, List<LiveScoreMatchDetail> matchDetails) {
+        this.leagueCode = leagueCode;
+        this.leagueName = leagueName;
+        this.countryName = countryName;
+        this.currentRound = currentRound;
+        this.seasonYear = seasonYear;
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.homeTeamGoals = homeTeamGoals;
+        this.awayTeamGoals = awayTeamGoals;
+        this.finalOutcome = finalOutcome;
+        this.homeTeamHalftimeGoals = homeTeamHalftimeGoals;
+        this.awayTeamHalftimeGoals = awayTeamHalftimeGoals;
+        this.halfTimeOutcome = halfTimeOutcome;
+        this.matchDetails = matchDetails;
+    }
+
     public ObjectId getId() {
         return id;
     }
@@ -56,6 +78,10 @@ public class DatabaseMatch {
 
     public String getCountryName() {
         return countryName;
+    }
+
+    public int getCurrentRound() {
+        return currentRound;
     }
 
     public String getDate() {
@@ -98,6 +124,10 @@ public class DatabaseMatch {
         return halfTimeOutcome;
     }
 
+    public List<LiveScoreMatchDetail> getMatchDetails() {
+        return matchDetails;
+    }
+
     @Override
     public String toString() {
         return "DatabaseMatch{" +
@@ -105,6 +135,7 @@ public class DatabaseMatch {
                 ", leagueCode='" + leagueCode + '\'' +
                 ", leagueName='" + leagueName + '\'' +
                 ", countryName='" + countryName + '\'' +
+                ", currentRound=" + currentRound +
                 ", date='" + date + '\'' +
                 ", seasonYear='" + seasonYear + '\'' +
                 ", homeTeam='" + homeTeam + '\'' +
@@ -115,6 +146,7 @@ public class DatabaseMatch {
                 ", homeTeamHalftimeGoals=" + homeTeamHalftimeGoals +
                 ", awayTeamHalftimeGoals=" + awayTeamHalftimeGoals +
                 ", halfTimeOutcome='" + halfTimeOutcome + '\'' +
+                ", matchDetails=" + matchDetails +
                 '}';
     }
 }

@@ -28,8 +28,6 @@ class MatchDetailsScrapper {
                 .filter(detailElement -> isCurrentElementAMatchDetailElement(detailElement))
                 .forEach(detailElement -> matchDetails.add(mapDetailsElementToMatchDetail(detailElement)));
 
-        System.out.println("matchDetails = " + matchDetails);
-
         return matchDetails;
 
     }
