@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 
 public class MatchMapper {
 
-    private static int MONTH_OF_JULY = 7;
-
     private MatchMapper() {
     }
 
@@ -41,6 +39,13 @@ public class MatchMapper {
     private static String getSeasonYearFromDate(String date) {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+
+        if (date.length() == 0 || date.equals("")) {
+            date = LocalDate.now().toString();
+        } else if (date.length() > 8) {
+            dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        }
+
         LocalDate parsedDate = LocalDate.parse(date, dateTimeFormatter);
 
         return ScrapperHelper.getCurrentSeasonYearWithDash(parsedDate);

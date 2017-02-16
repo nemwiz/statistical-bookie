@@ -6,7 +6,7 @@ public class CsvMatch {
 
     @Parsed(field = "Div")
     private String divisionName;
-    @Parsed(field = "Date")
+    @Parsed(field = "Date", defaultNullRead = "15/02/17")
     private String date;
     @Parsed(field = "HomeTeam")
     private String homeTeam;

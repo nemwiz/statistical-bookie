@@ -1,6 +1,5 @@
 package csv;
 
-import csv.helper.Countries;
 import csv.helper.ScrapperHelper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,63 +8,19 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class FootballDataScrapper {
 
     private Random random;
 
     private static final String FOOTBALL_DATA_MAIN_URL = "http://www.football-data.co.uk/";
-    private static final String FOOTBALL_DATA_HISTORY_URL = FOOTBALL_DATA_MAIN_URL + "data.php";
+    private static int MAX = 15000;
+    private static int MIN = 10000;
 
     public FootballDataScrapper() {
         this.random = new Random();
-    }
-
-    public List<String> getUrlsForEachCountry() {
-
-        List<String> countriesUrls = new ArrayList<>();
-
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Document historyDataHtml = Jsoup
-                    .connect(FOOTBALL_DATA_HISTORY_URL)
-                    .userAgent(getRandomUserAgent())
-                    .get();
-
-            Elements htmlElements = historyDataHtml.select("div.menus");
-
-            countriesUrls = htmlElements.stream()
-                    .filter(getAllElementsWithBreakTagAndText())
-                    .filter(isElementTextEqualToCountryName())
-                    .map(element -> element.getElementsByTag("a").attr("href"))
-                    .collect(Collectors.toList());
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return countriesUrls;
-    }
-
-    private Predicate<Element> isElementTextEqualToCountryName() {
-        return element -> Arrays.stream(Countries.values()).anyMatch(
-                countries -> countries.name().equals(element.getElementsByTag("b").text())
-        );
-    }
-
-    private Predicate<Element> getAllElementsWithBreakTagAndText() {
-        return element -> element.getElementsByTag("b").hasText();
     }
 
     public List<String> getUrlsToCsvFiles(List<String> countryUrls) {
@@ -75,7 +30,8 @@ public class FootballDataScrapper {
         countryUrls.forEach(url -> {
 
             try {
-                Thread.sleep(10000);
+                int sleepTime = this.random.nextInt((MAX - MIN) + 1000) + MIN;
+                Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

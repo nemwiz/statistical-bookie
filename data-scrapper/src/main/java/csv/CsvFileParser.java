@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import static java.lang.System.out;
 
@@ -19,6 +20,10 @@ public class CsvFileParser {
     private BeanListProcessor<CsvMatch> rowProcessor;
     private CsvParserSettings parserSettings;
     private CsvParser csvParser;
+    private Random random;
+
+    private static int MAX = 26000;
+    private static int MIN = 21000;
 
     public CsvFileParser() {
         this.rowProcessor = new BeanListProcessor<>(CsvMatch.class);
@@ -31,6 +36,7 @@ public class CsvFileParser {
             System.out.println("Error processing row: " + Arrays.toString(inputRow));
             System.out.println("Error details: column '" + error.getColumnName() + "' (index " + error.getColumnIndex() + ") has value '" + inputRow[error.getColumnIndex()] + "'");
         });
+        this.random = new Random();
 
         this.csvParser = new CsvParser(this.parserSettings);
     }
@@ -40,7 +46,8 @@ public class CsvFileParser {
         out.println("Parsing from url " + url);
 
         try {
-            Thread.sleep(21000);
+            int sleepTime = this.random.nextInt((MAX - MIN) + 3000) + MIN;
+            Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
