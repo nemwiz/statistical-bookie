@@ -4,7 +4,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {LandingPageComponent} from './components/landing-page/landing-page.component';
-import {TopNavbarComponent} from './components/shared/top-navbar/top-navbar.component';
 import {MatchService} from './services/match.service';
 import {RouterModule} from '@angular/router';
 import {AppRoutes} from './components/shared/routes';
@@ -16,12 +15,12 @@ import { AggregatedMatchComponent } from './components/aggregated-match/aggregat
 import {LeaguesService} from './services/leagues.service';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import {MdlModule} from 'angular2-mdl/components/index';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingPageComponent,
-    TopNavbarComponent,
     FixturesPageComponent,
     LeaguesPageComponent,
     NotFoundPageComponent,
@@ -34,6 +33,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     HttpModule,
     ChartsModule,
     ReactiveFormsModule,
+    MdlModule,
     RouterModule.forRoot(AppRoutes.routes)
   ],
   providers: [MatchService, FixturesService, LeaguesService],
