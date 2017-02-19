@@ -1,43 +1,30 @@
-
-<form [formGroup]="leaguesSearchForm"
-      (ngSubmit)="onSubmit(leaguesSearchForm.value)"
-      class="ui form">
-  <div class="league-search">
-    <!--<label for="leagueSearchInput">Seach</label>-->
-    <span class="icon"><i class="fa fa-search"></i></span>
-    <input class="league-search-input"
-           type="text"
-           id="leagueSearchInput"
-           placeholder="Search"
-           [formControl]="leaguesSearchForm.controls['leagueSearchInput']">
+<nav class="light-blue white-text"
+     [formGroup]="leaguesSearchForm" (ngSubmit)="onSubmit(leaguesSearchForm.value)">
+  <div class="nav-wrapper">
+    <form>
+      <div class="input-field">
+        <input id="leagueSearchInput" type="search" placeholder="Pretraži"
+               [formControl]="leaguesSearchForm.controls['leagueSearchInput']" required>
+        <label class="label-icon" for="leagueSearchInput"><i class="material-icons">search</i></label>
+        <i class="material-icons">close</i>
+      </div>
+    </form>
   </div>
-</form>
+</nav>
+
 
 <div *ngFor="let country of visibleLeagues">
 
-  <div class="country-and-leagues-container">
-    <div class="col-xs-12">
-      <img src="{{flagsPath}}{{country.leagues[0].countryCode}}.svg" class="country-flag">
-      <div class="country-name">{{country.countryName}}</div>
-    </div>
-
-    <div class="league-container col-md-3 col-sm-6 col-xs-12" *ngFor="let league of country.leagues">
-
-      <figure class="logo-container">
-        <img src="{{logosPath}}converted-{{league.leagueCode}}.png" />
-        <figcaption>
-          <h3><span>{{league.leagueName}}</span></h3>
-        </figcaption>
-        <a [routerLink]="['/leagues/', league.leagueId, 'fixtures']">
-          <!--{{league}}-->
-        </a>
-      </figure>
-
-
-
-    </div>
-
+  <div class="leagues-container">
+    <league-card
+      *ngFor="let league of country.leagues"
+      [leagueCode]="league.leagueCode"
+      [leagueName]="league.leagueName"
+      [countryName]="country.countryName"
+      [leagueId]="league.leagueId"
+    ></league-card>
   </div>
 
+  <div class="divider"></div>
 
 </div>

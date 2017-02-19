@@ -12,8 +12,6 @@ import {Observable} from 'rxjs/Observable';
 })
 export class LeaguesPageComponent implements OnInit {
 
-  flagsPath:string = '../../../assets/images/flags/';
-  logosPath:string = '../../../assets/images/logos/';
   leagues:Observable<League[]>;
   leaguesGroupedByCountry:any = [];
   visibleLeagues: any = [];
