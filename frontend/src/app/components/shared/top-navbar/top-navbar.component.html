@@ -1,0 +1,24 @@
+<div class="overlay-fix navbar-fixed">
+  <nav>
+    <div class="nav-wrapper light-blue">
+      <a href="#" data-activates="mobile-demo"
+         class="button-collapse"><i class="material-icons">menu</i></a>
+      <a href="#" class="brand-logo">Logo</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li *ngFor="let menuItem of menuItems">
+          <a [routerLink]="menuItem.route">{{menuItem.name}}</a>
+        </li>
+      </ul>
+
+      <ul class="side-nav" id="mobile-demo">
+        <li *ngFor="let menuItem of menuItems">
+          <a [routerLink]="menuItem.route">
+            <i class="material-icons">ic_arrow_forward</i>
+            {{menuItem.name}}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
