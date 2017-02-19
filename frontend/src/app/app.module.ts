@@ -15,7 +15,8 @@ import { AggregatedMatchComponent } from './components/aggregated-match/aggregat
 import {LeaguesService} from './services/leagues.service';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import {MdlModule} from 'angular2-mdl/components/index';
+import { LeagueCardComponent } from './components/league-card/league-card.component';
+import { TopNavbarComponent } from './components/shared/top-navbar/top-navbar.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,8 @@ import {MdlModule} from 'angular2-mdl/components/index';
     NotFoundPageComponent,
     AggregatedMatchComponent,
     PieChartComponent,
+    LeagueCardComponent,
+    TopNavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,6 @@ import {MdlModule} from 'angular2-mdl/components/index';
     HttpModule,
     ChartsModule,
     ReactiveFormsModule,
-    MdlModule,
     RouterModule.forRoot(AppRoutes.routes)
   ],
   providers: [MatchService, FixturesService, LeaguesService],

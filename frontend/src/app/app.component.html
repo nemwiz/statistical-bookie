@@ -1,32 +1,7 @@
-<div class="demo-container" mdl-shadow="2">
-  <mdl-layout mdl-layout-fixed-header mdl-layout-header-seamed>
+<top-navbar></top-navbar>
 
-    <mdl-layout-header>
-      <mdl-layout-header-row>
-        <mdl-layout-title>Stats bookie</mdl-layout-title>
-        <mdl-layout-spacer></mdl-layout-spacer>
-        <!-- Navigation. We hide it in small screens. -->
-        <nav class="mdl-navigation mdl-layout--large-screen-only">
-          <a *ngFor="let menuItem of menuItems" class="mdl-navigation__link"
-             [routerLink]="menuItem.route">{{menuItem.name}}</a>
-        </nav>
-      </mdl-layout-header-row>
-    </mdl-layout-header>
-    <mdl-layout-drawer>
-      <mdl-layout-title>Stats bookie</mdl-layout-title>
-      <nav class="mdl-navigation">
-        <a *ngFor="let menuItem of menuItems" class="mdl-navigation__link"
-           [routerLink]="menuItem.route">{{menuItem.name}}</a>
-      </nav>
-    </mdl-layout-drawer>
+<router-outlet></router-outlet>
 
-    <mdl-layout-content>
-      <!-- Your content goes here -->
-      <router-outlet></router-outlet>
-
-    </mdl-layout-content>
-  </mdl-layout>
-</div>
 
 
 

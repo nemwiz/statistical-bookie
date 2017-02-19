@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MenuItem } from './interfaces/top-navbar-menu-item';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +7,5 @@ import { MenuItem } from './interfaces/top-navbar-menu-item';
 })
 export class AppComponent {
 
-  menuItems:MenuItem[] = [
-    {name: 'Home', route:'/home'},
-    {name: 'Leagues', route:'/leagues'}
-  ];
+  
 }
