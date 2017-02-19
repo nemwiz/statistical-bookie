@@ -40,24 +40,24 @@ public class LiveScoreScrapper {
         this.leaguesDAO = leaguesDAO;
         this.matchDAO = matchDAO;
         this.matchDetailsScrapper = new MatchDetailsScrapper();
-        this.milisecondsRandomizer = new MilisecondsRandomizer(15000, 25000);
+        this.milisecondsRandomizer = new MilisecondsRandomizer(25000, 15000);
     }
 
     public void scrape(boolean scrapeFromBeginningOfSeason) {
 
         this.webkit = BrowserFactory.getWebKit();
 
-        List<League> leagues = this.leaguesDAO.getAllLeagues();
+//        List<League> leagues = this.leaguesDAO.getAllLeagues();
+//
+//        leagues.forEach(league ->
+//                scrapeLeague(
+//                        league.getLeagueCode(),
+//                        league.getLeagueName(),
+//                        league.getCountryName(),
+//                        league.getLiveScoreLink(),
+//                        scrapeFromBeginningOfSeason));
 
-        leagues.forEach(league ->
-                scrapeLeague(
-                        league.getLeagueCode(),
-                        league.getLeagueName(),
-                        league.getCountryName(),
-                        league.getLiveScoreLink(),
-                        scrapeFromBeginningOfSeason));
-
-//        scrapeLeague("G1", "Greece Super league", "Greece", "greece/super-league/");
+        scrapeLeague("I1", "Serie A", "Italy", "italy/serie-a/", scrapeFromBeginningOfSeason);
 
         this.webkit.shutdown();
 
@@ -74,8 +74,6 @@ public class LiveScoreScrapper {
         System.out.println("Scraping league = " + countryName + " " + leagueName);
 
         String liveScoreLeagueLinkFull = BASE_URL_SOCCER + liveScoreLink;
-//        String liveScoreLeagueLinkFull = BASE_URL_SOCCER + "greece/super-league/";
-
 
         try (Page leaguePage = this.webkit.navigate(liveScoreLeagueLinkFull)) {
 
@@ -92,7 +90,7 @@ public class LiveScoreScrapper {
 
             if (scrapeFromBeginningOfSeason) {
                 for (int i = 1; i < currentRound; i++) {
-                    navigateToRoundPage(liveScoreLeagueLinkFull, previousRound, leagueCode, leagueName, countryName);
+                    navigateToRoundPage(liveScoreLeagueLinkFull, i, leagueCode, leagueName, countryName);
                 }
             } else {
                 navigateToRoundPage(liveScoreLeagueLinkFull, previousRound, leagueCode, leagueName, countryName);
@@ -137,13 +135,13 @@ public class LiveScoreScrapper {
 
             System.out.println("url = " + url);
 
+            Page detailPage = getWebKit().navigate(url);
+
             try {
                 Thread.sleep(this.milisecondsRandomizer.randomize());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            Page detailPage = getWebKit().navigate(url);
 
             String detailPageHtml = detailPage.getDocument().getBody().getInnerHTML();
 
@@ -156,58 +154,63 @@ public class LiveScoreScrapper {
             String homeTeam = detailDocument.getElementsByAttributeValue(DATA_TYPE, "home-team").text();
             String awayTeam = detailDocument.getElementsByAttributeValue(DATA_TYPE, "away-team").text();
 
-            int homeTeamGoals = Integer.parseInt(detailDocument.getElementsByAttributeValue(DATA_TYPE, "score").get(0).getElementsByAttributeValue(DATA_TYPE, "home").text());
-            int awayTeamGoals = Integer.parseInt(detailDocument.getElementsByAttributeValue(DATA_TYPE, "score").get(0).getElementsByAttributeValue(DATA_TYPE, "away").text());
+            String homeTeamGoalsString = detailDocument.getElementsByAttributeValue(DATA_TYPE, "score").get(0).getElementsByAttributeValue(DATA_TYPE, "home").text();
 
-            String finalOutcome = determineOutcome(homeTeamGoals, awayTeamGoals);
+            if (!homeTeamGoalsString.equals("?")) {
 
-            String halfTimeScore = detailDocument.getElementsByAttributeValue(DATA_TYPE, "header-score").get(0).getElementsByAttributeValue(DATA_TYPE, "score").text();
+                int homeTeamGoals = Integer.parseInt(homeTeamGoalsString);
+                int awayTeamGoals = Integer.parseInt(detailDocument.getElementsByAttributeValue(DATA_TYPE, "score").get(0).getElementsByAttributeValue(DATA_TYPE, "away").text());
 
-            int homeTeamHalfTimeGoals = 0;
-            int awayTeamHalfTimeGoals = 0;
-            String halfTimeOutCome = DRAW;
+                String finalOutcome = determineOutcome(homeTeamGoals, awayTeamGoals);
 
-            if (halfTimeScore.length() > 2) {
+                String halfTimeScore = detailDocument.getElementsByAttributeValue(DATA_TYPE, "header-score").get(0).getElementsByAttributeValue(DATA_TYPE, "score").text();
 
-                String halfTimeScoreFormatted = formatHalfTimeScoreString(halfTimeScore);
+                int homeTeamHalfTimeGoals = 0;
+                int awayTeamHalfTimeGoals = 0;
+                String halfTimeOutCome = DRAW;
 
-                homeTeamHalfTimeGoals = Integer.parseInt(halfTimeScoreFormatted.substring(0, 1));
-                awayTeamHalfTimeGoals = Integer.parseInt(halfTimeScoreFormatted.substring(halfTimeScoreFormatted.length() - 1, halfTimeScoreFormatted.length()));
-                halfTimeOutCome = determineOutcome(homeTeamHalfTimeGoals, awayTeamHalfTimeGoals);
+                if (halfTimeScore.length() > 2) {
+
+                    String halfTimeScoreFormatted = formatHalfTimeScoreString(halfTimeScore);
+
+                    homeTeamHalfTimeGoals = Integer.parseInt(halfTimeScoreFormatted.substring(0, 1));
+                    awayTeamHalfTimeGoals = Integer.parseInt(halfTimeScoreFormatted.substring(halfTimeScoreFormatted.length() - 1, halfTimeScoreFormatted.length()));
+                    halfTimeOutCome = determineOutcome(homeTeamHalfTimeGoals, awayTeamHalfTimeGoals);
+                }
+
+                List<LiveScoreMatchDetail> matchDetails = this.matchDetailsScrapper.getMatchDetails(detailDocument);
+
+                System.out.println("seasonYear = " + seasonYear);
+                System.out.println("homeTeam = " + homeTeam);
+                System.out.println("awayTeam = " + awayTeam);
+                System.out.println("homeTeamGoals = " + homeTeamGoals);
+                System.out.println("awayTeamGoals = " + awayTeamGoals);
+                System.out.println("finalOutcome = " + finalOutcome);
+                System.out.println("halfTimeScore = " + halfTimeScore);
+                System.out.println("homeTeamHalfTimeGoals = " + homeTeamHalfTimeGoals);
+                System.out.println("awayTeamHalfTimeGoals = " + awayTeamHalfTimeGoals);
+                System.out.println("halfTimeOutCome = " + halfTimeOutCome);
+                System.out.println("matchDetails = " + matchDetails);
+
+                DatabaseMatch databaseMatch = new DatabaseMatch(
+                        leagueCode,
+                        leagueName,
+                        countryName,
+                        currentRound,
+                        seasonYear,
+                        homeTeam,
+                        awayTeam,
+                        homeTeamGoals,
+                        awayTeamGoals,
+                        finalOutcome,
+                        homeTeamHalfTimeGoals,
+                        awayTeamHalfTimeGoals,
+                        halfTimeOutCome,
+                        matchDetails
+                );
+
+                databaseMatches.add(databaseMatch);
             }
-
-            List<LiveScoreMatchDetail> matchDetails = this.matchDetailsScrapper.getMatchDetails(detailDocument);
-
-            System.out.println("seasonYear = " + seasonYear);
-            System.out.println("homeTeam = " + homeTeam);
-            System.out.println("awayTeam = " + awayTeam);
-            System.out.println("homeTeamGoals = " + homeTeamGoals);
-            System.out.println("awayTeamGoals = " + awayTeamGoals);
-            System.out.println("finalOutcome = " + finalOutcome);
-            System.out.println("halfTimeScore = " + halfTimeScore);
-            System.out.println("homeTeamHalfTimeGoals = " + homeTeamHalfTimeGoals);
-            System.out.println("awayTeamHalfTimeGoals = " + awayTeamHalfTimeGoals);
-            System.out.println("halfTimeOutCome = " + halfTimeOutCome);
-            System.out.println("matchDetails = " + matchDetails);
-
-            DatabaseMatch databaseMatch = new DatabaseMatch(
-                    leagueCode,
-                    leagueName,
-                    countryName,
-                    currentRound,
-                    seasonYear,
-                    homeTeam,
-                    awayTeam,
-                    homeTeamGoals,
-                    awayTeamGoals,
-                    finalOutcome,
-                    homeTeamHalfTimeGoals,
-                    awayTeamHalfTimeGoals,
-                    halfTimeOutCome,
-                    matchDetails
-            );
-
-            databaseMatches.add(databaseMatch);
 
         });
 
@@ -228,7 +231,13 @@ public class LiveScoreScrapper {
 
         document.getElementsByAttributeValue(DATA_TYPE, "container").
                 forEach(element -> element.getElementsByAttributeValue(DATA_TYPE, "evt")
-                        .forEach(aTag -> individualMatchUrls.add(BASE_URL + aTag.getElementsByClass("scorelink").attr("href"))));
+                        .forEach(aTag -> {
+                                    if (!aTag.getElementsByClass("scorelink").attr("href").equals("")) {
+                                        individualMatchUrls.add(BASE_URL + aTag.getElementsByClass("scorelink").attr("href"));
+                                    }
+                                }
+
+                        ));
 
         return individualMatchUrls;
     }
