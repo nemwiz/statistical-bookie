@@ -10,9 +10,9 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-class MatchDetailsScrapper {
+class MatchDetailScraper {
 
-    MatchDetailsScrapper() {
+    MatchDetailScraper() {
     }
 
     private static String DATA_TYPE = "data-type";
@@ -25,7 +25,7 @@ class MatchDetailsScrapper {
 
         matchDetailsDocument.getElementsByAttributeValue(DATA_TYPE, "incident")
                 .stream()
-                .filter(detailElement -> isCurrentElementAMatchDetailElement(detailElement))
+                .filter(this::isCurrentElementAMatchDetailElement)
                 .forEach(detailElement -> matchDetails.add(mapDetailsElementToMatchDetail(detailElement)));
 
         return matchDetails;

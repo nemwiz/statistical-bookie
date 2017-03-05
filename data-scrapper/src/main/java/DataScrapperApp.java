@@ -1,5 +1,5 @@
 import com.meltmedia.dropwizard.mongo.MongoBundle;
-import csv.HistoricalMatchesScrapper;
+import dao.FixtureDAO;
 import dao.LeaguesDAO;
 import dao.MatchDAO;
 import dao.MorphiaDatastore;
@@ -7,9 +7,10 @@ import healthchecks.DatabaseHealthCheck;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import livescore.LiveScoreScrapper;
+import livescore.FixtureScraper;
+import livescore.MatchScraper;
 
-public class DataScrapperApp extends Application<DataScrapperConfiguration>{
+public class DataScrapperApp extends Application<DataScrapperConfiguration> {
 
     private static String APP_NAME = "data-scrapper-app";
     private MongoBundle<DataScrapperConfiguration> mongoBundle;
@@ -36,6 +37,7 @@ public class DataScrapperApp extends Application<DataScrapperConfiguration>{
 
         MatchDAO matchDAO = new MatchDAO(morphiaDatastore);
         LeaguesDAO leaguesDAO = new LeaguesDAO(morphiaDatastore);
+        FixtureDAO fixtureDAO = new FixtureDAO(morphiaDatastore);
 
         final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(morphiaDatastore.getDatastore());
         environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
@@ -43,9 +45,11 @@ public class DataScrapperApp extends Application<DataScrapperConfiguration>{
 //        HistoricalMatchesScrapper historicalMatchesScrapper = new HistoricalMatchesScrapper(matchDAO, leaguesDAO);
 //        historicalMatchesScrapper.scrapeMatchesFromCsvFilesOnFootballDataSite();
 
-        LiveScoreScrapper liveScoreScrapper = new LiveScoreScrapper(leaguesDAO, matchDAO);
-        boolean scrapeFromBeginningOfSeason = true;
-        liveScoreScrapper.scrape(scrapeFromBeginningOfSeason);
+        FixtureScraper fixtureScraper = new FixtureScraper(leaguesDAO, fixtureDAO, 25000, 10000);
+        fixtureScraper.scrapeUpcomingFixtures();
+
+//        MatchScraper matchScraper = new MatchScraper(leaguesDAO, matchDAO, 25000, 10000);
+//        matchScraper.scrapeSpecificLeague("I2");
 
     }
 }

@@ -1,11 +1,14 @@
 package livescore;
 
+import csv.helper.ScrapperHelper;
+import dao.FixtureDAO;
 import dao.LeaguesDAO;
 import dao.model.League;
 import livescore.model.Fixture;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,20 +16,27 @@ import java.util.Map;
 
 public class FixtureScraper extends LiveScoreScraper {
 
-    public FixtureScraper(LeaguesDAO leaguesDAO, int maxMiliseconds, int minMiliseconds) {
+    private FixtureDAO fixtureDAO;
+
+    public FixtureScraper(LeaguesDAO leaguesDAO, FixtureDAO fixtureDAO, int maxMiliseconds, int minMiliseconds) {
         super(leaguesDAO, maxMiliseconds, minMiliseconds);
+        this.fixtureDAO = fixtureDAO;
     }
 
     public void scrapeUpcomingFixtures() {
 
         List<League> leagues = getLeaguesDAO().getAllLeagues();
         leagues.forEach(this::scrape);
+
+        this.shutdownBrowser();
     }
 
     public void scrapeUpcomingFixturesForSpecificLeague(String leagueCode) {
 
         League league = getLeaguesDAO().getLeagueByLeagueCode(leagueCode);
         scrape(league);
+
+        this.shutdownBrowser();
     }
 
     private void scrape(League league) {
@@ -34,12 +44,11 @@ public class FixtureScraper extends LiveScoreScraper {
         int currentRound = this.getCurrentRound(league);
         int nextRound = currentRound + 1;
 
-        Document liveScorePageWithMatchesForCurrentRound = this.navigateToAndReturnRoundPage(league, currentRound);
+        Document liveScorePageWithMatchesForCurrentRound = this.navigateToAndReturnRoundPage(league, nextRound);
 
         Map<String, String> fixtureId = this.getDatesWithFixturesIds(liveScorePageWithMatchesForCurrentRound);
         this.getUpcomingFixtures(fixtureId, liveScorePageWithMatchesForCurrentRound, league, nextRound);
 
-        this.shutdownBrowser();
     }
 
     private Map<String, String> getDatesWithFixturesIds(Document document) {
@@ -81,25 +90,38 @@ public class FixtureScraper extends LiveScoreScraper {
         List<Fixture> fixtures = new ArrayList<>();
 
         fixtureIdsWithDates.forEach(
-                (fixtureId, fixtureDate) -> {
-                    mapMatchRowToFixture(currentRoundPage.getElementsByAttributeValue(DATA_ID, fixtureId).get(0), fixtureDate);
-                }
+                (fixtureId, fixtureDate) -> fixtures.add(
+                        mapMatchRowToFixture(
+                                currentRoundPage.getElementsByAttributeValue(DATA_ID, fixtureId).get(0),
+                                fixtureDate,
+                                league,
+                                round)
+                )
         );
 
+        System.out.println("fixtures = " + fixtures);
+
+        this.fixtureDAO.insertFixtures(fixtures);
     }
 
-    private void mapMatchRowToFixture(Element rowElement, String fixtureDate) {
-
-//        Fixture fixture = new Fixture()
+    private Fixture mapMatchRowToFixture(Element rowElement, String fixtureDate, League league, int round) {
 
         String time = rowElement.getElementsByClass("min").text().replace("Limited coverage", "");
         String homeTeam = rowElement.getElementsByClass("ply tright name").text();
         String awayTeam = rowElement.getElementsByClass("ply name").text();
 
-        System.out.println("awayTeam = " + awayTeam);
-        System.out.println("homeTeam = " + homeTeam);
-        System.out.println("time = " + time + " date " + this.convertToStringDateFormat(fixtureDate));
-
+        return new Fixture(
+                league.getId(),
+                league.getLeagueCode(),
+                league.getLeagueName(),
+                league.getCountryName(),
+                round,
+                this.convertToStringDateFormat(fixtureDate),
+                time,
+                ScrapperHelper.getCurrentSeasonYearWithDash(LocalDate.now()),
+                homeTeam,
+                awayTeam
+        );
 
     }
 

@@ -21,13 +21,13 @@ public class MatchScraper extends LiveScoreScraper {
     private static final String HOME_TEAM = "H";
     private static final String AWAY_TEAM = "A";
     private static final String DRAW = "D";
-    private MatchDetailsScrapper matchDetailsScrapper;
+    private MatchDetailScraper matchDetailScraper;
     private MatchDAO matchDAO;
 
     public MatchScraper(LeaguesDAO leaguesDAO, MatchDAO matchDAO, int maxMiliseconds, int minMiliseconds) {
         super(leaguesDAO, maxMiliseconds, minMiliseconds);
         this.matchDAO = matchDAO;
-        this.matchDetailsScrapper = new MatchDetailsScrapper();
+        this.matchDetailScraper = new MatchDetailScraper();
     }
 
     public void scrapeAll() {
@@ -165,7 +165,7 @@ public class MatchScraper extends LiveScoreScraper {
                     halfTimeOutCome = determineOutcome(homeTeamHalfTimeGoals, awayTeamHalfTimeGoals);
                 }
 
-                List<LiveScoreMatchDetail> matchDetails = this.matchDetailsScrapper.getMatchDetails(detailDocument);
+                List<LiveScoreMatchDetail> matchDetails = this.matchDetailScraper.getMatchDetails(detailDocument);
 
                 System.out.println("seasonYear = " + seasonYear);
                 System.out.println("homeTeam = " + homeTeam);
