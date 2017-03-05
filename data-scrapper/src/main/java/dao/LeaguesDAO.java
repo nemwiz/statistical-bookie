@@ -18,4 +18,11 @@ public class LeaguesDAO {
                 .order("_id")
                 .asList();
     }
+
+    public League getLeagueByLeagueCode(String leagueCode) {
+        return this.datastore.getDatastore()
+                .createQuery(League.class)
+                .field("leagueCode").equal(leagueCode)
+                .get();
+    }
 }
