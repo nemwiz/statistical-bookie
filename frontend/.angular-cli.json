@@ -19,7 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "",
       "styles": [
-        "styles.css",
+        "./assets/variables.scss",
         "./semantic-ui-css-master/semantic.min.css"
       ],
       "scripts": [
