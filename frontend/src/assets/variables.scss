@@ -9,3 +9,15 @@ $ipad-screen-size: 767px;
 body {
   background-color: $body-background!important;
 }
+
+a:hover {
+  color: inherit !important;
+  text-decoration: none!important;
+}
+
+.ui.inverted.list .item a:not(.ui):hover {
+  color: white !important;
+}
+
+
+

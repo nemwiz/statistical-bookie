@@ -9,11 +9,13 @@ import {FixturesService} from "./services/fixtures.service";
 import {LeaguesService} from "./services/leagues.service";
 import {MatchService} from "./services/match.service";
 import {HttpModule} from "@angular/http";
+import { MatchComponent } from './modules/match/match.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent
+    HomePageComponent,
+    MatchComponent
   ],
   imports: [
     BrowserModule,

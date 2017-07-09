@@ -19,8 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "",
       "styles": [
-        "./assets/variables.scss",
-        "./semantic-ui-css-master/semantic.min.css"
+        "./semantic-ui-css-master/semantic.min.css",
+        "./assets/variables.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",

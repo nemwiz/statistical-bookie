@@ -42,6 +42,10 @@ export class HomePageComponent implements OnInit {
 
   }
 
+  pushFixture(fixture: Fixture) {
+    this.fixturesService.pushFixture(fixture);
+  }
+
   onKey(event: KeyboardEvent) {
     if ((<HTMLInputElement>event.target).value === '') {
       this.resetFixturesToOriginalState();
