@@ -3,11 +3,14 @@ package aggregator;
 import collecter.NumberOfGoalsCollecter;
 import helper.Constants;
 import model.Match;
-import viewmodel.MatchOutcomeView;
+import viewmodel.MatchOutcomeModel;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
-public class MatchOutcomeAggregator extends Aggregator {
+public class MatchOutcomeAggregator {
 
     private List<Match> matches;
 
@@ -15,53 +18,60 @@ public class MatchOutcomeAggregator extends Aggregator {
         this.matches = matches;
     }
 
-    public MatchOutcomeView getAggregatedCount() {
+    public MatchOutcomeModel getAggregatedCount() {
 
-        return new MatchOutcomeView(
-                getCountOnFullTime(Constants.HOME_TEAM_WIN),
-                getCountOnFullTime(Constants.DRAW),
-                getCountOnFullTime(Constants.AWAY_TEAM_WIN),
-                getCountOnHalfTime(Constants.HOME_TEAM_WIN),
-                getCountOnHalfTime(Constants.DRAW),
-                getCountOnHalfTime(Constants.AWAY_TEAM_WIN),
-                getCountHomeTeamWinsInSecondHalfTime(),
-                getCountAwayTeamWinsInSecondHalfTime(),
-                getCountDrawsInSecondHalfTime()
+        Map<String, Long> homeTeamResults = this.convertValuesToMap(this.getHomeTeamCount());
+        Map<String, Long> awayTeamResults = this.convertValuesToMap(this.getAwayTeamCount());
+        Map<String, Long> drawResults = this.convertValuesToMap(this.getDrawCount());
 
-        );
+        return new MatchOutcomeModel(homeTeamResults, awayTeamResults, drawResults);
     }
 
-    private long getCountOnFullTime(String matchOutcome) {
+    private long[] getHomeTeamCount() {
 
-        return matches.stream()
-                .filter(
-                        match -> match.getFinalOutcome().equals(matchOutcome)
-                ).count();
+        long countFulltime = this.countMatches(match -> match.getFinalOutcome().equals(Constants.HOME_TEAM_WIN));
+        long countFirstHalftime = this.countMatches(match -> match.getHalfTimeOutcome().equals(Constants.HOME_TEAM_WIN));
+        long countSecondHalftime = this.countMatches(this::isHomeTeamWonInSecondHalfTime);
+
+        return new long[]{
+                countFulltime,
+                countFirstHalftime,
+                countSecondHalftime
+        };
+
     }
 
-    private long getCountOnHalfTime(String halfTimeOutcome) {
+    private long[] getAwayTeamCount() {
 
-        return matches.stream()
-                .filter(
-                        match -> match.getHalfTimeOutcome().equals(halfTimeOutcome)
-                ).count();
+        long countFulltime = this.countMatches(match -> match.getFinalOutcome().equals(Constants.AWAY_TEAM_WIN));
+        long countFirstHalftime = this.countMatches(match -> match.getHalfTimeOutcome().equals(Constants.AWAY_TEAM_WIN));
+        long countSecondHalftime = this.countMatches(this::isAwayTeamWonInSecondHalfTime);
+
+        return new long[]{
+                countFulltime,
+                countFirstHalftime,
+                countSecondHalftime
+        };
+
     }
 
-    private long getCountHomeTeamWinsInSecondHalfTime() {
-        return matches.stream()
-                .filter(this::isHomeTeamWonInSecondHalfTime)
-                .count();
+    private long[] getDrawCount() {
+
+        long countFulltime = this.countMatches(match -> match.getFinalOutcome().equals(Constants.DRAW));
+        long countFirstHalftime = this.countMatches(match -> match.getHalfTimeOutcome().equals(Constants.DRAW));
+        long countSecondHalftime = this.countMatches(this::isDrawInSecondHalfTime);
+
+        return new long[]{
+                countFulltime,
+                countFirstHalftime,
+                countSecondHalftime
+        };
+
     }
 
-    private long getCountAwayTeamWinsInSecondHalfTime() {
+    private long countMatches(Function<Match, Boolean> filteringFunction) {
         return matches.stream()
-                .filter(this::isAwayTeamWonInSecondHalfTime)
-                .count();
-    }
-
-    private long getCountDrawsInSecondHalfTime() {
-        return matches.stream()
-                .filter(this::isDrawInSecondHalfTime)
+                .filter(filteringFunction::apply)
                 .count();
     }
 
@@ -87,6 +97,17 @@ public class MatchOutcomeAggregator extends Aggregator {
         int awayTeamGoalsScoredInSecondHalfTime = NumberOfGoalsCollecter.getAwayTeamGoalsScoredInSecondHalfTime(match);
 
         return homeTeamGoalsScoredInSecondHalfTime == awayTeamGoalsScoredInSecondHalfTime;
+    }
+
+    private Map<String, Long> convertValuesToMap(long[] results) {
+
+        Map<String, Long> resultsMap = new LinkedHashMap<>();
+
+        resultsMap.put("winFulltime", results[0]);
+        resultsMap.put("winFirstHalftime", results[1]);
+        resultsMap.put("winSecondHalftime", results[2]);
+
+        return resultsMap;
     }
 
 }

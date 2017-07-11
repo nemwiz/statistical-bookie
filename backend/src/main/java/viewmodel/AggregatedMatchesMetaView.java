@@ -11,7 +11,7 @@ public class AggregatedMatchesMetaView {
     @JsonProperty
     TeamGoalsModel teamGoalsView;
     @JsonProperty
-    MatchOutcomeView matchOutcomeView;
+    MatchOutcomeModel matchOutcomeView;
     @JsonProperty
     MatchDetailOutcomeView matchDetailOutcomeView;
     @JsonProperty
@@ -21,7 +21,7 @@ public class AggregatedMatchesMetaView {
     @JsonProperty
     Map<String, Long> exactResultView;
 
-    public AggregatedMatchesMetaView(NumberOfGoalsModel numberOfGoalsMetaView, TeamGoalsModel teamGoalsView, MatchOutcomeView matchOutcomeView, MatchDetailOutcomeView matchDetailOutcomeView, NumberOfGoalsAndWinsView numberOfGoalsAndWinsView, HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView, Map<String, Long> exactResultView) {
+    public AggregatedMatchesMetaView(NumberOfGoalsModel numberOfGoalsMetaView, TeamGoalsModel teamGoalsView, MatchOutcomeModel matchOutcomeView, MatchDetailOutcomeView matchDetailOutcomeView, NumberOfGoalsAndWinsView numberOfGoalsAndWinsView, HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView, Map<String, Long> exactResultView) {
         this.numberOfGoalsMetaView = numberOfGoalsMetaView;
         this.teamGoalsView = teamGoalsView;
         this.matchOutcomeView = matchOutcomeView;

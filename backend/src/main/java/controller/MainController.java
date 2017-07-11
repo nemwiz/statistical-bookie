@@ -40,7 +40,7 @@ public class MainController {
 
         NumberOfGoalsModel numberOfGoalsMetaView = numberOfGoalsAggregator.getAggregatedCount();
         TeamGoalsModel teamGoalsView = teamGoalsAggregator.getAggregatedCount();
-        MatchOutcomeView matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
+        MatchOutcomeModel matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
         MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
         NumberOfGoalsAndWinsView numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
         HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();
@@ -72,7 +72,7 @@ public class MainController {
 
         NumberOfGoalsModel numberOfGoalsMetaView = numberOfGoalsAggregator.getAggregatedCount();
         TeamGoalsModel teamGoalsView = teamGoalsAggregator.getAggregatedCount();
-        MatchOutcomeView matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
+        MatchOutcomeModel matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
         MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
         NumberOfGoalsAndWinsView numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
         HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();

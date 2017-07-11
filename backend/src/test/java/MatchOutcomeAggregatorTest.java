@@ -1,9 +1,8 @@
 import aggregator.MatchOutcomeAggregator;
-import helper.Constants;
 import model.Match;
 import org.junit.Before;
 import org.junit.Test;
-import viewmodel.MatchOutcomeView;
+import viewmodel.MatchOutcomeModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ import static junit.framework.TestCase.assertEquals;
 public class MatchOutcomeAggregatorTest {
 
     private MatchOutcomeAggregator matchOutcomeAggregator;
-    private MatchOutcomeView matchOutcomeView;
+    private MatchOutcomeModel matchOutcomeView;
     private List<Match> matches;
 
     @Before
@@ -31,8 +30,11 @@ public class MatchOutcomeAggregatorTest {
 
         matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
 
-        assertEquals(countOfMatches, matchOutcomeView.getHomeTeamWinFullTime());
-        assertEquals(countOfMatches, matchOutcomeView.getHomeTeamWinHalfTime());
+        long fullTimeCount = matchOutcomeView.getHomeTeam().get("winFulltime");
+        long halfTimeCount = matchOutcomeView.getHomeTeam().get("winFirstHalftime");
+
+        assertEquals(countOfMatches, fullTimeCount);
+        assertEquals(countOfMatches, halfTimeCount);
     }
 
     @Test
@@ -44,8 +46,11 @@ public class MatchOutcomeAggregatorTest {
 
         matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
 
-        assertEquals(countOfDrawMatches, matchOutcomeView.getDrawFullTime());
-        assertEquals(countOfDrawMatches, matchOutcomeView.getDrawHalfTime());
+        long fullTimeCount = matchOutcomeView.getDraw().get("winFulltime");
+        long halfTimeCount = matchOutcomeView.getDraw().get("winFirstHalftime");
+
+        assertEquals(countOfDrawMatches, fullTimeCount);
+        assertEquals(countOfDrawMatches, halfTimeCount);
     }
 
     @Test
@@ -57,8 +62,11 @@ public class MatchOutcomeAggregatorTest {
 
         matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
 
-        assertEquals(countOfAwayTeamWinMatches, matchOutcomeView.getAwayTeamWinFullTime());
-        assertEquals(countOfAwayTeamWinMatches, matchOutcomeView.getAwayTeamWinHalfTime());
+        long fullTimeCount = matchOutcomeView.getAwayTeam().get("winFulltime");
+        long halfTimeCount = matchOutcomeView.getAwayTeam().get("winFirstHalftime");
+
+        assertEquals(countOfAwayTeamWinMatches, fullTimeCount);
+        assertEquals(countOfAwayTeamWinMatches, halfTimeCount);
     }
 
     @Test
@@ -69,12 +77,21 @@ public class MatchOutcomeAggregatorTest {
 
         matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, matchOutcomeView.getAwayTeamWinFullTime());
-        assertEquals(expectedCount, matchOutcomeView.getAwayTeamWinHalfTime());
-        assertEquals(expectedCount, matchOutcomeView.getHomeTeamWinFullTime());
-        assertEquals(expectedCount, matchOutcomeView.getHomeTeamWinHalfTime());
-        assertEquals(expectedCount, matchOutcomeView.getDrawFullTime());
-        assertEquals(expectedCount, matchOutcomeView.getDrawHalfTime());
+        long fullTimeCountAwayTeam = matchOutcomeView.getAwayTeam().get("winFulltime");
+        long halfTimeCountAwayTeam = matchOutcomeView.getAwayTeam().get("winFirstHalftime");
+
+        long fullTimeCountHomeTeam = matchOutcomeView.getHomeTeam().get("winFulltime");
+        long halfTimeCountHomeTeam = matchOutcomeView.getHomeTeam().get("winFirstHalftime");
+
+        long fullTimeCountDraw = matchOutcomeView.getDraw().get("winFulltime");
+        long halfTimeCountDraw = matchOutcomeView.getDraw().get("winFirstHalftime");
+
+        assertEquals(expectedCount, fullTimeCountAwayTeam);
+        assertEquals(expectedCount, halfTimeCountAwayTeam);
+        assertEquals(expectedCount, fullTimeCountHomeTeam);
+        assertEquals(expectedCount, halfTimeCountHomeTeam);
+        assertEquals(expectedCount, fullTimeCountDraw);
+        assertEquals(expectedCount, halfTimeCountDraw);
     }
 
     private void createMatches(long numberOfMatchesToCreate, String halfTimeAndFinalOutcome) {
