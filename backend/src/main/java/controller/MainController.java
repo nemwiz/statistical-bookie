@@ -39,7 +39,7 @@ public class MainController {
         leagueTableAggregator = new LeagueTableAggregator(currentSeasonMatches);
 
         NumberOfGoalsModel numberOfGoalsMetaView = numberOfGoalsAggregator.getAggregatedCount();
-        TeamGoalsView teamGoalsView = teamGoalsAggregator.getAggregatedCount();
+        TeamGoalsModel teamGoalsView = teamGoalsAggregator.getAggregatedCount();
         MatchOutcomeView matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
         MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
         NumberOfGoalsAndWinsView numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
@@ -71,7 +71,7 @@ public class MainController {
         exactResultAggregator = new ExactResultAggregator(matches);
 
         NumberOfGoalsModel numberOfGoalsMetaView = numberOfGoalsAggregator.getAggregatedCount();
-        TeamGoalsView teamGoalsView = teamGoalsAggregator.getAggregatedCount();
+        TeamGoalsModel teamGoalsView = teamGoalsAggregator.getAggregatedCount();
         MatchOutcomeView matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
         MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
         NumberOfGoalsAndWinsView numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();

@@ -3,112 +3,79 @@ package aggregator;
 import collecter.NumberOfGoalsCollecter;
 import helper.Constants;
 import model.Match;
-import viewmodel.TeamGoalsView;
+import viewmodel.TeamGoalsModel;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
-public class TeamGoalsAggregator extends Aggregator {
-    
+public class TeamGoalsAggregator {
+
     private List<Match> matches;
 
     public TeamGoalsAggregator(List<Match> matches) {
         this.matches = matches;
     }
-    
-    
-    public TeamGoalsView getAggregatedCount() {
 
-        long[] countOfTeamGoalsFullTime = getCountFullTime();
-        long[] countOfTeamGoalsHalfTime = getCountHalfTime();
-        long[] countOfTeamGoalsInSecondHalfTime = getCountSecondHalfTime();
 
-        return mapArraysToViewModel(
-                countOfTeamGoalsFullTime,
-                countOfTeamGoalsHalfTime,
-                countOfTeamGoalsInSecondHalfTime);
+    public TeamGoalsModel getAggregatedCount() {
+
+        Map<String, Long> homeTeamResults = this.convertValuesToMap(this.getHomeTeamCount());
+        Map<String, Long> awayTeamResults = this.convertValuesToMap(this.getAwayTeamCount());
+        Map<String, Long> bothTeamsResults = this.convertValuesToMap(this.getBothTeamsCount());
+
+        return new TeamGoalsModel(homeTeamResults, awayTeamResults, bothTeamsResults);
     }
 
-    private TeamGoalsView mapArraysToViewModel(long[] countOfTeamGoalsFullTime,
-                                               long[] countOfTeamGoalsHalfTime,
-                                               long[] countOfTeamsGoalsInSecondHalfTime) {
-        return new TeamGoalsView(
-                countOfTeamGoalsFullTime[0],
-                countOfTeamGoalsFullTime[1],
-                countOfTeamGoalsFullTime[2],
-                countOfTeamGoalsHalfTime[0],
-                countOfTeamGoalsHalfTime[1],
-                countOfTeamGoalsHalfTime[2],
-                countOfTeamsGoalsInSecondHalfTime[0],
-                countOfTeamsGoalsInSecondHalfTime[1],
-                countOfTeamsGoalsInSecondHalfTime[2]
-        );
-    }
+    private long[] getHomeTeamCount() {
 
-    private long[] getCountFullTime() {
-
-        long countMatchesWhereHomeTeamScored = this.matches.stream()
-                .filter(match -> match.getHomeTeamGoals() > Constants.ZERO_GOALS)
-                .count();
-
-        long countMatchesWhereAwayTeamScored = this.matches.stream()
-                .filter(match -> match.getAwayTeamGoals() > Constants.ZERO_GOALS)
-                .count();
-
-        long countMatchesWhereBothTeamsHaveScored = this.matches.stream()
-                .filter(this::isBothTeamsScored)
-                .count();
+        long scoredInTheWholeGame = this.countMatches(match -> match.getHomeTeamGoals() > Constants.ZERO_GOALS);
+        long scoredInFirstHalftime = this.countMatches(match -> match.getHomeTeamHalftimeGoals() > Constants.ZERO_GOALS);
+        long scoredInSecondHalftime = this.countMatches(match -> NumberOfGoalsCollecter.getHomeTeamGoalsScoredInSecondHalfTime(match) > Constants.ZERO_GOALS);
 
         return new long[]{
-                countMatchesWhereHomeTeamScored,
-                countMatchesWhereAwayTeamScored,
-                countMatchesWhereBothTeamsHaveScored
+                scoredInTheWholeGame,
+                scoredInFirstHalftime,
+                scoredInSecondHalftime
         };
     }
 
-    private long[] getCountHalfTime() {
+    private long[] getAwayTeamCount() {
 
-        long countMatchesWhereHomeTeamScoredOnHalfTime = this.matches.stream()
-                .filter(match -> match.getHomeTeamHalftimeGoals() > Constants.ZERO_GOALS)
-                .count();
-
-        long countMatchesWhereAwayTeamScoredOnHalfTime = this.matches.stream()
-                .filter(match -> match.getAwayTeamHalftimeGoals() > Constants.ZERO_GOALS)
-                .count();
-
-        long countMatchesWhereBothTeamsHaveScoredOnHalfTime = this.matches.stream()
-                .filter(this::isBothTeamsScoredOnHalfTime)
-                .count();
+        long scoredInTheWholeGame = this.countMatches(match -> match.getAwayTeamGoals() > Constants.ZERO_GOALS);
+        long scoredInFirstHalftime = this.countMatches(match -> match.getAwayTeamHalftimeGoals() > Constants.ZERO_GOALS);
+        long scoredInSecondHalftime = this.countMatches(match -> NumberOfGoalsCollecter.getAwayTeamGoalsScoredInSecondHalfTime(match) > Constants.ZERO_GOALS);
 
         return new long[]{
-                countMatchesWhereHomeTeamScoredOnHalfTime,
-                countMatchesWhereAwayTeamScoredOnHalfTime,
-                countMatchesWhereBothTeamsHaveScoredOnHalfTime
+                scoredInTheWholeGame,
+                scoredInFirstHalftime,
+                scoredInSecondHalftime
         };
     }
 
-    private long[] getCountSecondHalfTime() {
+    private long[] getBothTeamsCount() {
 
-        long countMatchesWhereHomeTeamScoredInSecondHalfTime = this.matches.stream()
-                .filter(match -> NumberOfGoalsCollecter.getHomeTeamGoalsScoredInSecondHalfTime(match) > Constants.ZERO_GOALS)
-                .count();
-
-        long countMatchesWhereAwayTeamScoredInSecondHalfTime = this.matches.stream()
-                .filter(match -> NumberOfGoalsCollecter.getAwayTeamGoalsScoredInSecondHalfTime(match) > Constants.ZERO_GOALS)
-                .count();
-
-        long countMatchesWhereBothTeamsHaveScoredInSecondHalfTime = this.matches.stream()
-                .filter(this::isBothTeamsScoredInSecondHalfTime)
-                .count();
+        long scoredInTheWholeGame = this.countMatches(this::isBothTeamsScored);
+        long scoredInFirstHalftime = this.countMatches(this::isBothTeamsScoredOnHalfTime);
+        long scoredInSecondHalftime = this.countMatches(this::isBothTeamsScoredInSecondHalfTime);
 
         return new long[]{
-                countMatchesWhereHomeTeamScoredInSecondHalfTime,
-                countMatchesWhereAwayTeamScoredInSecondHalfTime,
-                countMatchesWhereBothTeamsHaveScoredInSecondHalfTime
+                scoredInTheWholeGame,
+                scoredInFirstHalftime,
+                scoredInSecondHalftime
         };
+    }
+
+    private long countMatches(Function<Match, Boolean> filteringFunction) {
+
+        return this.matches.stream()
+                .filter(filteringFunction::apply)
+                .count();
     }
 
     private boolean isBothTeamsScored(Match match) {
-        return match.getHomeTeamGoals() > Constants.ZERO_GOALS  && match.getAwayTeamGoals() > Constants.ZERO_GOALS;
+        return match.getHomeTeamGoals() > Constants.ZERO_GOALS && match.getAwayTeamGoals() > Constants.ZERO_GOALS;
     }
 
     private boolean isBothTeamsScoredOnHalfTime(Match match) {
@@ -117,5 +84,16 @@ public class TeamGoalsAggregator extends Aggregator {
 
     private boolean isBothTeamsScoredInSecondHalfTime(Match match) {
         return NumberOfGoalsCollecter.getHomeTeamGoalsScoredInSecondHalfTime(match) > Constants.ZERO_GOALS && NumberOfGoalsCollecter.getAwayTeamGoalsScoredInSecondHalfTime(match) > Constants.ZERO_GOALS;
+    }
+
+    private Map<String, Long> convertValuesToMap(long[] results) {
+
+        Map<String, Long> resultsMap = new LinkedHashMap<>();
+
+        resultsMap.put("scoredInTheWholeGame", results[0]);
+        resultsMap.put("scoredInFirstHalftime", results[1]);
+        resultsMap.put("scoredInSecondHalftime", results[2]);
+
+        return resultsMap;
     }
 }

@@ -2,7 +2,7 @@ import aggregator.TeamGoalsAggregator;
 import model.Match;
 import org.junit.Before;
 import org.junit.Test;
-import viewmodel.TeamGoalsView;
+import viewmodel.TeamGoalsModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class TeamGoalsAggregatorTest {
     private static int ONLY_AWAY_TEAM_SCORED = 2;
 
     private TeamGoalsAggregator teamGoalsAggregator;
-    private TeamGoalsView teamGoalsView;
+    private TeamGoalsModel teamGoalsView;
     private List<Match> matches;
     private int expectedCount;
 
@@ -34,8 +34,11 @@ public class TeamGoalsAggregatorTest {
 
         teamGoalsView = teamGoalsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, teamGoalsView.getHomeTeamScored());
-        assertEquals(expectedCount, teamGoalsView.getHomeTeamScoredHalfTime());
+        long countOfHomeTeamScored = teamGoalsView.getHomeTeam().get("scoredInTheWholeGame");
+        long countOfHomeTeamScoredInFirstHalftime = teamGoalsView.getHomeTeam().get("scoredInFirstHalftime");
+
+        assertEquals(expectedCount, countOfHomeTeamScored);
+        assertEquals(expectedCount, countOfHomeTeamScoredInFirstHalftime);
     }
 
     @Test
@@ -48,9 +51,11 @@ public class TeamGoalsAggregatorTest {
 
         teamGoalsView = teamGoalsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, teamGoalsView.getAwayTeamScored());
-        assertEquals(expectedCount, teamGoalsView.getAwayTeamScoredHalfTime());
+        long countOfAwayTeamScored = teamGoalsView.getAwayTeam().get("scoredInTheWholeGame");
+        long countOfAwayTeamScoredInFirstHalftime = teamGoalsView.getAwayTeam().get("scoredInFirstHalftime");
 
+        assertEquals(expectedCount, countOfAwayTeamScored);
+        assertEquals(expectedCount, countOfAwayTeamScoredInFirstHalftime);
     }
 
     @Test
@@ -62,8 +67,11 @@ public class TeamGoalsAggregatorTest {
 
         teamGoalsView = teamGoalsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, teamGoalsView.getBothTeamsScored());
-        assertEquals(expectedCount, teamGoalsView.getBothTeamsScoredHalfTime());
+        long countOfBothTeamsScored = teamGoalsView.getBothTeams().get("scoredInTheWholeGame");
+        long countOfBothTeamsScoredInFirstHalftime = teamGoalsView.getBothTeams().get("scoredInFirstHalftime");
+
+        assertEquals(expectedCount, countOfBothTeamsScored);
+        assertEquals(expectedCount, countOfBothTeamsScoredInFirstHalftime);
     }
 
     @Test
@@ -75,9 +83,11 @@ public class TeamGoalsAggregatorTest {
 
         teamGoalsView = teamGoalsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, teamGoalsView.getAwayTeamScored());
-        assertEquals(expectedCount, teamGoalsView.getAwayTeamScoredHalfTime());
+        long countOfAwayTeamScored = teamGoalsView.getAwayTeam().get("scoredInTheWholeGame");
+        long countOfAwayTeamScoredInFirstHalftime = teamGoalsView.getAwayTeam().get("scoredInFirstHalftime");
 
+        assertEquals(expectedCount, countOfAwayTeamScored);
+        assertEquals(expectedCount, countOfAwayTeamScoredInFirstHalftime);
     }
 
     @Test
@@ -90,9 +100,11 @@ public class TeamGoalsAggregatorTest {
 
         teamGoalsView = teamGoalsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, teamGoalsView.getHomeTeamScored());
-        assertEquals(expectedCount, teamGoalsView.getHomeTeamScoredHalfTime());
+        long countOfHomeTeamScored = teamGoalsView.getHomeTeam().get("scoredInTheWholeGame");
+        long countOfHomeTeamScoredInFirstHalftime = teamGoalsView.getHomeTeam().get("scoredInFirstHalftime");
 
+        assertEquals(expectedCount, countOfHomeTeamScored);
+        assertEquals(expectedCount, countOfHomeTeamScoredInFirstHalftime);
     }
 
     @Test
@@ -104,12 +116,21 @@ public class TeamGoalsAggregatorTest {
 
         teamGoalsView = teamGoalsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, teamGoalsView.getHomeTeamScored());
-        assertEquals(expectedCount, teamGoalsView.getHomeTeamScoredHalfTime());
-        assertEquals(expectedCount, teamGoalsView.getBothTeamsScored());
-        assertEquals(expectedCount, teamGoalsView.getBothTeamsScoredHalfTime());
-        assertEquals(expectedCount, teamGoalsView.getAwayTeamScored());
-        assertEquals(expectedCount, teamGoalsView.getAwayTeamScoredHalfTime());
+        long countOfHomeTeamScored = teamGoalsView.getHomeTeam().get("scoredInTheWholeGame");
+        long countOfHomeTeamScoredInFirstHalftime = teamGoalsView.getHomeTeam().get("scoredInFirstHalftime");
+
+        long countOfAwayTeamScored = teamGoalsView.getAwayTeam().get("scoredInTheWholeGame");
+        long countOfAwayTeamScoredInFirstHalftime = teamGoalsView.getAwayTeam().get("scoredInFirstHalftime");
+
+        long countOfBothTeamsScored = teamGoalsView.getBothTeams().get("scoredInTheWholeGame");
+        long countOfBothTeamsScoredInFirstHalftime = teamGoalsView.getBothTeams().get("scoredInFirstHalftime");
+
+        assertEquals(expectedCount, countOfHomeTeamScored);
+        assertEquals(expectedCount, countOfHomeTeamScoredInFirstHalftime);
+        assertEquals(expectedCount, countOfAwayTeamScored);
+        assertEquals(expectedCount, countOfAwayTeamScoredInFirstHalftime);
+        assertEquals(expectedCount, countOfBothTeamsScored);
+        assertEquals(expectedCount, countOfBothTeamsScoredInFirstHalftime);
     }
 
     private void createMatches(int numberOfMatchesToCreate, int outcome) {
