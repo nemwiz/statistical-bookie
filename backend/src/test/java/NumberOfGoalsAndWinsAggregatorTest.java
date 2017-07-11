@@ -3,18 +3,18 @@ import helper.Constants;
 import model.Match;
 import org.junit.Before;
 import org.junit.Test;
-import viewmodel.NumberOfGoalsAndWinsView;
+import viewmodel.NumberOfGoalsAndWinsModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertEquals;
 
 public class NumberOfGoalsAndWinsAggregatorTest {
 
     private NumberOfGoalsAndWinsAggregator numberOfGoalsAndWinsAggregator;
-    private NumberOfGoalsAndWinsView numberOfGoalsAndWinsView;
+    private NumberOfGoalsAndWinsModel numberOfGoalsAndWinsView;
     private List<Match> matches;
     private int expectedCount;
 
@@ -33,10 +33,15 @@ public class NumberOfGoalsAndWinsAggregatorTest {
 
         numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCount, numberOfGoalsAndWinsView.getHomeTeamWinAndOneGoalScored());
-        assertEquals(expectedCount, numberOfGoalsAndWinsView.getHomeTeamWinAndTwoGoalsScored());
-        assertEquals(expectedCount, numberOfGoalsAndWinsView.getHomeTeamWinAndThreeGoalsScored());
-        assertFalse(expectedCount == numberOfGoalsAndWinsView.getHomeTeamWinAndFourOrMoreGoalsScored());
+        long winAndOneGoalScored = numberOfGoalsAndWinsView.getHomeTeam().get("winAndOneGoalScored");
+        long winAndTwoGoalsScored = numberOfGoalsAndWinsView.getHomeTeam().get("winAndTwoGoalsScored");
+        long winAndThreeGoalsScored =numberOfGoalsAndWinsView.getHomeTeam().get("winAndThreeGoalsScored");
+        long winAndFourOrMoreGoalsScored = numberOfGoalsAndWinsView.getHomeTeam().get("winAndFourOrMoreGoalsScored");
+
+        assertEquals(expectedCount, winAndOneGoalScored);
+        assertEquals(expectedCount, winAndTwoGoalsScored);
+        assertEquals(expectedCount, winAndThreeGoalsScored);
+        assertFalse(expectedCount == winAndFourOrMoreGoalsScored);
     }
 
     @Test
@@ -51,10 +56,16 @@ public class NumberOfGoalsAndWinsAggregatorTest {
 
         numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCountOfDrawMatches, numberOfGoalsAndWinsView.getDrawAndOneGoalScored());
-        assertFalse(expectedCountOfDrawMatches == numberOfGoalsAndWinsView.getDrawAndTwoGoalsScored());
-        assertEquals(expectedCountOfAwayMatches, numberOfGoalsAndWinsView.getAwayTeamWinAndOneGoalScored());
-        assertFalse(expectedCountOfAwayMatches == numberOfGoalsAndWinsView.getAwayTeamWinAndTwoGoalsScored());
+        long drawAndOneGoalScored = numberOfGoalsAndWinsView.getDraw().get("winAndOneGoalScored");
+        long drawAndTwoGoalsScored = numberOfGoalsAndWinsView.getDraw().get("winAndTwoGoalsScored");
+        long awayWinAndOneGoalScored =numberOfGoalsAndWinsView.getAwayTeam().get("winAndOneGoalScored");
+        long awayWinAndTwoGoalsScored = numberOfGoalsAndWinsView.getAwayTeam().get("winAndTwoGoalsScored");
+
+
+        assertEquals(expectedCountOfDrawMatches, drawAndOneGoalScored);
+        assertFalse(expectedCountOfDrawMatches == drawAndTwoGoalsScored);
+        assertEquals(expectedCountOfAwayMatches, awayWinAndOneGoalScored);
+        assertFalse(expectedCountOfAwayMatches == awayWinAndTwoGoalsScored);
     }
 
     @Test
@@ -71,12 +82,20 @@ public class NumberOfGoalsAndWinsAggregatorTest {
 
         numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
 
-        assertEquals(expectedCountOfHomeMatches, numberOfGoalsAndWinsView.getHomeTeamWinAndOneGoalScored());
-        assertEquals(expectedCountOfDrawMatches, numberOfGoalsAndWinsView.getDrawAndOneGoalScored());
-        assertEquals(expectedCountOfAwayMatches, numberOfGoalsAndWinsView.getAwayTeamWinAndOneGoalScored());
-        assertEquals(expectedCountOfHomeMatches, numberOfGoalsAndWinsView.getHomeTeamWinAndFourOrMoreGoalsScored());
-        assertEquals(expectedCountOfDrawMatches, numberOfGoalsAndWinsView.getDrawAndFourOrMoreGoalsScored());
-        assertEquals(expectedCountOfAwayMatches, numberOfGoalsAndWinsView.getAwayTeamWinAndFourOrMoreGoalsScored());
+        long winAndOneGoalScored = numberOfGoalsAndWinsView.getHomeTeam().get("winAndOneGoalScored");
+        long drawAndOneGoalScored = numberOfGoalsAndWinsView.getDraw().get("winAndOneGoalScored");
+        long awayWinAndOneGoalScored =numberOfGoalsAndWinsView.getAwayTeam().get("winAndOneGoalScored");
+
+        long homeWinAndFourOrMoreGoalsScored = numberOfGoalsAndWinsView.getHomeTeam().get("winAndFourOrMoreGoalsScored");
+        long drawAndFourOrMoreGoalsScored = numberOfGoalsAndWinsView.getDraw().get("winAndFourOrMoreGoalsScored");
+        long awayWinAndFourOrMoreGoalsScored =numberOfGoalsAndWinsView.getAwayTeam().get("winAndFourOrMoreGoalsScored");
+
+        assertEquals(expectedCountOfHomeMatches, winAndOneGoalScored);
+        assertEquals(expectedCountOfDrawMatches, drawAndOneGoalScored);
+        assertEquals(expectedCountOfAwayMatches, awayWinAndOneGoalScored);
+        assertEquals(expectedCountOfHomeMatches, homeWinAndFourOrMoreGoalsScored);
+        assertEquals(expectedCountOfDrawMatches, drawAndFourOrMoreGoalsScored);
+        assertEquals(expectedCountOfAwayMatches, awayWinAndFourOrMoreGoalsScored);
     }
 
     private void createMatches(long numberOfMatchesToCreate, int numberOfGoals, String finalOutcome) {

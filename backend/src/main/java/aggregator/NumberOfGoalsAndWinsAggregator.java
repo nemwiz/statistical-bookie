@@ -3,11 +3,13 @@ package aggregator;
 import collecter.NumberOfGoalsCollecter;
 import helper.Constants;
 import model.Match;
-import viewmodel.NumberOfGoalsAndWinsView;
+import viewmodel.NumberOfGoalsAndWinsModel;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-public class NumberOfGoalsAndWinsAggregator extends Aggregator {
+public class NumberOfGoalsAndWinsAggregator {
 
     private List<Match> matches;
 
@@ -15,127 +17,40 @@ public class NumberOfGoalsAndWinsAggregator extends Aggregator {
         this.matches = matches;
     }
 
-    @Override
-    public NumberOfGoalsAndWinsView getAggregatedCount() {
+    public NumberOfGoalsAndWinsModel getAggregatedCount() {
 
-        return new NumberOfGoalsAndWinsView(
-                countMatchesWithHomeTeamWinAndOneGoal(),
-                countMatchesWithHomeTeamWinAndTwoGoals(),
-                countMatchesWithHomeTeamWinAndThreeGoals(),
-                countMatchesWithHomeTeamWinAndFourOrMoreGoals(),
-                countMatchesWithDrawAndOneGoal(),
-                countMatchesWithDrawAndTwoGoals(),
-                countMatchesWithDrawAndThreeGoals(),
-                countMatchesWithDrawAndFourOrMoreGoals(),
-                countMatchesWithAwayTeamWinAndOneGoal(),
-                countMatchesWithAwayTeamWinAndTwoGoals(),
-                countMatchesWithAwayTeamWinAndThreeGoals(),
-                countMatchesWithAwayTeamWinAndFourOrMoreGoals()
+        Map<String, Long> homeTeamResults = this.convertValuesToMap(this.getCount(Constants.HOME_TEAM_WIN));
+        Map<String, Long> awayTeamResults = this.convertValuesToMap(this.getCount(Constants.AWAY_TEAM_WIN));
+        Map<String, Long> drawResults = this.convertValuesToMap(this.getCount(Constants.DRAW));
+
+        return new NumberOfGoalsAndWinsModel(
+                homeTeamResults,
+                awayTeamResults,
+                drawResults
         );
     }
 
-    private long countMatchesWithHomeTeamWinAndOneGoal() {
+    private long[] getCount(String whichTeamWon) {
 
-        return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.HOME_TEAM_WIN))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.ONE_GOAL))
-                .count();
+        long winAndOneGoalScoredCount = this.countMatches(whichTeamWon, Constants.ONE_GOAL);
+        long winAndTwoGoalsScoredCount = this.countMatches(whichTeamWon, Constants.TWO_GOALS);
+        long winAndThreeGoalsScoredCount = this.countMatches(whichTeamWon, Constants.THREE_GOALS);
+        long winAndFourOrMoreGoalsScoredCount = this.countMatches(whichTeamWon, Constants.FOUR_GOALS);
+
+        return new long[]{
+                winAndOneGoalScoredCount,
+                winAndTwoGoalsScoredCount,
+                winAndThreeGoalsScoredCount,
+                winAndFourOrMoreGoalsScoredCount
+        };
     }
 
-    private long countMatchesWithHomeTeamWinAndTwoGoals() {
+    private long countMatches(String whichTeamWon, int goalsLimit) {
 
         return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.HOME_TEAM_WIN))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.TWO_GOALS))
+                .filter(match -> isMatchOutcome(match, whichTeamWon))
+                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, goalsLimit))
                 .count();
-
-    }
-
-    private long countMatchesWithHomeTeamWinAndThreeGoals() {
-
-        return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.HOME_TEAM_WIN))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.THREE_GOALS))
-                .count();
-
-    }
-
-    private long countMatchesWithHomeTeamWinAndFourOrMoreGoals() {
-
-        return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.HOME_TEAM_WIN))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.FOUR_GOALS))
-                .count();
-
-    }
-
-    private long countMatchesWithDrawAndOneGoal() {
-
-        return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.DRAW))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.ONE_GOAL))
-                .count();
-
-    }
-
-    private long countMatchesWithDrawAndTwoGoals() {
-
-        return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.DRAW))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.TWO_GOALS))
-                .count();
-
-    }
-
-    private long countMatchesWithDrawAndThreeGoals() {
-
-        return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.DRAW))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.THREE_GOALS))
-                .count();
-
-    }
-
-    private long countMatchesWithDrawAndFourOrMoreGoals() {
-
-        return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.DRAW))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.FOUR_GOALS))
-                .count();
-    }
-
-    private long countMatchesWithAwayTeamWinAndOneGoal() {
-
-        return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.AWAY_TEAM_WIN))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.ONE_GOAL))
-                .count();
-    }
-
-    private long countMatchesWithAwayTeamWinAndTwoGoals() {
-
-        return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.AWAY_TEAM_WIN))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.TWO_GOALS))
-                .count();
-
-    }
-
-    private long countMatchesWithAwayTeamWinAndThreeGoals() {
-
-        return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.AWAY_TEAM_WIN))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.THREE_GOALS))
-                .count();
-    }
-
-    private long countMatchesWithAwayTeamWinAndFourOrMoreGoals() {
-
-        return this.matches.stream()
-                .filter(match -> isMatchOutcome(match, Constants.AWAY_TEAM_WIN))
-                .filter(match -> isNumberOfGoalsAboveGoalLimit(match, Constants.FOUR_GOALS))
-                .count();
-
     }
 
     private boolean isNumberOfGoalsAboveGoalLimit(Match match, int goalsLimit) {
@@ -146,4 +61,16 @@ public class NumberOfGoalsAndWinsAggregator extends Aggregator {
         return match.getFinalOutcome().equals(outcome);
     }
 
+
+    private Map<String, Long> convertValuesToMap(long[] results) {
+
+        Map<String, Long> resultsMap = new LinkedHashMap<>();
+
+        resultsMap.put("winAndOneGoalScored", results[0]);
+        resultsMap.put("winAndTwoGoalsScored", results[1]);
+        resultsMap.put("winAndThreeGoalsScored", results[2]);
+        resultsMap.put("winAndFourOrMoreGoalsScored", results[3]);
+
+        return resultsMap;
+    }
 }
