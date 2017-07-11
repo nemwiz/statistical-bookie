@@ -1,5 +1,6 @@
 package model;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -7,44 +8,59 @@ import org.mongodb.morphia.annotations.Id;
 public class Fixture {
 
     @Id
-    private int fixtureId;
-    private String countryName;
+    private ObjectId fixtureId;
     private int leagueId;
-    private String homeTeamName;
-    private String awayTeamName;
-    private String fixtureDate;
-    private String seasonYears;
-    private String week;
+    private String leagueCode;
+    private String leagueName;
+    private String countryName;
+    private int round;
+    private String date;
+    private String time;
+    private String seasonYear;
+    private String homeTeam;
+    private String awayTeam;
 
-    public int getFixtureId() {
+    public ObjectId getFixtureId() {
         return fixtureId;
-    }
-
-    public String getCountryName() {
-        return countryName;
     }
 
     public int getLeagueId() {
         return leagueId;
     }
 
-    public String getHomeTeamName() {
-        return homeTeamName;
+    public String getLeagueCode() {
+        return leagueCode;
     }
 
-    public String getAwayTeamName() {
-        return awayTeamName;
+    public String getLeagueName() {
+        return leagueName;
     }
 
-    public String getFixtureDate() {
-        return fixtureDate;
+    public String getCountryName() {
+        return countryName;
     }
 
-    public String getSeasonYears() {
-        return seasonYears;
+    public int getRound() {
+        return round;
     }
 
-    public String getWeek() {
-        return week;
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getSeasonYear() {
+        return seasonYear;
+    }
+
+    public String getHomeTeam() {
+        return homeTeam;
+    }
+
+    public String getAwayTeam() {
+        return awayTeam;
     }
 }

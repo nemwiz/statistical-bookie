@@ -24,12 +24,11 @@ public class FixturesDAO {
 
     public List<Fixture> getUpcomingFixtures(int leagueId) {
 
-        // TODO Implement querying on current week and current season
 
         return this.datastore.getDatastore()
                 .createQuery(Fixture.class)
                 .field(LEAGUE_ID).equal(leagueId)
-                .order("-fixtureDate")
+                .order("date")
                 .asList();
     }
 }
