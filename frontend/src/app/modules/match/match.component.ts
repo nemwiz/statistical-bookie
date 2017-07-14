@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
 import {FixturesService} from "../../services/fixtures.service";
 import {Subscription} from "rxjs/Subscription";
+import {MatchService} from "../../services/match.service";
+import {MatchObject} from "../../interfaces/match/match-object";
+import {Fixture} from "../../interfaces/fixture";
+
+declare var jQuery: any;
 
 @Component({
   selector: 'match',
@@ -11,20 +16,37 @@ import {Subscription} from "rxjs/Subscription";
 export class MatchComponent implements OnInit {
 
   fixtureId: string;
+  fixture: Fixture;
   fixtureSubcription: Subscription;
+  matches: MatchObject = <any> {};
+
+  toggle: boolean = true;
 
   constructor(private route: ActivatedRoute,
-              private fixturesService: FixturesService) {
-    route.params.subscribe(params => { this.fixtureId = params['fixtureId']; });
+              private fixturesService: FixturesService,
+              private matchService: MatchService) {
+    route.params.subscribe(params => {
+      this.fixtureId = params['fixtureId'];
+    });
 
     this.fixtureSubcription = this.fixturesService.fixturesSubject.subscribe(
       fixture => {
-        console.log('Fixture received', fixture);
-      }
-    );
+        this.fixture = fixture;
+        this.matchService.getMatchesByTeams(fixture.homeTeam, fixture.awayTeam)
+          .subscribe((matches: MatchObject) => {
+            this.matches = matches;
+          });
+      });
+
   }
 
   ngOnInit() {
+    jQuery('.ui.accordion').accordion();
+  }
+
+  toggleContent(event) {
+    console.log(event);
+    this.toggle = !this.toggle;
   }
 
   ngOnDestroy() {

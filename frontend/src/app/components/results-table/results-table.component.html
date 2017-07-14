@@ -1,0 +1,21 @@
+<div class="ui top attached tabular secondary pointing inverted menu">
+  <a *ngFor="let key of tabKeys; let i = index" attr.data-tab="{{i}}"
+     class="item {{i === activeTab ? 'active' : ''}}" (click)="setActiveTab(i)">{{key}}</a>
+</div>
+
+<div *ngFor="let key of tabKeys; let i = index"
+     class="ui bottom attached tab inverted {{i === activeTab ? 'active' : ''}} segment" attr.data-tab="{{i}}">
+  <table class="ui inverted three unstackable blue small table">
+    <thead>
+    <th>Na poslednjih</th>
+    <th>5 mečeva</th>
+    <th>10 mečeva</th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let result of results[key] | keys">
+      <td>{{result.key}}</td>
+      <td>{{result.value}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

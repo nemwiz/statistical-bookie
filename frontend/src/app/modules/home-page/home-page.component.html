@@ -15,7 +15,7 @@
 </div>
 
 <div class="ui inverted segment fixtures-table">
-  <div class="ui inverted relaxed divided selection list">
+  <div class="ui inverted relaxed divided selection large list">
     <div *ngFor="let fixture of filteredFixtures" class=" item">
       <a [routerLink]="['/fixtures', fixture.fixtureId.counter]" (click)="pushFixture(fixture)">
         <div class="content">

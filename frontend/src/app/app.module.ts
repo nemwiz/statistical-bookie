@@ -10,12 +10,16 @@ import {LeaguesService} from "./services/leagues.service";
 import {MatchService} from "./services/match.service";
 import {HttpModule} from "@angular/http";
 import { MatchComponent } from './modules/match/match.component';
+import { KeysPipe } from './common/keys-pipe';
+import { ResultsTableComponent } from './components/results-table/results-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
-    MatchComponent
+    MatchComponent,
+    KeysPipe,
+    ResultsTableComponent
   ],
   imports: [
     BrowserModule,
