@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.*;
 
 public class MainController {
 
@@ -37,16 +38,37 @@ public class MainController {
 
         Instant start = Instant.now();
 
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
         List<AggregatedMatchesMetaView> matchesMetaViews = new ArrayList<>();
 
         List<Match> lastFiveMatches = this.matchDAO.getMatchesByTeamNames(homeTeamName, awayTeamName, 5);
         List<Match> lastTenMatches = this.matchDAO.getMatchesByTeamNames(homeTeamName, awayTeamName, 10);
 
-        AggregatedMatchesMetaView fiveMatchesView = getAggregatedMatchesMetaView(lastFiveMatches);
-        AggregatedMatchesMetaView tenMatchesView = getAggregatedMatchesMetaView(lastTenMatches);
+        Future<AggregatedMatchesMetaView> fiveMatchesView = executor.submit(() -> this.getAggregatedMatchesMetaView(lastFiveMatches));
+        Future<AggregatedMatchesMetaView> tenMatchesView = executor.submit(() -> this.getAggregatedMatchesMetaView(lastTenMatches));
 
-        matchesMetaViews.add(fiveMatchesView);
-        matchesMetaViews.add(tenMatchesView);
+        try {
+            matchesMetaViews.add(fiveMatchesView.get(4, TimeUnit.SECONDS));
+            matchesMetaViews.add(tenMatchesView.get(4, TimeUnit.SECONDS));
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            executor.shutdown();
+            executor.awaitTermination(5, TimeUnit.SECONDS);
+        }
+        catch (InterruptedException e) {
+            System.err.println("tasks interrupted");
+        }
+        finally {
+            if (!executor.isTerminated()) {
+                System.err.println("cancel non-finished tasks");
+            }
+            executor.shutdownNow();
+            System.out.println("Executor shutdown finished");
+        }
 
         Instant end = Instant.now();
         System.out.println(Duration.between(start, end));
