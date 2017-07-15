@@ -26,12 +26,12 @@ public class MatchDAO {
 
     }
 
-    public List<Match> getMatchesByTeamNames(String homeTeamName, String awayTeamName) {
+    public List<Match> getMatchesByTeamNames(String homeTeamName, String awayTeamName, int numberOfMatches) {
 
         return this.datastore.getDatastore().createQuery(Match.class)
                 .field("homeTeam").contains(homeTeamName)
                 .field("awayTeam").contains(awayTeamName)
-                .limit(10)
+                .limit(numberOfMatches)
                 .order("-date")
                 .asList();
 

@@ -12,35 +12,32 @@ import java.util.function.Function;
 
 public class NumberOfGoalsAggregator {
 
-    private List<Match> matches;
-
-    public NumberOfGoalsAggregator(List<Match> matches) {
-        this.matches = matches;
+    public NumberOfGoalsAggregator() {
     }
 
-    public NumberOfGoalsModel getAggregatedCount() {
+    public NumberOfGoalsModel getAggregatedCount(List<Match> matches) {
 
-        long[] countOfFullTimeGoalsHomeTeam = getCountFullTime(this.matches, Constants.HOME_TEAM);
-        long[] countOfHalfTimeGoalsHomeTeam = getCountHalfTime(this.matches, Constants.HOME_TEAM);
-        long[] countOfSecondHalfTimeGoalsHomeTeam = getCountSecondHalfTime(this.matches, Constants.HOME_TEAM);
+        long[] countOfFullTimeGoalsHomeTeam = getCountFullTime(matches, Constants.HOME_TEAM);
+        long[] countOfHalfTimeGoalsHomeTeam = getCountHalfTime(matches, Constants.HOME_TEAM);
+        long[] countOfSecondHalfTimeGoalsHomeTeam = getCountSecondHalfTime(matches, Constants.HOME_TEAM);
 
         Map<String, Long> homeTeamResults = this.convertValuesToMap(countOfFullTimeGoalsHomeTeam, countOfHalfTimeGoalsHomeTeam, countOfSecondHalfTimeGoalsHomeTeam);
 
-        long[] countOfFullTimeGoalsAwayTeam = getCountFullTime(this.matches, Constants.AWAY_TEAM);
-        long[] countOfHalfTimeGoalsAwayTeam = getCountHalfTime(this.matches, Constants.AWAY_TEAM);
-        long[] countOfSecondHalfTimeGoalsAwayTeam = getCountSecondHalfTime(this.matches, Constants.AWAY_TEAM);
+        long[] countOfFullTimeGoalsAwayTeam = getCountFullTime(matches, Constants.AWAY_TEAM);
+        long[] countOfHalfTimeGoalsAwayTeam = getCountHalfTime(matches, Constants.AWAY_TEAM);
+        long[] countOfSecondHalfTimeGoalsAwayTeam = getCountSecondHalfTime(matches, Constants.AWAY_TEAM);
 
         Map<String, Long> awayTeamResults = this.convertValuesToMap(countOfFullTimeGoalsAwayTeam, countOfHalfTimeGoalsAwayTeam, countOfSecondHalfTimeGoalsAwayTeam);
 
-        long[] countOfFullTimeGoals = getCountFullTime(this.matches, Constants.BOTH_TEAMS);
-        long[] countOfHalfTimeGoals = getCountHalfTime(this.matches, Constants.BOTH_TEAMS);
-        long[] countOfSecondHalfTimeGoals = getCountSecondHalfTime(this.matches, Constants.BOTH_TEAMS);
+        long[] countOfFullTimeGoals = getCountFullTime(matches, Constants.BOTH_TEAMS);
+        long[] countOfHalfTimeGoals = getCountHalfTime(matches, Constants.BOTH_TEAMS);
+        long[] countOfSecondHalfTimeGoals = getCountSecondHalfTime(matches, Constants.BOTH_TEAMS);
 
         Map<String, Long> bothTeamsResults = this.convertValuesToMap(countOfFullTimeGoals, countOfHalfTimeGoals, countOfSecondHalfTimeGoals);
 
         return new NumberOfGoalsModel(
                 homeTeamResults,
-                awayTeamResults,bothTeamsResults
+                awayTeamResults, bothTeamsResults
         );
     }
 

@@ -30,9 +30,9 @@ public class TeamGoalsAggregatorTest {
 
         expectedCount = 14;
         createMatches(expectedCount, ONLY_HOME_TEAM_SCORED);
-        teamGoalsAggregator = new TeamGoalsAggregator(matches);
+        teamGoalsAggregator = new TeamGoalsAggregator();
 
-        teamGoalsView = teamGoalsAggregator.getAggregatedCount();
+        teamGoalsView = teamGoalsAggregator.getAggregatedCount(this.matches);
 
         long countOfHomeTeamScored = teamGoalsView.getHomeTeam().get("scoredInTheWholeGame");
         long countOfHomeTeamScoredInFirstHalftime = teamGoalsView.getHomeTeam().get("scoredInFirstHalftime");
@@ -47,9 +47,9 @@ public class TeamGoalsAggregatorTest {
         expectedCount = 0;
         int numberOfMatchesToCreate = 5;
         createMatches(numberOfMatchesToCreate, ONLY_HOME_TEAM_SCORED);
-        teamGoalsAggregator = new TeamGoalsAggregator(matches);
+        teamGoalsAggregator = new TeamGoalsAggregator();
 
-        teamGoalsView = teamGoalsAggregator.getAggregatedCount();
+        teamGoalsView = teamGoalsAggregator.getAggregatedCount(this.matches);
 
         long countOfAwayTeamScored = teamGoalsView.getAwayTeam().get("scoredInTheWholeGame");
         long countOfAwayTeamScoredInFirstHalftime = teamGoalsView.getAwayTeam().get("scoredInFirstHalftime");
@@ -63,9 +63,9 @@ public class TeamGoalsAggregatorTest {
 
         expectedCount = 3;
         createMatches(expectedCount, BOTH_TEAMS_SCORED);
-        teamGoalsAggregator = new TeamGoalsAggregator(matches);
+        teamGoalsAggregator = new TeamGoalsAggregator();
 
-        teamGoalsView = teamGoalsAggregator.getAggregatedCount();
+        teamGoalsView = teamGoalsAggregator.getAggregatedCount(this.matches);
 
         long countOfBothTeamsScored = teamGoalsView.getBothTeams().get("scoredInTheWholeGame");
         long countOfBothTeamsScoredInFirstHalftime = teamGoalsView.getBothTeams().get("scoredInFirstHalftime");
@@ -79,9 +79,9 @@ public class TeamGoalsAggregatorTest {
 
         expectedCount = 5;
         createMatches(expectedCount, ONLY_AWAY_TEAM_SCORED);
-        teamGoalsAggregator = new TeamGoalsAggregator(matches);
+        teamGoalsAggregator = new TeamGoalsAggregator();
 
-        teamGoalsView = teamGoalsAggregator.getAggregatedCount();
+        teamGoalsView = teamGoalsAggregator.getAggregatedCount(this.matches);
 
         long countOfAwayTeamScored = teamGoalsView.getAwayTeam().get("scoredInTheWholeGame");
         long countOfAwayTeamScoredInFirstHalftime = teamGoalsView.getAwayTeam().get("scoredInFirstHalftime");
@@ -96,9 +96,9 @@ public class TeamGoalsAggregatorTest {
         expectedCount = 0;
         int numberOfMatchesToCreate = 3;
         createMatches(numberOfMatchesToCreate, ONLY_AWAY_TEAM_SCORED);
-        teamGoalsAggregator = new TeamGoalsAggregator(matches);
+        teamGoalsAggregator = new TeamGoalsAggregator();
 
-        teamGoalsView = teamGoalsAggregator.getAggregatedCount();
+        teamGoalsView = teamGoalsAggregator.getAggregatedCount(this.matches);
 
         long countOfHomeTeamScored = teamGoalsView.getHomeTeam().get("scoredInTheWholeGame");
         long countOfHomeTeamScoredInFirstHalftime = teamGoalsView.getHomeTeam().get("scoredInFirstHalftime");
@@ -112,9 +112,9 @@ public class TeamGoalsAggregatorTest {
 
         expectedCount = 6;
         createMatches(expectedCount, BOTH_TEAMS_SCORED);
-        teamGoalsAggregator = new TeamGoalsAggregator(matches);
+        teamGoalsAggregator = new TeamGoalsAggregator();
 
-        teamGoalsView = teamGoalsAggregator.getAggregatedCount();
+        teamGoalsView = teamGoalsAggregator.getAggregatedCount(this.matches);
 
         long countOfHomeTeamScored = teamGoalsView.getHomeTeam().get("scoredInTheWholeGame");
         long countOfHomeTeamScoredInFirstHalftime = teamGoalsView.getHomeTeam().get("scoredInFirstHalftime");

@@ -25,15 +25,16 @@ public class NumberOfGoalsPerMatchResource {
 
     @GET
     @Timed
-    public List<Match> getMatches(@QueryParam("homeTeamName") String homeTeamName) {
-        return mainController.getMatches(homeTeamName);
+    public List<AggregatedMatchesMetaView> getMatches(@QueryParam("homeTeam") String homeTeam,
+                                  @QueryParam("awayTeam") String awayTeam) {
+        return mainController.getMatchesByTeamNames(homeTeam, awayTeam);
     }
 
 
     @Path("/aggregate/")
     @GET
     @Timed
-    public AggregatedMatchesMetaView getMatchesByTeams(
+    public List<AggregatedMatchesMetaView> getMatchesByTeams(
             @QueryParam("homeTeam") String homeTeam,
             @QueryParam("awayTeam") String awayTeam) {
         return mainController.getMatchesByTeamNames(homeTeam, awayTeam);

@@ -5,6 +5,9 @@ import dao.MatchDAO;
 import model.Match;
 import viewmodel.*;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,65 +21,48 @@ public class MainController {
     private NumberOfGoalsAndWinsAggregator numberOfGoalsAndWinsAggregator;
     private HalfTimeWithMoreGoalsAggregator halfTimeWithMoreGoalsAggregator;
     private ExactResultAggregator exactResultAggregator;
-    private LeagueTableAggregator leagueTableAggregator;
 
-    public MainController(MatchDAO matchDAO) {
+    public MainController(MatchDAO matchDAO, NumberOfGoalsAggregator numberOfGoalsAggregator, TeamGoalsAggregator teamGoalsAggregator, MatchOutcomeAggregator matchOutcomeAggregator, MatchDetailOutcomeAggregator matchDetailOutcomeAggregator, NumberOfGoalsAndWinsAggregator numberOfGoalsAndWinsAggregator, HalfTimeWithMoreGoalsAggregator halfTimeWithMoreGoalsAggregator, ExactResultAggregator exactResultAggregator) {
         this.matchDAO = matchDAO;
+        this.numberOfGoalsAggregator = numberOfGoalsAggregator;
+        this.teamGoalsAggregator = teamGoalsAggregator;
+        this.matchOutcomeAggregator = matchOutcomeAggregator;
+        this.matchDetailOutcomeAggregator = matchDetailOutcomeAggregator;
+        this.numberOfGoalsAndWinsAggregator = numberOfGoalsAndWinsAggregator;
+        this.halfTimeWithMoreGoalsAggregator = halfTimeWithMoreGoalsAggregator;
+        this.exactResultAggregator = exactResultAggregator;
     }
 
-    public List<Match> getMatches(String homeTeamName) {
+    public List<AggregatedMatchesMetaView> getMatchesByTeamNames(String homeTeamName, String awayTeamName) {
 
-        List<Match> matches = this.matchDAO.getMatchesByTeamName(homeTeamName);
-        List<Match> currentSeasonMatches = this.matchDAO.getAllMatchesForCurrentSeason();
+        Instant start = Instant.now();
 
-        numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
-        teamGoalsAggregator = new TeamGoalsAggregator(matches);
-        matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
-        matchDetailOutcomeAggregator = new MatchDetailOutcomeAggregator(matches);
-        numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
-        halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator(matches);
-        exactResultAggregator = new ExactResultAggregator(matches);
-        leagueTableAggregator = new LeagueTableAggregator(currentSeasonMatches);
+        List<AggregatedMatchesMetaView> matchesMetaViews = new ArrayList<>();
 
-        NumberOfGoalsModel numberOfGoalsMetaView = numberOfGoalsAggregator.getAggregatedCount();
-        TeamGoalsModel teamGoalsView = teamGoalsAggregator.getAggregatedCount();
-        MatchOutcomeModel matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
-        MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
-        NumberOfGoalsAndWinsModel numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
-        HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();
-        Map<String, Long> exactResultsView = exactResultAggregator.aggregate();
-        leagueTableAggregator.aggregate();
+        List<Match> lastFiveMatches = this.matchDAO.getMatchesByTeamNames(homeTeamName, awayTeamName, 5);
+        List<Match> lastTenMatches = this.matchDAO.getMatchesByTeamNames(homeTeamName, awayTeamName, 10);
 
-        System.out.println(numberOfGoalsMetaView);
-        System.out.println(teamGoalsView);
-        System.out.println(matchOutcomeView);
-        System.out.println(matchDetailOutcomeView);
-        System.out.println(numberOfGoalsAndWinsView);
-        System.out.println(halfTimeWithMoreGoalsView);
-        System.out.println("ExactResultsView " + exactResultsView.toString());
+        AggregatedMatchesMetaView fiveMatchesView = getAggregatedMatchesMetaView(lastFiveMatches);
+        AggregatedMatchesMetaView tenMatchesView = getAggregatedMatchesMetaView(lastTenMatches);
 
-        return this.matchDAO.getMatchesByTeamName(homeTeamName);
+        matchesMetaViews.add(fiveMatchesView);
+        matchesMetaViews.add(tenMatchesView);
+
+        Instant end = Instant.now();
+        System.out.println(Duration.between(start, end));
+
+        return matchesMetaViews;
     }
 
-    public AggregatedMatchesMetaView getMatchesByTeamNames(String homeTeamName, String awayTeamName) {
+    private AggregatedMatchesMetaView getAggregatedMatchesMetaView(List<Match> matches) {
 
-        List<Match> matches = this.matchDAO.getMatchesByTeamNames(homeTeamName, awayTeamName);
-
-        numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
-        teamGoalsAggregator = new TeamGoalsAggregator(matches);
-        matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
-        matchDetailOutcomeAggregator = new MatchDetailOutcomeAggregator(matches);
-        numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
-        halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator(matches);
-        exactResultAggregator = new ExactResultAggregator(matches);
-
-        NumberOfGoalsModel numberOfGoalsMetaView = numberOfGoalsAggregator.getAggregatedCount();
-        TeamGoalsModel teamGoalsView = teamGoalsAggregator.getAggregatedCount();
-        MatchOutcomeModel matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
-        MatchDetailOutcomeView matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
-        NumberOfGoalsAndWinsModel numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
-        HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount();
-        Map<String, Long> exactResultsView = exactResultAggregator.aggregate();
+        NumberOfGoalsModel numberOfGoalsMetaView = this.numberOfGoalsAggregator.getAggregatedCount(matches);
+        TeamGoalsModel teamGoalsView = this.teamGoalsAggregator.getAggregatedCount(matches);
+        MatchOutcomeModel matchOutcomeView = this.matchOutcomeAggregator.getAggregatedCount(matches);
+        MatchDetailOutcomeView matchDetailOutcomeView = this.matchDetailOutcomeAggregator.getAggregatedCount(matches);
+        NumberOfGoalsAndWinsModel numberOfGoalsAndWinsView = this.numberOfGoalsAndWinsAggregator.getAggregatedCount(matches);
+        HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = this.halfTimeWithMoreGoalsAggregator.getAggregatedCount(matches);
+        Map<String, Long> exactResultsView = this.exactResultAggregator.aggregate(matches);
 
         return new AggregatedMatchesMetaView(numberOfGoalsMetaView,
                 teamGoalsView,

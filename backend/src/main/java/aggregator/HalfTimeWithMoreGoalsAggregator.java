@@ -5,39 +5,24 @@ import model.Match;
 import viewmodel.HalfTimeWithMoreGoalsView;
 
 import java.util.List;
+import java.util.function.Function;
 
-public class HalfTimeWithMoreGoalsAggregator extends Aggregator {
+public class HalfTimeWithMoreGoalsAggregator {
 
-    private List<Match> matches;
-
-    public HalfTimeWithMoreGoalsAggregator(List<Match> matches) {
-        this.matches = matches;
+    public HalfTimeWithMoreGoalsAggregator() {
     }
 
-    @Override
-    public HalfTimeWithMoreGoalsView getAggregatedCount() {
+    public HalfTimeWithMoreGoalsView getAggregatedCount(List<Match> matches) {
         return new HalfTimeWithMoreGoalsView(
-                countWhenMoreGoalsAreScoredInFirstHalfTime(),
-                countWhenMoreGoalsAreScoredInSecondHalfTime(),
-                countEvenNumberOfGoalsWasScoredInBothHalfTimes()
+                countMatches(matches, this::isMoreGoalsScoredInFirstHalfTime),
+                countMatches(matches, this::isMoreGoalsScoredInSecondHalfTime),
+                countMatches(matches, this::isEvenNumberOfGoalsScoredInBothHalfTimes)
         );
     }
 
-    private long countWhenMoreGoalsAreScoredInFirstHalfTime() {
+    private long countMatches(List<Match> matches, Function<Match, Boolean> filteringFunction) {
         return matches.stream()
-                .filter(this::isMoreGoalsScoredInFirstHalfTime)
-                .count();
-    }
-
-    private long countWhenMoreGoalsAreScoredInSecondHalfTime() {
-        return matches.stream()
-                .filter(this::isMoreGoalsScoredInSecondHalfTime)
-                .count();
-    }
-
-    private long countEvenNumberOfGoalsWasScoredInBothHalfTimes() {
-        return matches.stream()
-                .filter(this::isEvenNumberOfGoalsScoredInBothHalfTimes)
+                .filter(filteringFunction::apply)
                 .count();
     }
 
@@ -47,7 +32,6 @@ public class HalfTimeWithMoreGoalsAggregator extends Aggregator {
         int sumOfGoalsSecondHalfTime = NumberOfGoalsCollecter.sumGoalsFullTime(match) - sumOfGoalsFirstHalfTime;
 
         return sumOfGoalsFirstHalfTime > sumOfGoalsSecondHalfTime;
-
     }
 
     private boolean isMoreGoalsScoredInSecondHalfTime(Match match) {
@@ -56,7 +40,6 @@ public class HalfTimeWithMoreGoalsAggregator extends Aggregator {
         int sumOfGoalsSecondHalfTime = NumberOfGoalsCollecter.sumGoalsFullTime(match) - sumOfGoalsFirstHalfTime;
 
         return sumOfGoalsFirstHalfTime < sumOfGoalsSecondHalfTime;
-
     }
 
     private boolean isEvenNumberOfGoalsScoredInBothHalfTimes(Match match) {
@@ -65,7 +48,6 @@ public class HalfTimeWithMoreGoalsAggregator extends Aggregator {
         int sumOfGoalsSecondHalfTime = NumberOfGoalsCollecter.sumGoalsFullTime(match) - sumOfGoalsFirstHalfTime;
 
         return sumOfGoalsFirstHalfTime == sumOfGoalsSecondHalfTime;
-
     }
 
 }

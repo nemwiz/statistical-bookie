@@ -29,9 +29,9 @@ public class NumberOfGoalsAndWinsAggregatorTest {
         expectedCount = 3;
         int numberOfGoalsScoredOnMatch = 3;
         createMatches(expectedCount, numberOfGoalsScoredOnMatch, Constants.HOME_TEAM_WIN);
-        numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
+        numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator();
 
-        numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
+        numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount(this.matches);
 
         long winAndOneGoalScored = numberOfGoalsAndWinsView.getHomeTeam().get("winAndOneGoalScored");
         long winAndTwoGoalsScored = numberOfGoalsAndWinsView.getHomeTeam().get("winAndTwoGoalsScored");
@@ -52,9 +52,9 @@ public class NumberOfGoalsAndWinsAggregatorTest {
         int numberOfGoalsScoredOnMatch = 1;
         createMatches(expectedCountOfDrawMatches, numberOfGoalsScoredOnMatch, Constants.DRAW);
         createMatches(expectedCountOfAwayMatches, numberOfGoalsScoredOnMatch, Constants.AWAY_TEAM_WIN);
-        numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
+        numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator();
 
-        numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
+        numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount(this.matches);
 
         long drawAndOneGoalScored = numberOfGoalsAndWinsView.getDraw().get("winAndOneGoalScored");
         long drawAndTwoGoalsScored = numberOfGoalsAndWinsView.getDraw().get("winAndTwoGoalsScored");
@@ -78,9 +78,9 @@ public class NumberOfGoalsAndWinsAggregatorTest {
         createMatches(expectedCountOfHomeMatches, numberOfGoalsScoredOnMatch, Constants.HOME_TEAM_WIN);
         createMatches(expectedCountOfDrawMatches, numberOfGoalsScoredOnMatch, Constants.DRAW);
         createMatches(expectedCountOfAwayMatches, numberOfGoalsScoredOnMatch, Constants.AWAY_TEAM_WIN);
-        numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator(matches);
+        numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator();
 
-        numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount();
+        numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount(this.matches);
 
         long winAndOneGoalScored = numberOfGoalsAndWinsView.getHomeTeam().get("winAndOneGoalScored");
         long drawAndOneGoalScored = numberOfGoalsAndWinsView.getDraw().get("winAndOneGoalScored");

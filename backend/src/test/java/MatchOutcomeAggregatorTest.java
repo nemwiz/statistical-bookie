@@ -26,9 +26,9 @@ public class MatchOutcomeAggregatorTest {
 
         long countOfMatches = 3;
         createMatches(countOfMatches, HOME_TEAM_WIN);
-        matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
+        matchOutcomeAggregator = new MatchOutcomeAggregator();
 
-        matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
+        matchOutcomeView = matchOutcomeAggregator.getAggregatedCount(this.matches);
 
         long fullTimeCount = matchOutcomeView.getHomeTeam().get("winFulltime");
         long halfTimeCount = matchOutcomeView.getHomeTeam().get("winFirstHalftime");
@@ -42,9 +42,9 @@ public class MatchOutcomeAggregatorTest {
 
         long countOfDrawMatches = 2;
         createMatches(countOfDrawMatches, DRAW);
-        matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
+        matchOutcomeAggregator = new MatchOutcomeAggregator();
 
-        matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
+        matchOutcomeView = matchOutcomeAggregator.getAggregatedCount(this.matches);
 
         long fullTimeCount = matchOutcomeView.getDraw().get("winFulltime");
         long halfTimeCount = matchOutcomeView.getDraw().get("winFirstHalftime");
@@ -58,9 +58,9 @@ public class MatchOutcomeAggregatorTest {
 
         long countOfAwayTeamWinMatches = 5;
         createMatches(countOfAwayTeamWinMatches, AWAY_TEAM_WIN);
-        matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
+        matchOutcomeAggregator = new MatchOutcomeAggregator();
 
-        matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
+        matchOutcomeView = matchOutcomeAggregator.getAggregatedCount(this.matches);
 
         long fullTimeCount = matchOutcomeView.getAwayTeam().get("winFulltime");
         long halfTimeCount = matchOutcomeView.getAwayTeam().get("winFirstHalftime");
@@ -73,9 +73,9 @@ public class MatchOutcomeAggregatorTest {
     public void checkThatCountOfMatchWinAtFullAndHalfTimeIsZeroWhenNoMatches() {
 
         long expectedCount = 0;
-        matchOutcomeAggregator = new MatchOutcomeAggregator(matches);
+        matchOutcomeAggregator = new MatchOutcomeAggregator();
 
-        matchOutcomeView = matchOutcomeAggregator.getAggregatedCount();
+        matchOutcomeView = matchOutcomeAggregator.getAggregatedCount(this.matches);
 
         long fullTimeCountAwayTeam = matchOutcomeView.getAwayTeam().get("winFulltime");
         long halfTimeCountAwayTeam = matchOutcomeView.getAwayTeam().get("winFirstHalftime");

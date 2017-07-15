@@ -28,9 +28,9 @@ public class NumberOfGoalsAggregatorTest {
         expectedCount = 9;
         numberOfGoalsScoredOnMatch = 0;
         createMatches(expectedCount, numberOfGoalsScoredOnMatch);
-        numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
+        numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
 
         long noGoals = numberOfGoalsView.getBothTeams().get("noGoals");
         long noGoalsHalfTime = numberOfGoalsView.getBothTeams().get("noGoalsHalfTime");
@@ -47,9 +47,9 @@ public class NumberOfGoalsAggregatorTest {
         expectedCount = 3;
         numberOfGoalsScoredOnMatch = 1;
         createMatches(expectedCount, numberOfGoalsScoredOnMatch);
-        numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
+        numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
 
         long oneGoal = numberOfGoalsView.getBothTeams().get("oneGoal");
         long oneGoalHalfTime = numberOfGoalsView.getBothTeams().get("oneGoalHalfTime");
@@ -65,9 +65,9 @@ public class NumberOfGoalsAggregatorTest {
         expectedCount = 6;
         numberOfGoalsScoredOnMatch = 2;
         createMatches(expectedCount, numberOfGoalsScoredOnMatch);
-        numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
+        numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
 
         long twoGoal = numberOfGoalsView.getBothTeams().get("twoGoals");
         long twoGoalHalfTime = numberOfGoalsView.getBothTeams().get("twoGoalsHalfTime");
@@ -83,9 +83,9 @@ public class NumberOfGoalsAggregatorTest {
         expectedCount = 1;
         numberOfGoalsScoredOnMatch = 3;
         createMatches(expectedCount, numberOfGoalsScoredOnMatch);
-        numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
+        numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
 
         long threeGoals = numberOfGoalsView.getBothTeams().get("threeGoals");
         long threeGoalsHalfTime = numberOfGoalsView.getBothTeams().get("threeGoalsHalfTime");
@@ -102,9 +102,9 @@ public class NumberOfGoalsAggregatorTest {
         expectedCount = 5;
         numberOfGoalsScoredOnMatch = 4;
         createMatches(expectedCount, numberOfGoalsScoredOnMatch);
-        numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
+        numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
 
         long fourOrMoreGoals = numberOfGoalsView.getBothTeams().get("fourOrMoreGoals");
         long fourOrMoreGoalsHalfTime = numberOfGoalsView.getBothTeams().get("fourOrMoreGoalsHalfTime");
@@ -122,9 +122,9 @@ public class NumberOfGoalsAggregatorTest {
         expectedCount = 0;
         numberOfGoalsScoredOnMatch = 0;
         createMatches(numberOfMatchesToAdd, numberOfGoalsScoredOnMatch);
-        numberOfGoalsAggregator = new NumberOfGoalsAggregator(matches);
+        numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount();
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
 
         long noGoals = numberOfGoalsView.getBothTeams().get("noGoals");
         long oneGoal = numberOfGoalsView.getBothTeams().get("oneGoal");

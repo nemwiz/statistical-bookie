@@ -1,3 +1,4 @@
+import aggregator.*;
 import com.meltmedia.dropwizard.mongo.MongoBundle;
 import controller.FixturesController;
 import controller.LeaguesController;
@@ -45,14 +46,32 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
 
         MorphiaDatastore morphiaDatastore = new MorphiaDatastore(mongoBundle.getClient(), mongoBundle.getDB().getName());
 
-        MatchDAO matchDAO = new MatchDAO(morphiaDatastore);
-        FixturesDAO fixturesDAO = new FixturesDAO(morphiaDatastore);
-        LeaguesDAO leaguesDAO = new LeaguesDAO(morphiaDatastore);
-
         final DatabaseHealthCheck databaseHealthCheck = new DatabaseHealthCheck(morphiaDatastore.getDatastore());
         environment.healthChecks().register("MorphiaDatastore health check", databaseHealthCheck);
 
-        final MainController mainController = new MainController(matchDAO);
+        // Main controller set up
+        MatchDAO matchDAO = new MatchDAO(morphiaDatastore);
+        final NumberOfGoalsAggregator numberOfGoalsAggregator = new NumberOfGoalsAggregator();
+        final TeamGoalsAggregator teamGoalsAggregator = new TeamGoalsAggregator();
+        final MatchOutcomeAggregator matchOutcomeAggregator = new MatchOutcomeAggregator();
+        final MatchDetailOutcomeAggregator matchDetailOutcomeAggregator = new MatchDetailOutcomeAggregator();
+        final NumberOfGoalsAndWinsAggregator numberOfGoalsAndWinsAggregator = new NumberOfGoalsAndWinsAggregator();
+        final HalfTimeWithMoreGoalsAggregator halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator();
+        final ExactResultAggregator exactResultAggregator = new ExactResultAggregator();
+
+        final MainController mainController = new MainController(
+                matchDAO,
+                numberOfGoalsAggregator,
+                teamGoalsAggregator,
+                matchOutcomeAggregator,
+                matchDetailOutcomeAggregator,
+                numberOfGoalsAndWinsAggregator,
+                halfTimeWithMoreGoalsAggregator,
+                exactResultAggregator);
+
+        FixturesDAO fixturesDAO = new FixturesDAO(morphiaDatastore);
+        LeaguesDAO leaguesDAO = new LeaguesDAO(morphiaDatastore);
+
         final FixturesController fixturesController = new FixturesController(fixturesDAO);
         final LeaguesController leaguesController = new LeaguesController(leaguesDAO);
 

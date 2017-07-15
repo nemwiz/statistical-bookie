@@ -8,21 +8,17 @@ import java.util.stream.Collectors;
 
 public class ExactResultAggregator {
 
-    private List<Match> matches;
-
-    public ExactResultAggregator(List<Match> matches) {
-        this.matches = matches;
+    public ExactResultAggregator() {
     }
 
-    public Map<String, Long> aggregate() {
+    public Map<String, Long> aggregate(List<Match> matches) {
 
-        return this.matches.stream()
-                .map(match -> getMatchExactResultAsString(match))
+        return matches.stream()
+                .map(this::getMatchExactResultAsString)
                 .collect(Collectors.groupingBy(exactResult -> exactResult, Collectors.counting()));
     }
 
     private String getMatchExactResultAsString(Match match) {
-
         return String.valueOf(match.getHomeTeamGoals()) + ":" + String.valueOf(match.getAwayTeamGoals());
     }
 

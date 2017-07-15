@@ -7,89 +7,33 @@ import java.util.List;
 
 import static helper.Constants.*;
 
-public class MatchDetailOutcomeAggregator extends Aggregator {
+public class MatchDetailOutcomeAggregator {
 
     private List<Match> matches;
 
-    public MatchDetailOutcomeAggregator(List<Match> matches) {
-        this.matches = matches;
+    public MatchDetailOutcomeAggregator() {
     }
 
-    @Override
-    public MatchDetailOutcomeView getAggregatedCount() {
+    public MatchDetailOutcomeView getAggregatedCount(List<Match> matches) {
+
+        this.matches = matches;
+
         return new MatchDetailOutcomeView(
-                countWhenHomeTeamWonOnHalfTimeAndWonInTheEnd(),
-                countWhenHomeTeamWonOnHalfTimeAndDrewInTheEnd(),
-                countWhenHomeTeamWonOnHalfTimeAndLostInTheEnd(),
-                countWhenHalfTimeWasDrawAndHomeTeamWonInTheEnd(),
-                countWhenHalfTimeWasDrawAndWasDrawInTheEnd(),
-                countWhenHalfTimeWasDrawAndAwayTeamWonInTheEnd(),
-                countWhenAwayTeamWonOnHalfTimeAndWonInTheEnd(),
-                countWhenAwayTeamWonOnHalfTimeAndDrewInTheEnd(),
-                countWhenAwayTeamWonOnHalfTimeAndHomeTeamWonInTheEnd()
+                countMatches(HOME_TEAM_WIN, HOME_TEAM_WIN),
+                countMatches(HOME_TEAM_WIN, DRAW),
+                countMatches(HOME_TEAM_WIN, AWAY_TEAM_WIN),
+                countMatches(DRAW, HOME_TEAM_WIN),
+                countMatches(DRAW, DRAW),
+                countMatches(DRAW, AWAY_TEAM_WIN),
+                countMatches(AWAY_TEAM_WIN, AWAY_TEAM_WIN),
+                countMatches(AWAY_TEAM_WIN, DRAW),
+                countMatches(AWAY_TEAM_WIN, HOME_TEAM_WIN)
         );
     }
 
-    private long countWhenHomeTeamWonOnHalfTimeAndWonInTheEnd() {
-
-        return matches.stream()
-                .filter(match -> getMatchPredicate(match, HOME_TEAM_WIN, HOME_TEAM_WIN))
-                .count();
-    }
-
-    private long countWhenHomeTeamWonOnHalfTimeAndDrewInTheEnd() {
-
-        return matches.stream()
-                .filter(match -> getMatchPredicate(match, HOME_TEAM_WIN, DRAW))
-                .count();
-    }
-
-    private long countWhenHomeTeamWonOnHalfTimeAndLostInTheEnd() {
-
-        return matches.stream()
-                .filter(match -> getMatchPredicate(match, HOME_TEAM_WIN, AWAY_TEAM_WIN))
-                .count();
-    }
-
-    private long countWhenHalfTimeWasDrawAndHomeTeamWonInTheEnd() {
-
-        return matches.stream()
-                .filter(match -> getMatchPredicate(match, DRAW, HOME_TEAM_WIN))
-                .count();
-    }
-
-    private long countWhenHalfTimeWasDrawAndWasDrawInTheEnd() {
-
-        return matches.stream()
-                .filter(match -> getMatchPredicate(match, DRAW, DRAW))
-                .count();
-    }
-
-    private long countWhenHalfTimeWasDrawAndAwayTeamWonInTheEnd() {
-
-        return matches.stream()
-                .filter(match -> getMatchPredicate(match, DRAW, AWAY_TEAM_WIN))
-                .count();
-    }
-
-    private long countWhenAwayTeamWonOnHalfTimeAndWonInTheEnd() {
-
-        return matches.stream()
-                .filter(match -> getMatchPredicate(match, AWAY_TEAM_WIN, AWAY_TEAM_WIN))
-                .count();
-    }
-
-    private long countWhenAwayTeamWonOnHalfTimeAndDrewInTheEnd() {
-
-        return matches.stream()
-                .filter(match -> getMatchPredicate(match, AWAY_TEAM_WIN, DRAW))
-                .count();
-    }
-
-    private long countWhenAwayTeamWonOnHalfTimeAndHomeTeamWonInTheEnd() {
-
-        return matches.stream()
-                .filter(match -> getMatchPredicate(match, AWAY_TEAM_WIN, HOME_TEAM_WIN))
+    private long countMatches(String conditionOne, String conditionTwo) {
+        return this.matches.stream()
+                .filter(match -> getMatchPredicate(match, conditionOne, conditionTwo))
                 .count();
     }
 

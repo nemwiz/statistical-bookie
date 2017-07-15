@@ -11,17 +11,14 @@ import java.util.Map;
 
 public class NumberOfGoalsAndWinsAggregator {
 
-    private List<Match> matches;
-
-    public NumberOfGoalsAndWinsAggregator(List<Match> matches) {
-        this.matches = matches;
+    public NumberOfGoalsAndWinsAggregator() {
     }
 
-    public NumberOfGoalsAndWinsModel getAggregatedCount() {
+    public NumberOfGoalsAndWinsModel getAggregatedCount(List<Match> matches) {
 
-        Map<String, Long> homeTeamResults = this.convertValuesToMap(this.getCount(Constants.HOME_TEAM_WIN));
-        Map<String, Long> awayTeamResults = this.convertValuesToMap(this.getCount(Constants.AWAY_TEAM_WIN));
-        Map<String, Long> drawResults = this.convertValuesToMap(this.getCount(Constants.DRAW));
+        Map<String, Long> homeTeamResults = this.convertValuesToMap(this.getCount(matches, Constants.HOME_TEAM_WIN));
+        Map<String, Long> awayTeamResults = this.convertValuesToMap(this.getCount(matches, Constants.AWAY_TEAM_WIN));
+        Map<String, Long> drawResults = this.convertValuesToMap(this.getCount(matches, Constants.DRAW));
 
         return new NumberOfGoalsAndWinsModel(
                 homeTeamResults,
@@ -30,12 +27,12 @@ public class NumberOfGoalsAndWinsAggregator {
         );
     }
 
-    private long[] getCount(String whichTeamWon) {
+    private long[] getCount(List<Match> matches, String whichTeamWon) {
 
-        long winAndOneGoalScoredCount = this.countMatches(whichTeamWon, Constants.ONE_GOAL);
-        long winAndTwoGoalsScoredCount = this.countMatches(whichTeamWon, Constants.TWO_GOALS);
-        long winAndThreeGoalsScoredCount = this.countMatches(whichTeamWon, Constants.THREE_GOALS);
-        long winAndFourOrMoreGoalsScoredCount = this.countMatches(whichTeamWon, Constants.FOUR_GOALS);
+        long winAndOneGoalScoredCount = this.countMatches(matches, whichTeamWon, Constants.ONE_GOAL);
+        long winAndTwoGoalsScoredCount = this.countMatches(matches, whichTeamWon, Constants.TWO_GOALS);
+        long winAndThreeGoalsScoredCount = this.countMatches(matches, whichTeamWon, Constants.THREE_GOALS);
+        long winAndFourOrMoreGoalsScoredCount = this.countMatches(matches, whichTeamWon, Constants.FOUR_GOALS);
 
         return new long[]{
                 winAndOneGoalScoredCount,
@@ -45,9 +42,9 @@ public class NumberOfGoalsAndWinsAggregator {
         };
     }
 
-    private long countMatches(String whichTeamWon, int goalsLimit) {
+    private long countMatches(List<Match> matches, String whichTeamWon, int goalsLimit) {
 
-        return this.matches.stream()
+        return matches.stream()
                 .filter(match -> isMatchOutcome(match, whichTeamWon))
                 .filter(match -> isNumberOfGoalsAboveGoalLimit(match, goalsLimit))
                 .count();

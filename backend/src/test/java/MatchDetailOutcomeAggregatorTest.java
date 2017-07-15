@@ -105,8 +105,8 @@ public class MatchDetailOutcomeAggregatorTest {
 
     private long setUpWithParameters(long countOfMatches, String halfTimeOutcome, String finalOutcome) {
         createMatches(countOfMatches, halfTimeOutcome, finalOutcome);
-        matchDetailOutcomeAggregator = new MatchDetailOutcomeAggregator(matches);
-        matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount();
+        matchDetailOutcomeAggregator = new MatchDetailOutcomeAggregator();
+        matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount(this.matches);
         return countOfMatches;
     }
 

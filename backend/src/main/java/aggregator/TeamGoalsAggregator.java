@@ -12,40 +12,23 @@ import java.util.function.Function;
 
 public class TeamGoalsAggregator {
 
-    private List<Match> matches;
-
-    public TeamGoalsAggregator(List<Match> matches) {
-        this.matches = matches;
+    public TeamGoalsAggregator() {
     }
 
+    public TeamGoalsModel getAggregatedCount(List<Match> matches) {
 
-    public TeamGoalsModel getAggregatedCount() {
-
-        Map<String, Long> homeTeamResults = this.convertValuesToMap(this.getHomeTeamCount());
-        Map<String, Long> awayTeamResults = this.convertValuesToMap(this.getAwayTeamCount());
-        Map<String, Long> bothTeamsResults = this.convertValuesToMap(this.getBothTeamsCount());
+        Map<String, Long> homeTeamResults = this.convertValuesToMap(this.getHomeTeamCount(matches));
+        Map<String, Long> awayTeamResults = this.convertValuesToMap(this.getAwayTeamCount(matches));
+        Map<String, Long> bothTeamsResults = this.convertValuesToMap(this.getBothTeamsCount(matches));
 
         return new TeamGoalsModel(homeTeamResults, awayTeamResults, bothTeamsResults);
     }
 
-    private long[] getHomeTeamCount() {
+    private long[] getHomeTeamCount(List<Match> matches) {
 
-        long scoredInTheWholeGame = this.countMatches(match -> match.getHomeTeamGoals() > Constants.ZERO_GOALS);
-        long scoredInFirstHalftime = this.countMatches(match -> match.getHomeTeamHalftimeGoals() > Constants.ZERO_GOALS);
-        long scoredInSecondHalftime = this.countMatches(match -> NumberOfGoalsCollecter.getHomeTeamGoalsScoredInSecondHalfTime(match) > Constants.ZERO_GOALS);
-
-        return new long[]{
-                scoredInTheWholeGame,
-                scoredInFirstHalftime,
-                scoredInSecondHalftime
-        };
-    }
-
-    private long[] getAwayTeamCount() {
-
-        long scoredInTheWholeGame = this.countMatches(match -> match.getAwayTeamGoals() > Constants.ZERO_GOALS);
-        long scoredInFirstHalftime = this.countMatches(match -> match.getAwayTeamHalftimeGoals() > Constants.ZERO_GOALS);
-        long scoredInSecondHalftime = this.countMatches(match -> NumberOfGoalsCollecter.getAwayTeamGoalsScoredInSecondHalfTime(match) > Constants.ZERO_GOALS);
+        long scoredInTheWholeGame = this.countMatches(matches, match -> match.getHomeTeamGoals() > Constants.ZERO_GOALS);
+        long scoredInFirstHalftime = this.countMatches(matches, match -> match.getHomeTeamHalftimeGoals() > Constants.ZERO_GOALS);
+        long scoredInSecondHalftime = this.countMatches(matches, match -> NumberOfGoalsCollecter.getHomeTeamGoalsScoredInSecondHalfTime(match) > Constants.ZERO_GOALS);
 
         return new long[]{
                 scoredInTheWholeGame,
@@ -54,11 +37,11 @@ public class TeamGoalsAggregator {
         };
     }
 
-    private long[] getBothTeamsCount() {
+    private long[] getAwayTeamCount(List<Match> matches) {
 
-        long scoredInTheWholeGame = this.countMatches(this::isBothTeamsScored);
-        long scoredInFirstHalftime = this.countMatches(this::isBothTeamsScoredOnHalfTime);
-        long scoredInSecondHalftime = this.countMatches(this::isBothTeamsScoredInSecondHalfTime);
+        long scoredInTheWholeGame = this.countMatches(matches, match -> match.getAwayTeamGoals() > Constants.ZERO_GOALS);
+        long scoredInFirstHalftime = this.countMatches(matches, match -> match.getAwayTeamHalftimeGoals() > Constants.ZERO_GOALS);
+        long scoredInSecondHalftime = this.countMatches(matches, match -> NumberOfGoalsCollecter.getAwayTeamGoalsScoredInSecondHalfTime(match) > Constants.ZERO_GOALS);
 
         return new long[]{
                 scoredInTheWholeGame,
@@ -67,9 +50,22 @@ public class TeamGoalsAggregator {
         };
     }
 
-    private long countMatches(Function<Match, Boolean> filteringFunction) {
+    private long[] getBothTeamsCount(List<Match> matches) {
 
-        return this.matches.stream()
+        long scoredInTheWholeGame = this.countMatches(matches, this::isBothTeamsScored);
+        long scoredInFirstHalftime = this.countMatches(matches, this::isBothTeamsScoredOnHalfTime);
+        long scoredInSecondHalftime = this.countMatches(matches, this::isBothTeamsScoredInSecondHalfTime);
+
+        return new long[]{
+                scoredInTheWholeGame,
+                scoredInFirstHalftime,
+                scoredInSecondHalftime
+        };
+    }
+
+    private long countMatches(List<Match> matches, Function<Match, Boolean> filteringFunction) {
+
+        return matches.stream()
                 .filter(filteringFunction::apply)
                 .count();
     }
