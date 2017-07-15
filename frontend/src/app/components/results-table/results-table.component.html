@@ -12,9 +12,10 @@
     <th>10 mečeva</th>
     </thead>
     <tbody>
-    <tr *ngFor="let result of results[key] | keys">
-      <td>{{result.key}}</td>
-      <td>{{result.value}}</td>
+    <tr *ngFor="let fiveMatch of fiveMatches[key] | keys">
+      <td>{{fiveMatch.key}}</td>
+      <td>{{fiveMatch.value}}</td>
+      <td>{{tenMatches[key][fiveMatch.key]}}</td>
     </tr>
     </tbody>
   </table>

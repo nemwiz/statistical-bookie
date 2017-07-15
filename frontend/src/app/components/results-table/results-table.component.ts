@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
+import {MatchObject} from "../../interfaces/match/match-object";
 
 declare var jQuery: any;
 
@@ -6,18 +7,19 @@ declare var jQuery: any;
   selector: 'results-table',
   templateUrl: './results-table.component.html',
   styleUrls: ['./results-table.component.scss'],
-  inputs: ['results']
+  inputs: ['fiveMatches', 'tenMatches']
 })
 export class ResultsTableComponent implements OnInit {
 
   activeTab: number = 0;
   tabKeys: string[] = [];
-  results: object;
+  fiveMatches: MatchObject;
+  tenMatches: MatchObject;
 
   constructor() { }
 
   ngOnInit() {
-    this.tabKeys = Object.keys(this.results);
+    this.tabKeys = Object.keys(this.fiveMatches);
 
     jQuery('.menu .item')
       .tab();

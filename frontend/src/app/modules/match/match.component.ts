@@ -18,7 +18,7 @@ export class MatchComponent implements OnInit {
   fixtureId: string;
   fixture: Fixture;
   fixtureSubcription: Subscription;
-  matches: MatchObject = <any> {};
+  matches: MatchObject[] = [];
 
   toggle: boolean = true;
 
@@ -33,7 +33,7 @@ export class MatchComponent implements OnInit {
       fixture => {
         this.fixture = fixture;
         this.matchService.getMatchesByTeams(fixture.homeTeam, fixture.awayTeam)
-          .subscribe((matches: MatchObject) => {
+          .subscribe((matches) => {
             this.matches = matches;
           });
       });
@@ -45,7 +45,6 @@ export class MatchComponent implements OnInit {
   }
 
   toggleContent(event) {
-    console.log(event);
     this.toggle = !this.toggle;
   }
 

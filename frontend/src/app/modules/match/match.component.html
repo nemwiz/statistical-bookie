@@ -17,7 +17,7 @@
 
 <div class="ui inverted fluid accordion">
 
-  <div *ngFor="let data of matches | keys">
+  <div *ngFor="let data of matches[0] | keys">
     <div class="title">
       <i class="dropdown icon"></i>
       {{data.key}}
@@ -26,7 +26,9 @@
     <div class="content">
       <div class="transition hidden">
 
-        <results-table [results]="matches[data.key]"></results-table>
+        <results-table [fiveMatches]="matches[0][data.key]"
+                       [tenMatches]="matches[1][data.key]">
+        </results-table>
 
       </div>
     </div>
