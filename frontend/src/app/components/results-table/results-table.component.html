@@ -1,22 +1,39 @@
-<div class="ui top attached tabular secondary pointing inverted menu">
+<div *ngIf="structured" class="ui top attached tabular secondary pointing inverted menu">
   <a *ngFor="let key of tabKeys; let i = index" attr.data-tab="{{i}}"
      class="item {{i === activeTab ? 'active' : ''}}" (click)="setActiveTab(i)">{{key}}</a>
 </div>
 
-<div *ngFor="let key of tabKeys; let i = index"
-     class="ui bottom attached tab inverted {{i === activeTab ? 'active' : ''}} segment" attr.data-tab="{{i}}">
-  <table class="ui inverted three unstackable blue small table">
-    <thead>
-    <th>Na poslednjih</th>
-    <th>5 mečeva</th>
-    <th>10 mečeva</th>
-    </thead>
-    <tbody>
-    <tr *ngFor="let fiveMatch of fiveMatches[key] | keys">
-      <td>{{fiveMatch.key}}</td>
-      <td>{{fiveMatch.value}}</td>
-      <td>{{tenMatches[key][fiveMatch.key]}}</td>
-    </tr>
-    </tbody>
-  </table>
+<div *ngIf="structured">
+  <div *ngFor="let key of tabKeys; let i = index"
+       class="ui bottom attached tab inverted {{i === activeTab ? 'active' : ''}} segment" attr.data-tab="{{i}}">
+    <table class="ui inverted three unstackable blue small table">
+      <thead>
+      <th>Na poslednjih</th>
+      <th>5 mečeva</th>
+      <th>10 mečeva</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let fiveMatch of fiveMatches[key] | keys">
+        <td>{{fiveMatch.key}}</td>
+        <td>{{fiveMatch.value}}</td>
+        <td>{{tenMatches[key][fiveMatch.key]}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<table *ngIf="!structured" class="ui inverted three unstackable blue small table">
+  <thead>
+  <th>Na poslednjih</th>
+  <th>5 mečeva</th>
+  <th>10 mečeva</th>
+  </thead>
+  <tbody>
+  <tr *ngFor="let tabKey of tabKeys">
+    <td>{{tabKey}}</td>
+    <td>{{fiveMatches[tabKey] ? fiveMatches[tabKey]: 0}}</td>
+    <td>{{tenMatches[tabKey]}}</td>
+  </tr>
+  </tbody>
+</table>

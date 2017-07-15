@@ -5,6 +5,7 @@ import {Subscription} from "rxjs/Subscription";
 import {MatchService} from "../../services/match.service";
 import {MatchObject} from "../../interfaces/match/match-object";
 import {Fixture} from "../../interfaces/fixture";
+import {pick, omit} from 'lodash';
 
 declare var jQuery: any;
 
@@ -18,7 +19,8 @@ export class MatchComponent implements OnInit {
   fixtureId: string;
   fixture: Fixture;
   fixtureSubcription: Subscription;
-  matches: MatchObject[] = [];
+  structuredMatches: object[] = [];
+  specificStructureMatches: object[] = [];
 
   toggle: boolean = true;
 
@@ -34,7 +36,7 @@ export class MatchComponent implements OnInit {
         this.fixture = fixture;
         this.matchService.getMatchesByTeams(fixture.homeTeam, fixture.awayTeam)
           .subscribe((matches) => {
-            this.matches = matches;
+            this.mapMatchObject(matches);
           });
       });
 
@@ -42,6 +44,15 @@ export class MatchComponent implements OnInit {
 
   ngOnInit() {
     jQuery('.ui.accordion').accordion();
+  }
+
+  private mapMatchObject(matches: MatchObject[]) {
+
+    matches.forEach(matchObject => {
+      this.structuredMatches.push(omit(matchObject, ['matchDetailOutcomeView', 'halfTimeWithMoreGoalsView', 'exactResultView']));
+      this.specificStructureMatches.push(pick(matchObject, ['matchDetailOutcomeView', 'halfTimeWithMoreGoalsView', 'exactResultView']));
+    });
+
   }
 
   toggleContent(event) {

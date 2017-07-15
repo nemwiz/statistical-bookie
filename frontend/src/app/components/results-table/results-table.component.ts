@@ -7,7 +7,7 @@ declare var jQuery: any;
   selector: 'results-table',
   templateUrl: './results-table.component.html',
   styleUrls: ['./results-table.component.scss'],
-  inputs: ['fiveMatches', 'tenMatches']
+  inputs: ['fiveMatches', 'tenMatches', 'structured']
 })
 export class ResultsTableComponent implements OnInit {
 
@@ -15,14 +15,25 @@ export class ResultsTableComponent implements OnInit {
   tabKeys: string[] = [];
   fiveMatches: MatchObject;
   tenMatches: MatchObject;
+  structured: boolean = true;
 
   constructor() { }
 
   ngOnInit() {
-    this.tabKeys = Object.keys(this.fiveMatches);
+
+    this.constructTabKeys();
 
     jQuery('.menu .item')
       .tab();
+  }
+
+  private constructTabKeys() {
+    let fiveMatchesKey: string[] = Object.keys(this.fiveMatches);
+    let tenMatchesKey: string[] = Object.keys(this.tenMatches);
+
+    let allKeys: string[] = [...fiveMatchesKey, ...tenMatchesKey];
+
+    this.tabKeys = Array.from(new Set(allKeys));
   }
 
   setActiveTab(tabNumber: number) {
