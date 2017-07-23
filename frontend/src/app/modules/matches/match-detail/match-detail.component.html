@@ -1,7 +1,12 @@
-<div class="ui teal two item tabular labeled borderless icon menu blue lighten-4 fixed-bottom-menu">
-  <a class="item {{activeTab === 1 ? 'active' : ''}}" (click)="setActiveTab(1)">Home <i class="table icon"></i></a>
-  <a class="item {{activeTab === 2 ? 'active' : ''}}" (click)="setActiveTab(2)">Messages <i
-    class="bar chart icon"></i></a>
+<div class="fixed-bottom-menu">
+  <ul class="tabs blue">
+    <li class="tab col s3">
+      <div class="{{activeTab === 1 ? 'active-item' : ''}}"(click)="setActiveTab(1)"><i class="table icon"></i></div>
+    </li>
+    <li class="tab col s3">
+      <div class="{{activeTab === 2 ? 'active-item' : ''}}" (click)="setActiveTab(2)"><i class="bar chart icon"></i></div>
+    </li>
+  </ul>
 </div>
 
 <loader [isLoading]="!matchStats || (isLoading && activeTab === 2)"></loader>

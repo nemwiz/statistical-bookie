@@ -13,6 +13,16 @@ $margin-offset: 10px;
   width: 100%;
   top: $top-navbar-height;
   z-index: 1000;
+
+  .active-item {
+    color: $primary-white !important;
+    border-bottom: 3px solid $primary-white;
+  }
+
+  .icon {
+    font-size: $icon-font-size;
+  }
+
 }
 
 .chart-container {
