@@ -17,9 +17,7 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
   activeTab: number = 1;
   matchStats: ResultsTableData;
   detailsParam: string;
-
-  // charts common stuff
-  chartColors: string[] = ['red', 'yellow', 'blue', 'orange', 'green'];
+  isLoading = true;
 
   constructor(private route: ActivatedRoute,
               private matchService: MatchService) {
@@ -37,6 +35,7 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
 
   setActiveTab(tab: number) {
     this.activeTab = tab;
+    this.isLoading = true;
   }
 
   mapLabels(data: object): string[] {
@@ -55,6 +54,10 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
 
   private removeNullValues(data: object): object {
     return pickBy(data, (value) => {return value !== 0});
+  }
+
+  shouldShowLoadingSpinner(event: boolean){
+    this.isLoading = event;
   }
 
   ngOnDestroy(): void {

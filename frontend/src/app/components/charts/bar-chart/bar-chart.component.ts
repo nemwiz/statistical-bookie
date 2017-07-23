@@ -1,19 +1,22 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, EventEmitter, OnInit} from "@angular/core";
 import {Bar, IChartistData} from "chartist";
+import {chartColors} from "../../../common/chart-colors";
 
 @Component({
   selector: 'bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss'],
-  inputs: ['labels', 'series', 'index', 'chartColors']
+  inputs: ['labels', 'series', 'index'],
+  outputs: ['isLoading']
 })
 export class BarChartComponent implements OnInit {
 
   labels: string[];
   series: object;
   index: number;
-  chartColors: string[];
+  chartColors: string[] = chartColors;
   colorCounter: number = 0;
+  isLoading: EventEmitter<boolean> = new EventEmitter();
 
   constructor() { }
 
@@ -33,6 +36,8 @@ export class BarChartComponent implements OnInit {
         labels: this.labels,
         series: [this.series]
       }, responsiveOptions);
+
+      this.isLoading.emit(false);
     }, 1000);
 
   }

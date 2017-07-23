@@ -13,6 +13,7 @@ import {MatchService} from "../../services/match.service";
 import {LeaguesService} from "../../services/leagues.service";
 import {FixturesService} from "../../services/fixtures.service";
 import {BarChartComponent} from "../../components/charts/bar-chart/bar-chart.component";
+import {LoaderComponent} from "../../components/loader/loader.component";
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import {BarChartComponent} from "../../components/charts/bar-chart/bar-chart.com
     PieChartComponent,
     BarChartComponent,
     MatchDetailComponent,
+    LoaderComponent
   ],
   providers: [MatchService, FixturesService, LeaguesService],
 })

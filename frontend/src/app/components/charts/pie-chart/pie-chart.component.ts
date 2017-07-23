@@ -1,18 +1,19 @@
 import {Component, OnInit} from "@angular/core";
 import {Pie, Svg} from "chartist";
+import {chartColors} from "../../../common/chart-colors";
 
 @Component({
   selector: 'pie-chart',
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss'],
-  inputs: ['labels', 'series', 'index', 'chartColors']
+  inputs: ['labels', 'series', 'index']
 })
 export class PieChartComponent implements OnInit {
 
   labels: string[];
   series: object;
   index: number;
-  chartColors: string[];
+  chartColors: string[] = chartColors;
   colorCounter: number = 0;
 
   constructor() { }
