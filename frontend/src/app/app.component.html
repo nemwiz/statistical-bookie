@@ -1,7 +1,7 @@
 <div class="navbar-fixed">
   <nav>
     <div class="nav-wrapper blue">
-      <i class="arrow left icon" (click)="navigateBack()"></i>
+      <i *ngIf="currentRoute !== '/home'" class="arrow left icon" (click)="navigateBack()"></i>
       <div class="center brand-logo">StatsBookie</div>
     </div>
   </nav>
