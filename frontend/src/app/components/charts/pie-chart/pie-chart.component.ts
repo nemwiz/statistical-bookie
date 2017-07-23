@@ -6,11 +6,10 @@ import {chartColors} from "../../../common/chart-colors";
   selector: 'pie-chart',
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss'],
-  inputs: ['labels', 'series', 'index']
+  inputs: ['series', 'index']
 })
 export class PieChartComponent implements OnInit {
 
-  labels: string[];
   series: object;
   index: number;
   chartColors: string[] = chartColors;
@@ -21,7 +20,6 @@ export class PieChartComponent implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.setUpPieChart({
-        labels: this.labels,
         series: this.series
       });
     }, 1000);
@@ -29,7 +27,7 @@ export class PieChartComponent implements OnInit {
   }
 
   private setUpPieChart(data: any) {
-    new Pie(`#pie-chart-${this.index}`, data, {donut: true, donutWidth: 80})
+    new Pie(`#pie-chart-${this.index}`, data, {donut: true, donutWidth: 80, showLabel: false})
       .on('draw', (context) => {
       if(context.type === 'slice') {
         let pathLength = context.element._node.getTotalLength();

@@ -5,6 +5,7 @@ import {Subscription} from "rxjs/Subscription";
 import {ResultsTableData} from "../../../interfaces/match/data-stats";
 import {ActivatedRoute} from "@angular/router";
 import {pickBy, values} from "lodash";
+import {chartColors} from "../../../common/chart-colors";
 
 @Component({
   selector: 'match-detail',
@@ -18,6 +19,7 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
   matchStats: ResultsTableData;
   detailsParam: string;
   isLoading = true;
+  chartColors: string[] = chartColors;
 
   constructor(private route: ActivatedRoute,
               private matchService: MatchService) {

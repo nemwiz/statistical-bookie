@@ -31,4 +31,16 @@ $margin-offset: 10px;
   @media(max-width: $ipad-screen-size) {
     flex-direction: column;
   }
+
+  .legend-container {
+    display: flex;
+
+    $legend-dimensions: 16px;
+    .legend {
+      height: $legend-dimensions;
+      width: $legend-dimensions;
+      margin-right: $legend-dimensions;
+    }
+  }
+
 }

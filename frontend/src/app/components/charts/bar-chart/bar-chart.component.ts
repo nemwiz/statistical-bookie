@@ -6,12 +6,11 @@ import {chartColors} from "../../../common/chart-colors";
   selector: 'bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss'],
-  inputs: ['labels', 'series', 'index'],
+  inputs: ['series', 'index'],
   outputs: ['isLoading']
 })
 export class BarChartComponent implements OnInit {
 
-  labels: string[];
   series: object;
   index: number;
   chartColors: string[] = chartColors;
@@ -33,7 +32,6 @@ export class BarChartComponent implements OnInit {
 
     setTimeout(() => {
       this.setUpBarChart({
-        labels: this.labels,
         series: [this.series]
       }, responsiveOptions);
 

@@ -1,10 +1,11 @@
 <div class="fixed-bottom-menu">
   <ul class="tabs blue">
     <li class="tab col s3">
-      <div class="{{activeTab === 1 ? 'active-item' : ''}}"(click)="setActiveTab(1)"><i class="table icon"></i></div>
+      <div class="{{activeTab === 1 ? 'active-item' : ''}}" (click)="setActiveTab(1)"><i class="table icon"></i></div>
     </li>
     <li class="tab col s3">
-      <div class="{{activeTab === 2 ? 'active-item' : ''}}" (click)="setActiveTab(2)"><i class="bar chart icon"></i></div>
+      <div class="{{activeTab === 2 ? 'active-item' : ''}}" (click)="setActiveTab(2)"><i class="bar chart icon"></i>
+      </div>
     </li>
   </ul>
 </div>
@@ -26,27 +27,35 @@
       <div class="chart-container" *ngFor="let data of matchStats.tenMatches | keys; let i = index; let last = last;">
 
       <span *ngIf="matchStats.isStructured">
-        <h3 class="ui block centered aligned header blue">{{data.key}}</h3>
+       <h3 class="ui block centered aligned header blue">{{data.key}}</h3>
+
+       <div class="legend-container" *ngFor="let legend of mapLabels(matchStats.tenMatches[data.key]); let j = index">
+         <div class="legend" [ngStyle]="{'background-color' : chartColors[j]}"></div>
+         <span>{{legend}}</span>
+       </div>
+
        <bar-chart (isLoading)="shouldShowLoadingSpinner($event)"
                   [index]="i"
-                  [labels]="mapLabels(matchStats.tenMatches[data.key])"
                   [series]="mapSeries(matchStats.tenMatches[data.key])">
        </bar-chart>
        <pie-chart [index]="i"
-                  [labels]="mapLabels(matchStats.tenMatches[data.key])"
                   [series]="mapSeries(matchStats.tenMatches[data.key])">
        </pie-chart>
       </span>
 
         <span *ngIf="!matchStats.isStructured && last">
-      <h3 class="ui block centered aligned header blue">{{detailsParam}}</h3>
+        <h3 class="ui block centered aligned header blue">{{detailsParam}}</h3>
+
+        <div class="legend-container" *ngFor="let legend of mapLabels(matchStats.tenMatches); let j = index">
+         <div class="legend" [ngStyle]="{'background-color' : chartColors[j]}"></div>
+         <span>{{legend}}</span>
+       </div>
+
       <bar-chart (isLoading)="shouldShowLoadingSpinner($event)"
                  [index]="i"
-                 [labels]="mapLabels(matchStats.tenMatches)"
                  [series]="mapSeries(matchStats.tenMatches)">
       </bar-chart>
       <pie-chart [index]="i"
-                 [labels]="mapLabels(matchStats.tenMatches)"
                  [series]="mapSeries(matchStats.tenMatches)">
       </pie-chart>
       </span>
