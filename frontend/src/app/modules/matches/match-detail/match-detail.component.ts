@@ -4,6 +4,7 @@ import "rxjs/add/operator/takeLast";
 import {Subscription} from "rxjs/Subscription";
 import {ResultsTableData} from "../../../interfaces/match/data-stats";
 import {ActivatedRoute} from "@angular/router";
+import {pickBy, values} from "lodash";
 
 @Component({
   selector: 'match-detail',
@@ -16,6 +17,9 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
   activeTab: number = 1;
   matchStats: ResultsTableData;
   detailsParam: string;
+
+  // charts common stuff
+  chartColors: string[] = ['red', 'yellow', 'blue', 'orange', 'green'];
 
   constructor(private route: ActivatedRoute,
               private matchService: MatchService) {
@@ -33,6 +37,24 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
 
   setActiveTab(tab: number) {
     this.activeTab = tab;
+  }
+
+  mapLabels(data: object): string[] {
+    let dataWithoutNullValues = this.removeNullValues(data);
+
+    return Object.keys(dataWithoutNullValues)
+      .sort((a, b) => {return dataWithoutNullValues[a] - dataWithoutNullValues[b]})
+      .reverse()
+      .splice(0, 5);
+  }
+
+  mapSeries(data: object): object {
+    let dataWithoutNullValues = this.removeNullValues(data);
+    return values(dataWithoutNullValues).sort().reverse().splice(0, 5);
+  }
+
+  private removeNullValues(data: object): object {
+    return pickBy(data, (value) => {return value !== 0});
   }
 
   ngOnDestroy(): void {

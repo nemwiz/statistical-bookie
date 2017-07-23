@@ -1,32 +1,23 @@
 import {Component, OnInit} from "@angular/core";
-import {pickBy, values} from "lodash";
 import {Bar, IChartistData} from "chartist";
 
 @Component({
   selector: 'bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss'],
-  inputs: ['data', 'index']
+  inputs: ['labels', 'series', 'index', 'chartColors']
 })
 export class BarChartComponent implements OnInit {
 
-  data: object;
+  labels: string[];
+  series: object;
   index: number;
+  chartColors: string[];
+  colorCounter: number = 0;
 
   constructor() { }
 
   ngOnInit() {
-
-    let dataWithoutNullValues = pickBy(this.data, (value) => {
-      return value !== 0
-    });
-
-    let sortedLabels = Object.keys(dataWithoutNullValues)
-      .sort((a, b) => {return dataWithoutNullValues[a] - dataWithoutNullValues[b]})
-      .reverse()
-      .splice(0, 5);
-
-    let sortedSeries = values(dataWithoutNullValues).sort().reverse().splice(0, 5);
 
     let responsiveOptions = [
       ['screen and (min-width: 641px) and (max-width: 1024px)', {
@@ -39,23 +30,30 @@ export class BarChartComponent implements OnInit {
 
     setTimeout(() => {
       this.setUpBarChart({
-        labels: sortedLabels,
-        series: [sortedSeries]
+        labels: this.labels,
+        series: [this.series]
       }, responsiveOptions);
     }, 1000);
 
   }
 
   private setUpBarChart(data: IChartistData, responsiveOptions: object) {
-    new Bar(`#bar-chart-${this.index}`, data, responsiveOptions).on('draw', (bars) => {
-      bars.element.animate({
+    new Bar(`#bar-chart-${this.index}`, data, responsiveOptions).on('draw', (context) => {
+      context.element.animate({
         y2: {
           begin: 0,
           dur: 1200,
-          from: bars.y1,
-          to: bars.y2
+          from: context.y1,
+          to: context.y2
         }
-      })
+      });
+
+      if(context.type === 'bar') {
+        context.element.attr({
+          style: `stroke: ${this.chartColors[this.colorCounter]};`
+        });
+        this.colorCounter++;
+      }
     });
   }
 

@@ -13,14 +13,30 @@
 
       <span *ngIf="matchStats.isStructured">
         <h3 class="ui block centered aligned header">{{data.key}}</h3>
-       <bar-chart [index]="i" [data]="matchStats.tenMatches[data.key]"></bar-chart>
-       <pie-chart [data]="matchStats.tenMatches[data.key]" [index]="i"></pie-chart>
+       <bar-chart [index]="i"
+                  [labels]="mapLabels(matchStats.tenMatches[data.key])"
+                  [series]="mapSeries(matchStats.tenMatches[data.key])"
+                  [chartColors]="chartColors">
+       </bar-chart>
+       <pie-chart [index]="i"
+                  [labels]="mapLabels(matchStats.tenMatches[data.key])"
+                  [series]="mapSeries(matchStats.tenMatches[data.key])"
+                  [chartColors]="chartColors">
+       </pie-chart>
       </span>
 
       <span *ngIf="!matchStats.isStructured && last">
-        <h3 class="ui block centered aligned header">{{detailsParam}}</h3>
-        <bar-chart [index]="i" [data]="matchStats.tenMatches"></bar-chart>
-        <pie-chart [data]="matchStats.tenMatches" [index]="i"></pie-chart>
+      <h3 class="ui block centered aligned header">{{detailsParam}}</h3>
+      <bar-chart [index]="i"
+                 [labels]="mapLabels(matchStats.tenMatches)"
+                 [series]="mapSeries(matchStats.tenMatches)"
+                 [chartColors]="chartColors">
+      </bar-chart>
+      <pie-chart [index]="i"
+                 [labels]="mapLabels(matchStats.tenMatches)"
+                 [series]="mapSeries(matchStats.tenMatches)"
+                 [chartColors]="chartColors">
+      </pie-chart>
       </span>
 
     </div>

@@ -1,57 +1,51 @@
 import {Component, OnInit} from "@angular/core";
-import {IChartistData, Pie, Svg} from "chartist";
-import {Goals} from "../../../interfaces/match/goals";
-import {pickBy, values} from "lodash";
+import {Pie, Svg} from "chartist";
 
 @Component({
   selector: 'pie-chart',
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss'],
-  inputs: ['data', 'index']
+  inputs: ['labels', 'series', 'index', 'chartColors']
 })
 export class PieChartComponent implements OnInit {
 
-  data: Goals;
+  labels: string[];
+  series: object;
   index: number;
+  chartColors: string[];
+  colorCounter: number = 0;
 
   constructor() { }
 
   ngOnInit() {
-
-    let dataWithoutNullValues = pickBy(this.data, (value) => {
-      return value !== 0
-    });
-
-    let sortedLabels = Object.keys(dataWithoutNullValues)
-      .sort((a, b) => {return dataWithoutNullValues[a] - dataWithoutNullValues[b]})
-      .reverse()
-      .splice(0, 5);
-
-    let sortedSeries = values(dataWithoutNullValues).sort().reverse().splice(0, 5);
-    let chartData: IChartistData = {
-      labels: sortedLabels,
-      series: sortedSeries
-    };
-
     setTimeout(() => {
-      this.setUpPieChart(chartData);
+      this.setUpPieChart({
+        labels: this.labels,
+        series: this.series
+      });
     }, 1000);
 
   }
 
-  private setUpPieChart(data: IChartistData) {
+  private setUpPieChart(data: any) {
     new Pie(`#pie-chart-${this.index}`, data, {donut: true, donutWidth: 80})
-      .on('draw', (data) => {
-      if(data.type === 'slice') {
-        let pathLength = data.element._node.getTotalLength();
+      .on('draw', (context) => {
+      if(context.type === 'slice') {
+        let pathLength = context.element._node.getTotalLength();
 
-        data.element.attr({
+        context.element.attr({
           'stroke-dasharray': pathLength + 'px ' + pathLength + 'px'
         });
 
+        context.element.attr({
+          style: `stroke: ${this.chartColors[this.colorCounter]};`
+        });
+
+        this.colorCounter++;
+
         let animationDefinition: any = {
           'stroke-dashoffset': {
-            id: 'anim' + data.index,
+            id: 'anim' + context.index,
             dur: 600,
             from: -pathLength + 'px',
             to:  '0px',
@@ -60,15 +54,15 @@ export class PieChartComponent implements OnInit {
           }
         };
 
-        if(data.index !== 0) {
-          animationDefinition['stroke-dashoffset'].begin = 'anim' + (data.index - 1) + '.end';
+        if(context.index !== 0) {
+          animationDefinition['stroke-dashoffset'].begin = 'anim' + (context.index - 1) + '.end';
         }
 
-        data.element.attr({
+        context.element.attr({
           'stroke-dashoffset': -pathLength + 'px'
         });
 
-        data.element.animate(animationDefinition, false);
+        context.element.animate(animationDefinition, false);
       }
     });
   }
