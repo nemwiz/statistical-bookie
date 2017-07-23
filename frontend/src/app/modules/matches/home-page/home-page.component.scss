@@ -1,4 +1,4 @@
-@import "../../../assets/variables";
+@import "../../../../assets/variables";
 
 $search-box-margin: 20px;
 
@@ -37,7 +37,6 @@ $search-box-margin: 20px;
       padding: 0.85em 0.15em;
       width: 100%;
       padding-right: 0 !important;
-      background-color: $body-background;
       color: #ffffff;
     }
 
@@ -93,8 +92,4 @@ $search-box-margin: 20px;
 
   }
 
-}
-
-.fixtures-table {
-  text-align: center;
 }

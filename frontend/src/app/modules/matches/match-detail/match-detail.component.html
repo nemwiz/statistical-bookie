@@ -1,0 +1,35 @@
+<div *ngIf="matchStats" class="scrollable-content ">
+
+  <div *ngIf="activeTab === 1">
+    <results-table
+      [isStructured]="matchStats.isStructured"
+      [fiveMatches]="matchStats.fiveMatches"
+      [tenMatches]="matchStats.tenMatches">
+    </results-table>
+  </div>
+
+  <div *ngIf="activeTab === 2">
+    <div class="chart-container" *ngFor="let data of matchStats.tenMatches | keys; let i = index; let last = last;">
+
+      <span *ngIf="matchStats.isStructured">
+        <h3 class="ui block centered aligned header">{{data.key}}</h3>
+       <bar-chart [index]="i" [data]="matchStats.tenMatches[data.key]"></bar-chart>
+       <pie-chart [data]="matchStats.tenMatches[data.key]" [index]="i"></pie-chart>
+      </span>
+
+      <span *ngIf="!matchStats.isStructured && last">
+        <h3 class="ui block centered aligned header">{{detailsParam}}</h3>
+        <bar-chart [index]="i" [data]="matchStats.tenMatches"></bar-chart>
+        <pie-chart [data]="matchStats.tenMatches" [index]="i"></pie-chart>
+      </span>
+
+    </div>
+  </div>
+
+</div>
+
+
+<div class="ui teal two item tabular labeled borderless icon menu blue lighten-4 fixed-bottom-menu">
+  <a class="item {{activeTab === 1 ? 'active' : ''}}" (click)="setActiveTab(1)">Home <i class="table icon"></i></a>
+  <a class="item {{activeTab === 2 ? 'active' : ''}}" (click)="setActiveTab(2)">Messages <i class="bar chart icon"></i></a>
+</div>

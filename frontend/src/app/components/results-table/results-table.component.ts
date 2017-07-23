@@ -1,30 +1,23 @@
 import {Component, OnInit} from "@angular/core";
-import {MatchObject} from "../../interfaces/match/match-object";
-
-declare var jQuery: any;
+import {Data} from "@angular/router";
 
 @Component({
   selector: 'results-table',
   templateUrl: './results-table.component.html',
   styleUrls: ['./results-table.component.scss'],
-  inputs: ['fiveMatches', 'tenMatches', 'structured']
+  inputs: ['fiveMatches', 'tenMatches', 'isStructured']
 })
 export class ResultsTableComponent implements OnInit {
 
-  activeTab: number = 0;
   tabKeys: string[] = [];
-  fiveMatches: MatchObject;
-  tenMatches: MatchObject;
-  structured: boolean = true;
+  fiveMatches: Data;
+  tenMatches: Data;
+  isStructured: boolean = true;
 
   constructor() { }
 
   ngOnInit() {
-
     this.constructTabKeys();
-
-    jQuery('.menu .item')
-      .tab();
   }
 
   private constructTabKeys() {
@@ -34,10 +27,6 @@ export class ResultsTableComponent implements OnInit {
     let allKeys: string[] = [...fiveMatchesKey, ...tenMatchesKey];
 
     this.tabKeys = Array.from(new Set(allKeys));
-  }
-
-  setActiveTab(tabNumber: number) {
-    this.activeTab = tabNumber;
   }
 
 }

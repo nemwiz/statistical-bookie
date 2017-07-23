@@ -1,13 +1,12 @@
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
-import {FixturesService} from "../../services/fixtures.service";
+import {ActivatedRoute, Data} from "@angular/router";
+import {FixturesService} from "../../../services/fixtures.service";
 import {Subscription} from "rxjs/Subscription";
-import {MatchService} from "../../services/match.service";
-import {MatchObject} from "../../interfaces/match/match-object";
-import {Fixture} from "../../interfaces/fixture";
-import {pick, omit} from 'lodash';
-
-declare var jQuery: any;
+import {MatchService} from "../../../services/match.service";
+import {MatchObject} from "../../../interfaces/match/match-object";
+import {Fixture} from "../../../interfaces/fixture";
+import {omit, pick} from "lodash";
+import {ResultsTableData} from "../../../interfaces/match/data-stats";
 
 @Component({
   selector: 'match',
@@ -19,19 +18,19 @@ export class MatchComponent implements OnInit {
   fixtureId: string;
   fixture: Fixture;
   fixtureSubcription: Subscription;
-  structuredMatches: object[] = [];
-  specificStructureMatches: object[] = [];
 
-  toggle: boolean = true;
+  structuredMatches: Data[] = [];
+  specificStructureMatches: Data[] = [];
 
   constructor(private route: ActivatedRoute,
               private fixturesService: FixturesService,
               private matchService: MatchService) {
+
     route.params.subscribe(params => {
       this.fixtureId = params['fixtureId'];
     });
 
-    this.fixtureSubcription = this.fixturesService.fixturesSubject.subscribe(
+    this.fixtureSubcription = this.fixturesService.fixturesObservable.subscribe(
       fixture => {
         this.fixture = fixture;
         this.matchService.getMatchesByTeams(fixture.homeTeam, fixture.awayTeam)
@@ -43,7 +42,6 @@ export class MatchComponent implements OnInit {
   }
 
   ngOnInit() {
-    jQuery('.ui.accordion').accordion();
   }
 
   private mapMatchObject(matches: MatchObject[]) {
@@ -55,8 +53,15 @@ export class MatchComponent implements OnInit {
 
   }
 
-  toggleContent(event) {
-    this.toggle = !this.toggle;
+  pushMatchData(fiveMatches: Data, tenMatches: Data, isStructured: boolean) {
+
+    let results: ResultsTableData = {
+      fiveMatches: fiveMatches,
+      tenMatches: tenMatches,
+      isStructured: isStructured
+    };
+
+    this.matchService.pushMatchData(results);
   }
 
   ngOnDestroy() {

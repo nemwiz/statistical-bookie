@@ -1,12 +1,10 @@
-<div *ngIf="structured" class="ui top attached tabular secondary pointing inverted menu">
-  <a *ngFor="let key of tabKeys; let i = index" attr.data-tab="{{i}}"
-     class="item {{i === activeTab ? 'active' : ''}}" (click)="setActiveTab(i)">{{key}}</a>
-</div>
-
-<div *ngIf="structured">
-  <div *ngFor="let key of tabKeys; let i = index"
-       class="ui bottom attached tab inverted {{i === activeTab ? 'active' : ''}} segment" attr.data-tab="{{i}}">
-    <table class="ui inverted three unstackable blue small table">
+<div *ngIf="isStructured">
+    <table *ngFor="let key of tabKeys;" class="ui three column unstackable small table">
+      <thead>
+      <tr class="center-align">
+        <th colspan="3">{{key}}</th>
+      </tr>
+      </thead>
       <thead>
       <th>Na poslednjih</th>
       <th>5 mečeva</th>
@@ -20,10 +18,9 @@
       </tr>
       </tbody>
     </table>
-  </div>
 </div>
 
-<table *ngIf="!structured" class="ui inverted three unstackable blue small table">
+<table *ngIf="!isStructured" class="ui three column unstackable small table">
   <thead>
   <th>Na poslednjih</th>
   <th>5 mečeva</th>

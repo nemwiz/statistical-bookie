@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FixturesService} from "../../services/fixtures.service";
-import {Fixture} from "../../interfaces/fixture";
+import {FixturesService} from "../../../services/fixtures.service";
+import {Fixture} from "../../../interfaces/fixture";
 declare var jQuery: any;
 
 @Component({
@@ -12,7 +12,6 @@ export class HomePageComponent implements OnInit {
 
   fixtures: Fixture[] = [];
   filteredFixtures: Fixture[] = [];
-  shouldAnimate: boolean = false;
 
   constructor(private fixturesService: FixturesService) {
   }

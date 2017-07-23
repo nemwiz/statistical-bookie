@@ -6,8 +6,11 @@ $small-font: 14px;
 
 $ipad-screen-size: 767px;
 
+$top-navbar-height: 56px;
+$bottom-navbar-height: 74px;
+
 body {
-  background-color: $body-background!important;
+  background-color: white!important;
 }
 
 a:hover {

@@ -6,27 +6,35 @@ import {GoalsAndWins} from "./goals-and-wins";
 import {HalftimeWithMoreGoals} from "./halftime-with-more-goals";
 
 export interface MatchObject {
-  numberOfGoalsMetaView: {
-    homeTeam: Goals;
-    awayTeam: Goals;
-    bothTeams: Goals;
-  };
-  teamGoalsView: {
-    homeTeam: TeamGoals;
-    awayTeam: TeamGoals;
-    bothTeams: TeamGoals;
-  };
-  matchOutcomeView: {
-    homeTeam: MatchOutcome;
-    awayTeam: MatchOutcome;
-    draw: MatchOutcome;
-  };
+  numberOfGoalsMetaView: NumberOfGoalsMetaView;
+  teamGoalsView: TeamGoalsView;
+  matchOutcomeView: MatchOutcomeView;
   matchDetailOutcomeView: MatchDetailOutcome;
-  numberOfGoalsAndWinsView: {
-    homeTeam: GoalsAndWins;
-    awayTeam: GoalsAndWins;
-    draw: GoalsAndWins;
-  };
+  numberOfGoalsAndWinsView: NumberOfGoalsAndWinsView;
   halfTimeWithMoreGoalsView: HalftimeWithMoreGoals;
   exactResultView: object;
+}
+
+export interface NumberOfGoalsMetaView {
+  homeTeam: Goals;
+  awayTeam: Goals;
+  bothTeams: Goals;
+}
+
+export interface TeamGoalsView {
+  homeTeam: TeamGoals;
+  awayTeam: TeamGoals;
+  bothTeams: TeamGoals;
+}
+
+export interface MatchOutcomeView {
+  homeTeam: MatchOutcome;
+  awayTeam: MatchOutcome;
+  draw: MatchOutcome;
+}
+
+export interface NumberOfGoalsAndWinsView {
+  homeTeam: GoalsAndWins;
+  awayTeam: GoalsAndWins;
+  draw: GoalsAndWins;
 }
