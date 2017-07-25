@@ -14,13 +14,15 @@ import {LeaguesService} from "../../services/leagues.service";
 import {FixturesService} from "../../services/fixtures.service";
 import {BarChartComponent} from "../../components/charts/bar-chart/bar-chart.component";
 import {LoaderComponent} from "../../components/loader/loader.component";
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     BrowserModule,
     HttpModule,
-    MatchRoutingModule
+    MatchRoutingModule,
+    TranslateModule
   ],
   declarations: [
     HomePageComponent,

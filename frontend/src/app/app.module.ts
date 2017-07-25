@@ -4,6 +4,13 @@ import {AppComponent} from "./app.component";
 import {MatchModule} from "./modules/matches/match.module";
 import {AppRoutingModule} from "./modules/app-routing.module";
 import {BrowserModule} from "@angular/platform-browser";
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {Http} from "@angular/http";
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http: Http) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -12,7 +19,16 @@ import {BrowserModule} from "@angular/platform-browser";
   imports: [
     BrowserModule,
     MatchModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TranslateModule.forRoot(
+      {
+        loader: {
+          provide: TranslateLoader,
+          useFactory: (createTranslateLoader),
+          deps: [Http]
+        }
+      }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]
