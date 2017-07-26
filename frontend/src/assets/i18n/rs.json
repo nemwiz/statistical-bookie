@@ -2,9 +2,9 @@
   "onLastMatches": "Na poslednjih",
   "lastFiveMatches": "5 mečeva",
   "lastTenMatches": "10 mečeva",
-  "noGoalsInSecondHalfTime": "bez golova",
-  "oneGoalInSecondHalfTime": "1 gol",
-  "twoGoalsInSecondHalfTime": "2 gola",
-  "threeGoalsInSecondHalfTime": "3 gola",
-  "fourOrMoreGoalsInSecondHalfTime": "4 ili više golova"
+  "noGoals": "bez golova",
+  "oneGoal": "1 gol",
+  "twoGoals": "2 gola",
+  "threeGoals": "3 gola",
+  "fourOrMoreGoals": "4 ili više golova"
 }

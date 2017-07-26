@@ -7,6 +7,9 @@ public class Constants {
     public static final String HOME_TEAM = "HOME_TEAM";
     public static final String AWAY_TEAM = "AWAY_TEAM";
     public static final String BOTH_TEAMS = "BOTH_TEAMS";
+    public static final String FULLTIME = "FULLTIME";
+    public static final String FIRST_HALF = "FIRST_HALF";
+    public static final String SECOND_HALF = "SECOND_HALF";
     public static final int ZERO_GOALS = 0;
     public static final int ONE_GOAL = 1;
     public static final int TWO_GOALS = 2;

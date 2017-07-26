@@ -6,7 +6,9 @@ import {GoalsAndWins} from "./goals-and-wins";
 import {HalftimeWithMoreGoals} from "./halftime-with-more-goals";
 
 export interface MatchObject {
-  numberOfGoalsMetaView: NumberOfGoalsMetaView;
+  numberOfGoalsFullTime: NumberOfGoalsMetaView;
+  numberOfGoalsFirstHalf: NumberOfGoalsMetaView;
+  numberOfGoalsSecondHalf: NumberOfGoalsMetaView;
   teamGoalsView: TeamGoalsView;
   matchOutcomeView: MatchOutcomeView;
   matchDetailOutcomeView: MatchDetailOutcome;

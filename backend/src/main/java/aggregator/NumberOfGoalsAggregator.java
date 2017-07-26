@@ -15,29 +15,39 @@ public class NumberOfGoalsAggregator {
     public NumberOfGoalsAggregator() {
     }
 
-    public NumberOfGoalsModel getAggregatedCount(List<Match> matches) {
+    public NumberOfGoalsModel getAggregatedCount(List<Match> matches, String gamePeriod) {
 
-        long[] countOfFullTimeGoalsHomeTeam = getCountFullTime(matches, Constants.HOME_TEAM);
-        long[] countOfHalfTimeGoalsHomeTeam = getCountHalfTime(matches, Constants.HOME_TEAM);
-        long[] countOfSecondHalfTimeGoalsHomeTeam = getCountSecondHalfTime(matches, Constants.HOME_TEAM);
+        long[] homeTeamCount = new long[0];
+        long[] awayTeamCount = new long[0];
+        long[] bothTeamsCount = new long[0];
 
-        Map<String, Long> homeTeamResults = this.convertValuesToMap(countOfFullTimeGoalsHomeTeam, countOfHalfTimeGoalsHomeTeam, countOfSecondHalfTimeGoalsHomeTeam);
 
-        long[] countOfFullTimeGoalsAwayTeam = getCountFullTime(matches, Constants.AWAY_TEAM);
-        long[] countOfHalfTimeGoalsAwayTeam = getCountHalfTime(matches, Constants.AWAY_TEAM);
-        long[] countOfSecondHalfTimeGoalsAwayTeam = getCountSecondHalfTime(matches, Constants.AWAY_TEAM);
+        switch(gamePeriod) {
+            case Constants.FULLTIME:
+                homeTeamCount = getCountFullTime(matches, Constants.HOME_TEAM);
+                awayTeamCount = getCountFullTime(matches, Constants.AWAY_TEAM);
+                bothTeamsCount = getCountFullTime(matches, Constants.BOTH_TEAMS);
+                break;
+            case Constants.FIRST_HALF:
+                homeTeamCount = getCountHalfTime(matches, Constants.HOME_TEAM);
+                awayTeamCount = getCountHalfTime(matches, Constants.AWAY_TEAM);
+                bothTeamsCount = getCountHalfTime(matches, Constants.BOTH_TEAMS);
+                break;
+            case Constants.SECOND_HALF:
+                homeTeamCount = getCountSecondHalfTime(matches, Constants.HOME_TEAM);
+                awayTeamCount = getCountSecondHalfTime(matches, Constants.AWAY_TEAM);
+                bothTeamsCount = getCountSecondHalfTime(matches, Constants.BOTH_TEAMS);
+                break;
+        }
 
-        Map<String, Long> awayTeamResults = this.convertValuesToMap(countOfFullTimeGoalsAwayTeam, countOfHalfTimeGoalsAwayTeam, countOfSecondHalfTimeGoalsAwayTeam);
-
-        long[] countOfFullTimeGoals = getCountFullTime(matches, Constants.BOTH_TEAMS);
-        long[] countOfHalfTimeGoals = getCountHalfTime(matches, Constants.BOTH_TEAMS);
-        long[] countOfSecondHalfTimeGoals = getCountSecondHalfTime(matches, Constants.BOTH_TEAMS);
-
-        Map<String, Long> bothTeamsResults = this.convertValuesToMap(countOfFullTimeGoals, countOfHalfTimeGoals, countOfSecondHalfTimeGoals);
+        Map<String, Long> homeTeamResults = this.convertValuesToMap(homeTeamCount);
+        Map<String, Long> awayTeamResults = this.convertValuesToMap(awayTeamCount);
+        Map<String, Long> bothTeamsResults = this.convertValuesToMap(bothTeamsCount);
 
         return new NumberOfGoalsModel(
                 homeTeamResults,
-                awayTeamResults, bothTeamsResults
+                awayTeamResults,
+                bothTeamsResults
         );
     }
 
@@ -171,27 +181,15 @@ public class NumberOfGoalsAggregator {
                 .count();
     }
 
-    private Map<String, Long> convertValuesToMap(long[] countOfFullTimeGoals, long[] countOfHalfTimeGoals, long[] countOfSecondHalfTimeGoals) {
+    private Map<String, Long> convertValuesToMap(long[] goalsCount) {
 
         Map<String, Long> finalMap = new LinkedHashMap<>();
 
-        finalMap.put("noGoals", countOfFullTimeGoals[0]);
-        finalMap.put("oneGoal", countOfFullTimeGoals[1]);
-        finalMap.put("twoGoals", countOfFullTimeGoals[2]);
-        finalMap.put("threeGoals", countOfFullTimeGoals[3]);
-        finalMap.put("fourOrMoreGoals", countOfFullTimeGoals[4]);
-
-        finalMap.put("noGoalsHalfTime", countOfHalfTimeGoals[0]);
-        finalMap.put("oneGoalHalfTime", countOfHalfTimeGoals[1]);
-        finalMap.put("twoGoalsHalfTime", countOfHalfTimeGoals[2]);
-        finalMap.put("threeGoalsHalfTime", countOfHalfTimeGoals[3]);
-        finalMap.put("fourOrMoreGoalsHalfTime", countOfHalfTimeGoals[4]);
-
-        finalMap.put("noGoalsInSecondHalfTime", countOfSecondHalfTimeGoals[0]);
-        finalMap.put("oneGoalInSecondHalfTime", countOfSecondHalfTimeGoals[1]);
-        finalMap.put("twoGoalsInSecondHalfTime", countOfSecondHalfTimeGoals[2]);
-        finalMap.put("threeGoalsInSecondHalfTime", countOfSecondHalfTimeGoals[3]);
-        finalMap.put("fourOrMoreGoalsInSecondHalfTime", countOfSecondHalfTimeGoals[4]);
+        finalMap.put("noGoals", goalsCount[0]);
+        finalMap.put("oneGoal", goalsCount[1]);
+        finalMap.put("twoGoals", goalsCount[2]);
+        finalMap.put("threeGoals", goalsCount[3]);
+        finalMap.put("fourOrMoreGoals", goalsCount[4]);
 
         return finalMap;
     }

@@ -1,4 +1,5 @@
 import aggregator.NumberOfGoalsAggregator;
+import helper.Constants;
 import model.Match;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,14 +31,11 @@ public class NumberOfGoalsAggregatorTest {
         createMatches(expectedCount, numberOfGoalsScoredOnMatch);
         numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches, Constants.FULLTIME);
 
         long noGoals = numberOfGoalsView.getBothTeams().get("noGoals");
-        long noGoalsHalfTime = numberOfGoalsView.getBothTeams().get("noGoalsHalfTime");
 
         assertEquals(expectedCount, noGoals);
-        assertEquals(expectedCount, noGoalsHalfTime);
-
 
     }
 
@@ -49,13 +47,11 @@ public class NumberOfGoalsAggregatorTest {
         createMatches(expectedCount, numberOfGoalsScoredOnMatch);
         numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches, Constants.FULLTIME);
 
         long oneGoal = numberOfGoalsView.getBothTeams().get("oneGoal");
-        long oneGoalHalfTime = numberOfGoalsView.getBothTeams().get("oneGoalHalfTime");
 
         assertEquals(expectedCount, oneGoal);
-        assertEquals(expectedCount, oneGoalHalfTime);
 
     }
 
@@ -67,13 +63,11 @@ public class NumberOfGoalsAggregatorTest {
         createMatches(expectedCount, numberOfGoalsScoredOnMatch);
         numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches, Constants.FULLTIME);
 
         long twoGoal = numberOfGoalsView.getBothTeams().get("twoGoals");
-        long twoGoalHalfTime = numberOfGoalsView.getBothTeams().get("twoGoalsHalfTime");
 
         assertEquals(expectedCount, twoGoal);
-        assertEquals(expectedCount, twoGoalHalfTime);
 
     }
 
@@ -85,13 +79,11 @@ public class NumberOfGoalsAggregatorTest {
         createMatches(expectedCount, numberOfGoalsScoredOnMatch);
         numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches, Constants.FULLTIME);
 
         long threeGoals = numberOfGoalsView.getBothTeams().get("threeGoals");
-        long threeGoalsHalfTime = numberOfGoalsView.getBothTeams().get("threeGoalsHalfTime");
 
         assertEquals(expectedCount, threeGoals);
-        assertEquals(expectedCount, threeGoalsHalfTime);
 
 
     }
@@ -104,14 +96,11 @@ public class NumberOfGoalsAggregatorTest {
         createMatches(expectedCount, numberOfGoalsScoredOnMatch);
         numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches, Constants.FULLTIME);
 
         long fourOrMoreGoals = numberOfGoalsView.getBothTeams().get("fourOrMoreGoals");
-        long fourOrMoreGoalsHalfTime = numberOfGoalsView.getBothTeams().get("fourOrMoreGoalsHalfTime");
 
         assertEquals(expectedCount, fourOrMoreGoals);
-        assertEquals(expectedCount, fourOrMoreGoalsHalfTime);
-
 
     }
 
@@ -124,7 +113,7 @@ public class NumberOfGoalsAggregatorTest {
         createMatches(numberOfMatchesToAdd, numberOfGoalsScoredOnMatch);
         numberOfGoalsAggregator = new NumberOfGoalsAggregator();
 
-        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches);
+        numberOfGoalsView = numberOfGoalsAggregator.getAggregatedCount(this.matches, Constants.FULLTIME);
 
         long noGoals = numberOfGoalsView.getBothTeams().get("noGoals");
         long oneGoal = numberOfGoalsView.getBothTeams().get("oneGoal");

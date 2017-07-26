@@ -7,7 +7,11 @@ import java.util.Map;
 public class AggregatedMatchesMetaView {
 
     @JsonProperty
-    NumberOfGoalsModel numberOfGoalsMetaView;
+    NumberOfGoalsModel numberOfGoalsFullTime;
+    @JsonProperty
+    NumberOfGoalsModel numberOfGoalsFirstHalf;
+    @JsonProperty
+    NumberOfGoalsModel numberOfGoalsSecondHalf;
     @JsonProperty
     TeamGoalsModel teamGoalsView;
     @JsonProperty
@@ -21,8 +25,10 @@ public class AggregatedMatchesMetaView {
     @JsonProperty
     Map<String, Long> exactResultView;
 
-    public AggregatedMatchesMetaView(NumberOfGoalsModel numberOfGoalsMetaView, TeamGoalsModel teamGoalsView, MatchOutcomeModel matchOutcomeView, MatchDetailOutcomeView matchDetailOutcomeView, NumberOfGoalsAndWinsModel numberOfGoalsAndWinsView, HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView, Map<String, Long> exactResultView) {
-        this.numberOfGoalsMetaView = numberOfGoalsMetaView;
+    public AggregatedMatchesMetaView(NumberOfGoalsModel numberOfGoalsFullTime, NumberOfGoalsModel numberOfGoalsFirstHalf, NumberOfGoalsModel numberOfGoalsSecondHalf, TeamGoalsModel teamGoalsView, MatchOutcomeModel matchOutcomeView, MatchDetailOutcomeView matchDetailOutcomeView, NumberOfGoalsAndWinsModel numberOfGoalsAndWinsView, HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView, Map<String, Long> exactResultView) {
+        this.numberOfGoalsFullTime = numberOfGoalsFullTime;
+        this.numberOfGoalsFirstHalf = numberOfGoalsFirstHalf;
+        this.numberOfGoalsSecondHalf = numberOfGoalsSecondHalf;
         this.teamGoalsView = teamGoalsView;
         this.matchOutcomeView = matchOutcomeView;
         this.matchDetailOutcomeView = matchDetailOutcomeView;

@@ -2,6 +2,7 @@ package controller;
 
 import aggregator.*;
 import dao.MatchDAO;
+import helper.Constants;
 import model.Match;
 import viewmodel.*;
 
@@ -78,7 +79,10 @@ public class MainController {
 
     private AggregatedMatchesMetaView getAggregatedMatchesMetaView(List<Match> matches) {
 
-        NumberOfGoalsModel numberOfGoalsMetaView = this.numberOfGoalsAggregator.getAggregatedCount(matches);
+        NumberOfGoalsModel fullTime = this.numberOfGoalsAggregator.getAggregatedCount(matches, Constants.FULLTIME);
+        NumberOfGoalsModel firstHalf = this.numberOfGoalsAggregator.getAggregatedCount(matches, Constants.FIRST_HALF);
+        NumberOfGoalsModel secondHalf = this.numberOfGoalsAggregator.getAggregatedCount(matches, Constants.SECOND_HALF);
+
         TeamGoalsModel teamGoalsView = this.teamGoalsAggregator.getAggregatedCount(matches);
         MatchOutcomeModel matchOutcomeView = this.matchOutcomeAggregator.getAggregatedCount(matches);
         MatchDetailOutcomeView matchDetailOutcomeView = this.matchDetailOutcomeAggregator.getAggregatedCount(matches);
@@ -86,7 +90,9 @@ public class MainController {
         HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = this.halfTimeWithMoreGoalsAggregator.getAggregatedCount(matches);
         Map<String, Long> exactResultsView = this.exactResultAggregator.aggregate(matches);
 
-        return new AggregatedMatchesMetaView(numberOfGoalsMetaView,
+        return new AggregatedMatchesMetaView(fullTime,
+                firstHalf,
+                secondHalf,
                 teamGoalsView,
                 matchOutcomeView,
                 matchDetailOutcomeView,
