@@ -1,4 +1,18 @@
 {
+  "numberOfGoalsFullTime": "Total goals - full time",
+  "numberOfGoalsFirstHalf": "Total goals - first half",
+  "numberOfGoalsSecondHalf": "Total goals - second half",
+  "teamGoalsView": "Team goals",
+  "matchOutcomeView": "Match outcome",
+  "numberOfGoalsAndWinsView": "Total goals and wins",
+  "matchDetailOutcomeView": "Half time / full time",
+  "halfTimeWithMoreGoalsView": "Half time with more goals",
+  "exactResultView": "Correct score",
+
+  "homeTeam": "Home team",
+  "awayTeam": "Away team",
+  "bothTeams": "Both teams",
+
   "onLastMatches": "On last",
   "lastFiveMatches": "5 matches",
   "lastTenMatches": "10 matches",
@@ -6,5 +20,33 @@
   "oneGoal": "1 goal",
   "twoGoals": "2 goals",
   "threeGoals": "3 goals",
-  "fourOrMoreGoals": "4 or more goals"
+  "fourOrMoreGoals": "4 or more goals",
+
+  "scoredInTheWholeGame" : "Scored full time",
+  "scoredInFirstHalftime" : "Scored in first half",
+  "scoredInSecondHalftime" : "Scored in second half",
+
+  "winFulltime" : "Win - full time",
+  "winFirstHalftime" : "Win - first half",
+  "winSecondHalftime" : "Win - second half",
+
+  "winAndOneGoalScored" : "Win and 1 goal",
+  "winAndTwoGoalsScored" : "Win and 2 goals",
+  "winAndThreeGoalsScored" : "Win and 3 goals",
+  "winAndFourOrMoreGoalsScored" : "Win and 4 or more goals",
+
+  "homeTeamWonOnHalfTimeAndWonInTheEnd" : "1/1",
+  "homeTeamWonOnHalfTimeAndDrewInTheEnd" : "1/X",
+  "homeTeamWonOnHalfTimeAndLostInTheEnd" : "1/2",
+  "halfTimeWasDrawAndHomeTeamWonInTheEnd" : "X/1",
+  "halfTimeWasDrawAndWasDrawInTheEnd" : "X/X",
+  "halfTimeWasDrawAndAwayTeamWonInTheEnd" : "X/2",
+  "awayTeamWonOnHalfTimeAndWonInTheEnd" : "2/2",
+  "awayTeamWonOnHalfTimeAndDrewInTheEnd" : "2/X",
+  "awayTeamWonOnHalfTimeAndLostInTheEnd" : "2/1",
+
+
+  "moreGoalsWillBeScoredInFirstHalfTime" : "More goals in first half",
+  "moreGoalsWillBeScoredInSecondtHalfTime" : "More goals in second half",
+  "evenNumberOfGoalsWillBeScoredInBothHalfTimes" : "Even number of goals in both halves"
 }

@@ -2,13 +2,13 @@
     <table *ngFor="let key of tabKeys;" class="ui three column unstackable small table">
       <thead>
       <tr class="center-align">
-        <th colspan="3">{{key}}</th>
+        <th colspan="3">{{key | translate}}</th>
       </tr>
       </thead>
       <thead>
-      <th>Na poslednjih</th>
+      <th>{{ 'onLastMatches' | translate }}</th>
       <th>{{ 'lastFiveMatches' | translate }}</th>
-      <th>10 mečeva</th>
+      <th>{{ 'lastTenMatches' | translate }}</th>
       </thead>
       <tbody>
       <tr *ngFor="let fiveMatch of fiveMatches[key] | keys">
@@ -22,13 +22,13 @@
 
 <table *ngIf="!isStructured" class="ui three column unstackable small table">
   <thead>
-  <th>Na poslednjih</th>
-  <th>5 mečeva</th>
-  <th>10 mečeva</th>
+  <th>{{ 'onLastMatches' | translate }}</th>
+  <th>{{ 'lastFiveMatches' | translate }}</th>
+  <th>{{ 'lastTenMatches' | translate }}</th>
   </thead>
   <tbody>
   <tr *ngFor="let tabKey of tabKeys">
-    <td>{{tabKey}}</td>
+    <td>{{tabKey | translate}}</td>
     <td>{{fiveMatches[tabKey] ? fiveMatches[tabKey]: 0}}</td>
     <td>{{tenMatches[tabKey]}}</td>
   </tr>

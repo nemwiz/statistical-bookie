@@ -1,4 +1,18 @@
 {
+  "numberOfGoalsFullTime": "Ukupno golova - kraj",
+  "numberOfGoalsFirstHalf": "Ukupno golova - prvo poluvreme",
+  "numberOfGoalsSecondHalf": "Ukupno golova - drugo poluvreme",
+  "teamGoalsView": "Tim golovi",
+  "matchOutcomeView": "Konačan ishod",
+  "numberOfGoalsAndWinsView": "Konačan ishod i golovi",
+  "matchDetailOutcomeView": "Prelazi",
+  "halfTimeWithMoreGoalsView": "Poluvreme sa više golova",
+  "exactResultView": "Tačan rezultat",
+
+  "homeTeam": "Domaćin",
+  "awayTeam": "Gost",
+  "bothTeams": "Oba tima",
+
   "onLastMatches": "Na poslednjih",
   "lastFiveMatches": "5 mečeva",
   "lastTenMatches": "10 mečeva",
@@ -6,5 +20,32 @@
   "oneGoal": "1 gol",
   "twoGoals": "2 gola",
   "threeGoals": "3 gola",
-  "fourOrMoreGoals": "4 ili više golova"
+  "fourOrMoreGoals": "4 ili više golova",
+
+  "scoredInTheWholeGame" : "Postigao gol na meču",
+  "scoredInFirstHalftime" : "Postigao gol u prvom poluvremenu",
+  "scoredInSecondHalftime" : "Postigao gol u drugom poluvremenu",
+
+  "winFulltime" : "Pobedio na meču",
+  "winFirstHalftime" : "Pobeda prvo poluvreme",
+  "winSecondHalftime" : "Pobeda drugo poluvreme",
+
+  "winAndOneGoalScored" : "Pobeda i 1 gol",
+  "winAndTwoGoalsScored" : "Pobeda i 2 gola",
+  "winAndThreeGoalsScored" : "Pobeda i 3 gola",
+  "winAndFourOrMoreGoalsScored" : "Pobeda i 4 ili više golova",
+
+  "homeTeamWonOnHalfTimeAndWonInTheEnd" : "Iz 1 u 1",
+  "homeTeamWonOnHalfTimeAndDrewInTheEnd" : "Iz 1 u X",
+  "homeTeamWonOnHalfTimeAndLostInTheEnd" : "Iz 1 u 2",
+  "halfTimeWasDrawAndHomeTeamWonInTheEnd" : "Iz X u 1",
+  "halfTimeWasDrawAndWasDrawInTheEnd" : "Iz X u X",
+  "halfTimeWasDrawAndAwayTeamWonInTheEnd" : "Iz X u 2",
+  "awayTeamWonOnHalfTimeAndWonInTheEnd" : "Iz 2 u 2",
+  "awayTeamWonOnHalfTimeAndDrewInTheEnd" : "Iz X u 2",
+  "awayTeamWonOnHalfTimeAndLostInTheEnd" : "Iz 2 u 1",
+
+  "moreGoalsWillBeScoredInFirstHalfTime" : "Više golova prvo poluvreme",
+  "moreGoalsWillBeScoredInSecondtHalfTime" : "Više golova drugo poluvreme",
+  "evenNumberOfGoalsWillBeScoredInBothHalfTimes" : "Jednak broj golova na oba poluvremena"
 }
