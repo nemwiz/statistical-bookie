@@ -1,0 +1,17 @@
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 5000
+  adminConnectors:
+    - type: http
+      port: 5001
+
+mongo:
+  seeds:
+  - host: localhost
+    port: 28008
+  database: stats
+#  credentials:
+#    userName: example
+#    password: example

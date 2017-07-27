@@ -1,0 +1,11 @@
+<div class="navbar-fixed top-navbar">
+  <nav>
+    <div class="nav-wrapper blue">
+      <i *ngIf="currentRoute !== '/home'" class="arrow left icon" (click)="navigateBack()"></i>
+      <div class="center brand-logo">StatsBookie</div>
+      <button class="right waves-effect waves-light btn" (click)="changeLanguage()">lang</button>
+    </div>
+  </nav>
+</div>
+
+<router-outlet></router-outlet>

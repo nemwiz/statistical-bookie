@@ -1,0 +1,35 @@
+$body-background: #1B1C1D;
+$extra-large-font: 26px;
+$large-font: 22px;
+$regular-font: 18px;
+$small-font: 14px;
+
+$ipad-screen-size: 767px;
+
+$top-navbar-height: 56px;
+$bottom-navbar-height: 48px;
+
+$primary-color: #2196F3;
+$dark-primary-color: #1976D2;
+$accent-color: #FFC107;
+$primary-contrast: #FF5613;
+
+$primary-white: #ffffff;
+
+$icon-font-size: 2em;
+
+body {
+  background-color: white!important;
+}
+
+a:hover {
+  color: inherit !important;
+  text-decoration: none!important;
+}
+
+.ui.inverted.list .item a:not(.ui):hover {
+  color: white !important;
+}
+
+
+

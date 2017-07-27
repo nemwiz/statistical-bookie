@@ -7,3 +7,12 @@ server:
     - type: http
       port: 5001
 
+mongo:
+  seeds:
+  - host: stats-db
+    port: 27017
+  database: stats
+#  credentials:
+#    userName: example
+#    password: example
+
