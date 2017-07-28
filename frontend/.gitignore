@@ -4,9 +4,11 @@
 /dist
 /tmp
 /out-tsc
+/cordova/www
 
 # dependencies
 /node_modules
+/cordova/node_modules
 
 # IDEs and editors
 /.idea

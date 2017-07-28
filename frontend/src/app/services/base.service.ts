@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
+
 // Operators
 import 'rxjs/add/operator/map';
 
-let BACKEND_API: string = 'http://localhost:5000/api/';
+let API: string = '/api/';
 
 @Injectable()
 export abstract class BaseService {
@@ -14,7 +16,7 @@ export abstract class BaseService {
   }
 
   get<T>(resource: string): Observable<T> {
-    let query = BACKEND_API + resource;
+    let query = `${environment.apiUrl}${API}${resource}`;
     //noinspection TypeScriptValidateTypes
     return this.http.get(query)
       .map((response: Response) => {

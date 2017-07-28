@@ -1,0 +1,17 @@
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 5000
+  adminConnectors:
+    - type: http
+      port: 5001
+
+mongo:
+  seeds:
+  - host: ds123933.mlab.com
+    port: 23933
+  database: heroku_x3nhtb8g
+  credentials:
+    userName: heroku_x3nhtb8g
+    password: kqn0sn52ld2dahve956iq0oa23
