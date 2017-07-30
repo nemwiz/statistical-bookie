@@ -12,6 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/leagues")
@@ -43,8 +45,8 @@ public class LeaguesResource {
     @GET
     @Timed
 
-    public List<Fixture> getSubResource(@PathParam("leagueId") int leagueId) {
-        return this.resourceContext.getResource(FixturesResource.class).getUpcomingFixtures(leagueId);
+    public Response getSubResource(@PathParam("leagueId") int leagueId, @Context Request request) {
+        return this.resourceContext.getResource(FixturesResource.class).getUpcomingFixtures(leagueId, request);
     }
 
 }

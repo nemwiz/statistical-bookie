@@ -63,4 +63,22 @@ public class Fixture {
     public String getAwayTeam() {
         return awayTeam;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Fixture fixture = (Fixture) o;
+
+        if (leagueId != fixture.leagueId) return false;
+        return fixtureId.equals(fixture.fixtureId);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = fixtureId.hashCode();
+        result = 31 * result + leagueId;
+        return result;
+    }
 }
