@@ -1,11 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Data} from "@angular/router";
-import {FixturesService} from "../../../services/fixtures.service";
-import {Subscription} from "rxjs/Subscription";
 import {MatchService} from "../../../services/match.service";
 import {MatchObject} from "../../../interfaces/match/match-object";
-import {Fixture} from "../../../interfaces/fixture";
-import {omit, pick} from "lodash";
+import {omit, pick, capitalize} from "lodash";
 import {ResultsTableData} from "../../../interfaces/match/data-stats";
 
 @Component({
@@ -15,9 +12,8 @@ import {ResultsTableData} from "../../../interfaces/match/data-stats";
 })
 export class MatchComponent implements OnInit {
 
-  fixtureId: string;
-  fixture: Fixture;
-  fixtureSubcription: Subscription;
+  homeTeam: string = '';
+  awayTeam: string = '';
 
   isLoading: boolean = true;
 
@@ -25,23 +21,23 @@ export class MatchComponent implements OnInit {
   specificStructureMatches: Data[] = [];
 
   constructor(private route: ActivatedRoute,
-              private fixturesService: FixturesService,
               private matchService: MatchService) {
 
     route.params.subscribe(params => {
-      this.fixtureId = params['fixtureId'];
+      let objectKeys = Object.keys(params);
+      let paramValue: string = params[objectKeys[0]];
+
+      let dashIndex = paramValue.indexOf('-', 0);
+
+      this.homeTeam = paramValue.substring(0, dashIndex);
+      this.awayTeam = paramValue.substring(dashIndex + 1, paramValue.length);
     });
 
-    this.fixtureSubcription = this.fixturesService.fixturesObservable.subscribe(
-      fixture => {
-        this.fixture = fixture;
-        this.matchService.getMatchesByTeams(fixture.homeTeam, fixture.awayTeam)
-          .subscribe((matches) => {
-            this.mapMatchObject(matches);
-            this.isLoading = false;
-          });
+    this.matchService.getMatchesByTeams(capitalize(this.homeTeam), capitalize(this.awayTeam))
+      .subscribe((matches) => {
+        this.mapMatchObject(matches);
+        this.isLoading = false;
       });
-
   }
 
   ngOnInit() {
@@ -65,10 +61,6 @@ export class MatchComponent implements OnInit {
     };
 
     this.matchService.pushMatchData(results);
-  }
-
-  ngOnDestroy() {
-    this.fixtureSubcription.unsubscribe();
   }
 
 }

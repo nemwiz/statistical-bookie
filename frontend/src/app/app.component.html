@@ -1,7 +1,7 @@
 <div class="navbar-fixed top-navbar">
   <nav>
     <div class="nav-wrapper blue">
-      <i *ngIf="currentRoute !== '/home'" class="arrow left icon" (click)="navigateBack()"></i>
+      <i *ngIf="currentRoute !== '/home' || currentRoute === ''" class="arrow left icon" (click)="navigateBack()"></i>
       <div class="center brand-logo">StatsBookie</div>
       <button class="right waves-effect waves-light btn" (click)="changeLanguage()">lang</button>
     </div>

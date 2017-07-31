@@ -3,14 +3,14 @@
   <loader [isLoading]="isLoading"></loader>
 
   <div class="item" *ngFor="let data of structuredMatches[0] | keys"
-       [routerLink]="['/fixtures', fixtureId, data.key]"
+       [routerLink]="['/fixtures/' + homeTeam + '-' + awayTeam, data.key.toLowerCase()]"
        (click)="pushMatchData(structuredMatches[0][data.key], structuredMatches[1][data.key], true)">
 
     <div class="content">{{data.key | translate}}</div>
   </div>
 
   <div class="item" *ngFor="let data of specificStructureMatches[0] | keys"
-       [routerLink]="['/fixtures', fixtureId, data.key]"
+       [routerLink]="['/fixtures/' + homeTeam + '-' + awayTeam, data.key.toLowerCase()]"
        (click)="pushMatchData(specificStructureMatches[0][data.key], specificStructureMatches[1][data.key], false)">
 
     <div class="content">{{data.key | translate}}</div>

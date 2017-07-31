@@ -18,7 +18,7 @@
 
   <div class="ui selection celled list">
     <div *ngFor="let fixture of filteredFixtures"
-         [routerLink]="['/fixtures', fixture.fixtureId.counter]" (click)="pushFixture(fixture)"
+         [routerLink]="['/fixtures/' + fixture.homeTeam.toLowerCase() + '-' + fixture.awayTeam.toLowerCase()]"
          class="item">
       <img class="ui avatar image flag-icon-background flag-icon-squared flag-icon-gb">
         <div class="content">
