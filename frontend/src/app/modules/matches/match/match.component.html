@@ -1,5 +1,7 @@
 <div class="ui small selection divided list center-align">
 
+  <loader [isLoading]="isLoading"></loader>
+
   <div class="item" *ngFor="let data of structuredMatches[0] | keys"
        [routerLink]="['/fixtures', fixtureId, data.key]"
        (click)="pushMatchData(structuredMatches[0][data.key], structuredMatches[1][data.key], true)">

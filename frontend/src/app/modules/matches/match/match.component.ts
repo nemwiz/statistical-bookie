@@ -19,6 +19,8 @@ export class MatchComponent implements OnInit {
   fixture: Fixture;
   fixtureSubcription: Subscription;
 
+  isLoading: boolean = true;
+
   structuredMatches: Data[] = [];
   specificStructureMatches: Data[] = [];
 
@@ -36,6 +38,7 @@ export class MatchComponent implements OnInit {
         this.matchService.getMatchesByTeams(fixture.homeTeam, fixture.awayTeam)
           .subscribe((matches) => {
             this.mapMatchObject(matches);
+            this.isLoading = false;
           });
       });
 

@@ -12,6 +12,7 @@ export class HomePageComponent implements OnInit {
 
   fixtures: Fixture[] = [];
   filteredFixtures: Fixture[] = [];
+  isLoading: boolean = true;
 
   constructor(private fixturesService: FixturesService) {
   }
@@ -22,6 +23,7 @@ export class HomePageComponent implements OnInit {
       .subscribe(fixtures => {
         this.fixtures = fixtures;
         this.filteredFixtures = fixtures;
+        this.isLoading = false;
         let adaptedFixtures = this.adaptFixturesToSearchInputFormat(this.fixtures);
 
         jQuery('.ui.search')
