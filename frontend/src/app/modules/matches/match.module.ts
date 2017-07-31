@@ -10,7 +10,6 @@ import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
 import {MatchRoutingModule} from "./match-routing.module";
 import {MatchService} from "../../services/match.service";
-import {LeaguesService} from "../../services/leagues.service";
 import {FixturesService} from "../../services/fixtures.service";
 import {BarChartComponent} from "../../components/charts/bar-chart/bar-chart.component";
 import {LoaderComponent} from "../../components/loader/loader.component";
@@ -34,6 +33,6 @@ import {TranslateModule} from '@ngx-translate/core';
     MatchDetailComponent,
     LoaderComponent
   ],
-  providers: [MatchService, FixturesService, LeaguesService],
+  providers: [MatchService, FixturesService],
 })
 export class MatchModule { }

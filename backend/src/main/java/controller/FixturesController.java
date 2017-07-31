@@ -13,7 +13,7 @@ public class FixturesController {
         this.fixturesDAO = fixturesDAO;
     }
 
-    public List<Fixture> getUpcomingFixtures(int leagueId) {
-        return this.fixturesDAO.getUpcomingFixtures(leagueId);
+    public List<Fixture> getUpcomingFixtures() {
+        return this.fixturesDAO.getUpcomingFixtures();
     }
 }

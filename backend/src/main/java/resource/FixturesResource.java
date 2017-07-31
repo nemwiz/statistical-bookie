@@ -21,10 +21,10 @@ public class FixturesResource {
 
     @GET
     @Path("/upcoming")
-    public Response getUpcomingFixtures(int leagueId, @Context final Request request) {
+    public Response getUpcomingFixtures(@Context final Request request) {
         // TODO Remove leagueId
 
-        List<Fixture> upcomingFixtures = this.fixturesController.getUpcomingFixtures(leagueId);
+        List<Fixture> upcomingFixtures = this.fixturesController.getUpcomingFixtures();
 
         // TODO This expects list to be sorted e.g. first match never changes, check if okay for ETag
 

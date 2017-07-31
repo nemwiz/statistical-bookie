@@ -17,18 +17,14 @@ public class FixturesDAO {
         this.datastore = datastore;
     }
 
-    public void insertFixtures(List<Fixture> fixtures) {
+    public List<Fixture> getUpcomingFixtures() {
 
-        this.datastore.getDatastore().save(fixtures);
-    }
-
-    public List<Fixture> getUpcomingFixtures(int leagueId) {
-
-
+        // TODO - add date criterion
         return this.datastore.getDatastore()
                 .createQuery(Fixture.class)
-                .field(LEAGUE_ID).equal(leagueId)
                 .order("date")
+                .field(LEAGUE_ID).equal(1)
+                .limit(15)
                 .asList();
     }
 }
