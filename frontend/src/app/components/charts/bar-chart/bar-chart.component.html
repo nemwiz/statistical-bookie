@@ -1,1 +1,7 @@
-<div class="ct-chart ct-golden-section" id="bar-chart-{{index}}"></div>
+<div [hidden]="series.length === 0" class="ct-chart ct-golden-section" id="bar-chart-{{index}}"></div>
+
+<div *ngIf="series.length === 0" class="ui negative message no-data">
+  <div class="header">
+    {{'noDataAvailable' | translate}}
+  </div>
+</div>

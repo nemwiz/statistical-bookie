@@ -11,7 +11,7 @@ import {chartColors} from "../../../common/chart-colors";
 })
 export class BarChartComponent implements OnInit {
 
-  series: object;
+  series: number[];
   index: number;
   chartColors: string[] = chartColors;
   colorCounter: number = 0;

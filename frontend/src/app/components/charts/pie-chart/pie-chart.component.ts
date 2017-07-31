@@ -10,7 +10,7 @@ import {chartColors} from "../../../common/chart-colors";
 })
 export class PieChartComponent implements OnInit {
 
-  series: object;
+  series: number[];
   index: number;
   chartColors: string[] = chartColors;
   colorCounter: number = 0;
@@ -18,6 +18,11 @@ export class PieChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    if (this.series.length === 0) {
+      return;
+    }
+
     setTimeout(() => {
       this.setUpPieChart({
         series: this.series

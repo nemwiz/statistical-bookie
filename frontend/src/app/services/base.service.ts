@@ -18,6 +18,8 @@ export abstract class BaseService {
   get<T>(resource: string): Observable<T> {
     let query = `${environment.apiUrl}${API}${resource}`;
     //noinspection TypeScriptValidateTypes
+
+    // TODO - Handle other error codes e.g. 500
     return this.http.get(query)
       .map((response: Response) => {
         return <T> response.json();

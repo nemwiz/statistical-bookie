@@ -1,4 +1,6 @@
 {
+  "noDataAvailable" : "No data available",
+
   "numberOfGoalsFullTime": "Total goals - full time",
   "numberOfGoalsFirstHalf": "Total goals - first half",
   "numberOfGoalsSecondHalf": "Total goals - second half",
