@@ -5,7 +5,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "prebuild": "rm -rf cordova/www/*",
+    "build": "ng build --target=production --environment=prod --output-path cordova/www/ --base-href .",
+    "cordova": "cd cordova && cordova build android && cordova run android",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

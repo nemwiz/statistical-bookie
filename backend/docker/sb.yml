@@ -12,7 +12,7 @@ mongo:
   - host: stats-db
     port: 27017
   database: stats
-#  credentials:
-#    userName: example
-#    password: example
+  credentials:
+    userName: example
+    password: example
 
