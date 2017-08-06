@@ -2,6 +2,7 @@ $body-background: #1B1C1D;
 $extra-large-font: 26px;
 $large-font: 22px;
 $regular-font: 18px;
+$medium-font: 16px;
 $small-font: 14px;
 
 $ipad-screen-size: 767px;
@@ -9,12 +10,13 @@ $ipad-screen-size: 767px;
 $top-navbar-height: 56px;
 $bottom-navbar-height: 48px;
 
-$primary-color: #2196F3;
-$dark-primary-color: #1976D2;
-$accent-color: #FFC107;
-$primary-contrast: #FF5613;
+$primary-color: #2196F3 !important;
+$dark-primary-color: #1976D2 !important;
+$accent-color: #FFC107 !important;
+$primary-contrast: #FF5613 !important;
 
-$primary-white: #ffffff;
+$primary-white: #ffffff !important;
+$primary-black: #000000 !important;
 
 $icon-font-size: 2em;
 

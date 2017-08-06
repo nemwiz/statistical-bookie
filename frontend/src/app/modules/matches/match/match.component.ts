@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Data} from "@angular/router";
 import {MatchService} from "../../../services/match.service";
 import {MatchObject} from "../../../interfaces/match/match-object";
-import {omit, pick, capitalize} from "lodash";
+import {omit, pick} from "lodash";
 import {ResultsTableData} from "../../../interfaces/match/data-stats";
 
 @Component({
@@ -33,7 +33,7 @@ export class MatchComponent implements OnInit {
       this.awayTeam = paramValue.substring(dashIndex + 1, paramValue.length);
     });
 
-    this.matchService.getMatchesByTeams(capitalize(this.homeTeam), capitalize(this.awayTeam))
+    this.matchService.getMatchesByTeams(this.homeTeam, this.awayTeam)
       .subscribe((matches) => {
         this.mapMatchObject(matches);
         this.isLoading = false;

@@ -15,7 +15,7 @@ $margin-offset: 10px;
   z-index: 1000;
 
   .active-item {
-    color: $primary-white !important;
+    color: $primary-white;
     border-bottom: 3px solid $primary-white;
   }
 
@@ -30,6 +30,10 @@ $margin-offset: 10px;
 
   @media(max-width: $ipad-screen-size) {
     flex-direction: column;
+  }
+
+  h3 {
+    color: $primary-white;
   }
 
   .legend-container {

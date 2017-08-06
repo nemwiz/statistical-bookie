@@ -1,0 +1,10 @@
+@import "../../../../assets/variables";
+
+.list-item {
+  font-size: $medium-font;
+  color: $primary-black;
+
+  .content {
+    margin-top: 5px !important;
+  }
+}
