@@ -101,7 +101,7 @@ public class FixtureScraper extends LiveScoreScraper {
 
         System.out.println("fixtures = " + fixtures);
 
-        this.fixtureDAO.insertFixtures(fixtures);
+        this.fixtureDAO.insertFixtureIfNotAlreadyPresent(fixtures);
     }
 
     private Fixture mapMatchRowToFixture(Element rowElement, String fixtureDate, League league, int round) {
