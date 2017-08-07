@@ -18,6 +18,7 @@ import static com.ui4j.api.browser.BrowserFactory.getWebKit;
 
 public class MatchScraper extends LiveScoreScraper {
 
+    public static String SCRAPPER_ID = "matchScrapper";
     private static final String HOME_TEAM = "H";
     private static final String AWAY_TEAM = "A";
     private static final String DRAW = "D";
@@ -94,7 +95,7 @@ public class MatchScraper extends LiveScoreScraper {
 
         List<DatabaseMatch> databaseMatches = scrapeIndividualMatches(individualMatches, round, league);
 
-        this.matchDAO.insertMatchesIntoDatabase(databaseMatches);
+        this.matchDAO.insertMatchesIfNotAlreadyPresent(databaseMatches);
     }
 
     private List<String> getUrlForEachMatch(Document document) {

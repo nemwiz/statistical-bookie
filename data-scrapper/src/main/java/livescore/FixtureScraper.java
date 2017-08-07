@@ -16,6 +16,7 @@ import java.util.Map;
 
 public class FixtureScraper extends LiveScoreScraper {
 
+    public static String SCRAPPER_ID = "fixtureScraper";
     private FixtureDAO fixtureDAO;
 
     public FixtureScraper(LeaguesDAO leaguesDAO, FixtureDAO fixtureDAO, int maxMiliseconds, int minMiliseconds) {

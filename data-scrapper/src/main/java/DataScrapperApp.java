@@ -7,8 +7,19 @@ import healthchecks.DatabaseHealthCheck;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import jobs.FixtureJob;
+import jobs.MatchJob;
 import livescore.FixtureScraper;
 import livescore.MatchScraper;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.impl.StdSchedulerFactory;
+
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+import static org.quartz.TriggerBuilder.newTrigger;
 
 public class DataScrapperApp extends Application<DataScrapperConfiguration> {
 
@@ -46,10 +57,51 @@ public class DataScrapperApp extends Application<DataScrapperConfiguration> {
 //        historicalMatchesScrapper.scrapeMatchesFromCsvFilesOnFootballDataSite();
 
         FixtureScraper fixtureScraper = new FixtureScraper(leaguesDAO, fixtureDAO, 25000, 10000);
-        fixtureScraper.scrapeUpcomingFixtures();
-
-//        MatchScraper matchScraper = new MatchScraper(leaguesDAO, matchDAO, 25000, 10000);
+        MatchScraper matchScraper = new MatchScraper(leaguesDAO, matchDAO, 25000, 10000);
+//        fixtureScraper.scrapeUpcomingFixturesForSpecificLeague("E0");
 //        matchScraper.scrapeSpecificLeague("I2");
 
+        this.scheduleCronScrappingJobs(fixtureScraper, matchScraper);
+
+    }
+
+    private void scheduleCronScrappingJobs(FixtureScraper fixtureScraper, MatchScraper matchScraper) throws SchedulerException {
+
+        String triggerGroup = "group1";
+
+        JobDetail fixturesScrappingJob = newJob(FixtureJob.class)
+                .withIdentity("fixtureJob", triggerGroup)
+                .build();
+
+        Trigger fixtureScrappingTrigger = newTrigger()
+                .withIdentity("fixtureScrappingTrigger", triggerGroup)
+                .startNow()
+                .withSchedule(simpleSchedule()
+                        .withIntervalInHours(72)
+                        .repeatForever())
+                .build();
+
+        JobDetail matchesScrappingJob = newJob(MatchJob.class)
+                .withIdentity("matchesJob", triggerGroup)
+                .build();
+
+        Trigger matchesScrappingTrigger = newTrigger()
+                .withIdentity("matchesScrappingTrigger", triggerGroup)
+                .startNow()
+                .withSchedule(simpleSchedule()
+                        .withIntervalInHours(96)
+                        .repeatForever())
+                .build();
+
+        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+
+        scheduler.getContext().put(FixtureScraper.SCRAPPER_ID, fixtureScraper);
+        scheduler.getContext().put(MatchScraper.SCRAPPER_ID, matchScraper);
+
+        // Tell quartz to schedule the job using our trigger
+        scheduler.scheduleJob(fixturesScrappingJob, fixtureScrappingTrigger);
+        scheduler.scheduleJob(matchesScrappingJob, matchesScrappingTrigger);
+
+        scheduler.start();
     }
 }
