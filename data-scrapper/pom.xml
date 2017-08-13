@@ -59,11 +59,6 @@
             <version>2.2.2</version>
             <type>jar</type>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.github.ui4j.ui4j</groupId>-->
-            <!--<artifactId>ui4j-all</artifactId>-->
-            <!--<version>2.2.0</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>io.webfolder</groupId>
             <artifactId>ui4j-webkit</artifactId>

@@ -9,10 +9,13 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import livescore.FixtureScraper;
 import livescore.MatchScraper;
+import resource.FixtureScrapingResource;
+import resource.MatchScrapingResource;
 
 public class DataScrapperApp extends Application<DataScrapperConfiguration> {
 
     private static String APP_NAME = "data-scrapper-app";
+    private static final String BASE_URL = "/api/*";
     private MongoBundle<DataScrapperConfiguration> mongoBundle;
 
     public static void main(String[] args) throws Exception {
@@ -45,11 +48,18 @@ public class DataScrapperApp extends Application<DataScrapperConfiguration> {
 //        HistoricalMatchesScrapper historicalMatchesScrapper = new HistoricalMatchesScrapper(matchDAO, leaguesDAO);
 //        historicalMatchesScrapper.scrapeMatchesFromCsvFilesOnFootballDataSite();
 
-        FixtureScraper fixtureScraper = new FixtureScraper(leaguesDAO, fixtureDAO, 25000, 10000);
-        MatchScraper matchScraper = new MatchScraper(leaguesDAO, matchDAO, 25000, 10000);
-        fixtureScraper.scrapeUpcomingFixturesForSpecificLeague("E0");
-//        matchScraper.scrapeSpecificLeague("I2");
+        String apiKey = dataScrapperConfiguration.getApiKey();
 
+        final FixtureScraper fixtureScraper = new FixtureScraper(leaguesDAO, fixtureDAO, 25000, 10000);
+        final MatchScraper matchScraper = new MatchScraper(leaguesDAO, matchDAO, 25000, 10000);
+
+        final FixtureScrapingResource fixtureScrapingResource = new FixtureScrapingResource(fixtureScraper, apiKey);
+        final MatchScrapingResource matchScrapingResource = new MatchScrapingResource(matchScraper, apiKey);
+
+        environment.jersey().register(fixtureScrapingResource);
+        environment.jersey().register(matchScrapingResource);
+
+        environment.jersey().setUrlPattern(BASE_URL);
     }
 
 }

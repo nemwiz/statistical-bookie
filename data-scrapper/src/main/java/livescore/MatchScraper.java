@@ -58,14 +58,14 @@ public class MatchScraper extends LiveScoreScraper {
     }
 
 
-    public void scrapeAllFromSpecificRound(int round) {
+    public void scrapeAllMatchesFromSpecifiedRoundToCurrentRound(int round) {
         List<League> leagueList = getLeaguesDAO().getAllLeagues();
 
         for (League league : leagueList) {
             int currentRound = this.getCurrentRound(league);
 
-            for (; round < currentRound; round++) {
-                scrape(league, round);
+            for (int i = round; i < currentRound; i++) {
+                scrape(league, i);
             }
 
         }
@@ -78,9 +78,17 @@ public class MatchScraper extends LiveScoreScraper {
 
         int currentRound = this.getCurrentRound(league);
 
-        for (; round < currentRound; round++) {
-            scrape(league, round);
+        for (int i = round; i < currentRound; i++) {
+            scrape(league, i);
         }
+
+        this.shutdownBrowser();
+    }
+
+    public void scrapeLeagueForSpecifiedRound(int round, String leagueCode) {
+        League league = getLeaguesDAO().getLeagueByLeagueCode(leagueCode);
+
+        scrape(league, round);
 
         this.shutdownBrowser();
     }
