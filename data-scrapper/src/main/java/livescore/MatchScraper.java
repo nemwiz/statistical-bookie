@@ -1,11 +1,11 @@
 package livescore;
 
-import com.ui4j.api.browser.Page;
 import csv.helper.ScrapperHelper;
 import csv.model.DatabaseMatch;
 import dao.LeaguesDAO;
 import dao.MatchDAO;
 import dao.model.League;
+import io.webfolder.ui4j.api.browser.Page;
 import livescore.model.LiveScoreMatchDetail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,7 +14,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ui4j.api.browser.BrowserFactory.getWebKit;
+import static io.webfolder.ui4j.api.browser.BrowserFactory.getWebKit;
+
 
 public class MatchScraper extends LiveScoreScraper {
 

@@ -1,11 +1,11 @@
 package livescore;
 
-import com.ui4j.api.browser.BrowserEngine;
-import com.ui4j.api.browser.BrowserFactory;
-import com.ui4j.api.browser.Page;
 import csv.helper.MilisecondsRandomizer;
 import dao.LeaguesDAO;
 import dao.model.League;
+import io.webfolder.ui4j.api.browser.BrowserEngine;
+import io.webfolder.ui4j.api.browser.BrowserFactory;
+import io.webfolder.ui4j.api.browser.Page;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
