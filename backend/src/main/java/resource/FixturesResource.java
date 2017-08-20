@@ -8,6 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.*;
 import java.util.List;
+import java.util.Map;
 
 @Path("/fixtures")
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,30 +23,16 @@ public class FixturesResource {
     @GET
     @Path("/upcoming")
     public Response getUpcomingFixtures(@Context final Request request) {
-        // TODO Remove leagueId
 
-        List<Fixture> upcomingFixtures = this.fixturesController.getUpcomingFixtures();
-
-        // TODO This expects list to be sorted e.g. first match never changes, check if okay for ETag
-
-        final EntityTag eTag = new EntityTag(String.valueOf(upcomingFixtures.get(0).hashCode()));
+        Map<String, Map<String, List<Fixture>>> upcomingFixtures = this.fixturesController.getUpcomingFixtures();
 
         CacheControl cc = new CacheControl();
         cc.setMaxAge(604800);
 
-        Response.ResponseBuilder responseBuilder = request.evaluatePreconditions(eTag);
-
-        if (responseBuilder == null) {
-            return Response.ok(upcomingFixtures)
-                    .tag(eTag)
-                    .cacheControl(cc)
-                    .build();
-        }
-
-        return Response.notModified()
-                .tag(eTag)
+        return Response.ok(upcomingFixtures)
                 .cacheControl(cc)
                 .build();
+
     }
 
 }

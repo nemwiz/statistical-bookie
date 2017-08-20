@@ -1,10 +1,13 @@
 package model;
 
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
+import org.mongodb.morphia.annotations.*;
 
 @Entity("matches")
+@Indexes({
+        @Index(fields = @Field("homeTeam")),
+        @Index(fields = @Field("awayTeam"))
+})
 public class Match {
 
     @Id

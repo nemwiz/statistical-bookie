@@ -2,7 +2,12 @@ package helper;
 
 import org.joda.time.DateTime;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class SeasonsAndDates {
 
@@ -37,5 +42,22 @@ public class SeasonsAndDates {
 
     private static String addForwardSlash(String season1, String season2) {
         return season1 + "/" + season2;
+    }
+
+    public static List<String> getEachDayOfTheCurrentWeek() {
+        Calendar now = Calendar.getInstance();
+
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
+
+        String[] days = new String[7];
+        int delta = -now.get(GregorianCalendar.DAY_OF_WEEK) - 1; //add 2 if your week start on monday
+        now.add(Calendar.DAY_OF_MONTH, delta );
+        for (int i = 0; i < 7; i++)
+        {
+            days[i] = format.format(now.getTime());
+            now.add(Calendar.DAY_OF_MONTH, 1);
+        }
+
+        return Arrays.asList(days);
     }
 }

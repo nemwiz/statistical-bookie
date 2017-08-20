@@ -142,8 +142,6 @@ public class MatchScraper extends LiveScoreScraper {
 
             String detailPageHtml = detailPage.getDocument().getBody().getInnerHTML();
 
-            System.out.println("detailPageHtml = " + detailPageHtml);
-
             Document detailDocument = Jsoup.parse(detailPageHtml);
 
             String seasonYear = ScrapperHelper.getCurrentSeasonYearWithDash(LocalDate.now());
