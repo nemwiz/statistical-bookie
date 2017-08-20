@@ -1,29 +1,22 @@
-<div class="ui search search-box">
-
-  <div class="ui icon input input-container">
-    <div class="group">
-      <input type="text" class="prompt input-field" (keyup)="onKey($event)">
-      <span class="bar"></span>
-      <div class="label-and-icon-container">
-        <label>Search</label>
-        <i class="search icon"></i>
-      </div>
-    </div>
-
-  </div>
-  <div class="results"></div>
-</div>
-
 <loader [isLoading]="isLoading"></loader>
 
-  <div class="ui selection celled list">
-    <div *ngFor="let fixture of filteredFixtures"
-         [routerLink]="['/fixtures/' + fixture.homeTeam + '-' + fixture.awayTeam]"
-         class="item">
-      <img class="ui avatar image flag-icon-background flag-icon-squared flag-icon-gb">
-        <div class="content">
-          <div class="header">{{fixture.countryName}} {{fixture.date}} </div>
-          <div class="description"> {{fixture.homeTeam}} vs. {{fixture.awayTeam}}</div>
-        </div>
+<div *ngFor="let league of groupedFixtures | keys">
+
+  <div class="league-header">
+    <img class="league-flag"
+         src="../../../../assets/flags/{{groupedFixtures[league.key][0].countryName}}.svg">
+    <div class="league-title">{{league.key}}</div>
+  </div>
+
+  <div class="ui relaxed divided list fixture-list">
+    <div class="item" *ngFor="let fixture of groupedFixtures[league.key]"
+         [routerLink]="['/fixtures/' + fixture.homeTeam + '-' + fixture.awayTeam]">
+      <div class="content">
+        <div class="header">{{fixture.homeTeam}} vs. {{fixture.awayTeam}}</div>
+        <div class="description">{{fixture.date}}</div>
+      </div>
     </div>
   </div>
+</div>
+
+

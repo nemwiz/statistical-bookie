@@ -1,7 +1,7 @@
 package dao;
 
-import model.Match;
 import helper.SeasonsAndDates;
+import model.Match;
 
 import javax.inject.Inject;
 import java.time.LocalDate;

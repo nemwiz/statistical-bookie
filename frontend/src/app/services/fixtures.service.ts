@@ -13,7 +13,7 @@ export class FixturesService extends BaseService {
     super(http);
   }
 
-  getUpcomingFixtures(leagueId: string): Observable<Fixture[]> {
+  getUpcomingFixtures(): Observable<Fixture[]> {
     let endpoint = `${this.BASE_ENDPOINT}/upcoming`;
     return this.get(endpoint);
   }

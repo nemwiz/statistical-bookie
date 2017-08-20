@@ -22,7 +22,7 @@ export class MatchService extends BaseService {
   }
 
   getMatchesByTeams(homeTeamName: string, awayTeamName: string): Observable<MatchObject[]> {
-    let endpoint = `${this.BASE_ENDPOINT}/aggregate/?homeTeam=${homeTeamName}&awayTeam=${awayTeamName}`;
+    let endpoint = `${this.BASE_ENDPOINT}/aggregate/?homeTeam=${encodeURIComponent(homeTeamName)}&awayTeam=${encodeURIComponent(awayTeamName)}`;
     return this.get<any>(endpoint);
   }
 

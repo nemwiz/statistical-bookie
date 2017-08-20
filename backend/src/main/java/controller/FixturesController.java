@@ -17,16 +17,9 @@ public class FixturesController {
         this.fixturesDAO = fixturesDAO;
     }
 
-    public Map<String, Map<String, List<Fixture>>> getUpcomingFixtures() {
+    public List<Fixture> getUpcomingFixtures() {
 
         List<String> daysOfCurrentWeek = SeasonsAndDates.getEachDayOfTheCurrentWeek();
-        List<Fixture> myFixtures = this.fixturesDAO.getUpcomingFixtures(daysOfCurrentWeek);
-
-        Map<String, List<Fixture>> groupingByCountry = myFixtures.stream().collect(Collectors.groupingBy(Fixture::getCountryName));
-        Map<String, Map<String, List<Fixture>>> groupingByCountryAndDate = new HashMap<>();
-
-        groupingByCountry.forEach((key, value) -> groupingByCountryAndDate.put(key, value.stream().collect(Collectors.groupingBy(Fixture::getDate))));
-
-        return groupingByCountryAndDate;
+        return this.fixturesDAO.getUpcomingFixtures(daysOfCurrentWeek);
     }
 }

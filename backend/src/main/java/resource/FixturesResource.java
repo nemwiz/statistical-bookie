@@ -24,7 +24,7 @@ public class FixturesResource {
     @Path("/upcoming")
     public Response getUpcomingFixtures(@Context final Request request) {
 
-        Map<String, Map<String, List<Fixture>>> upcomingFixtures = this.fixturesController.getUpcomingFixtures();
+       List<Fixture> upcomingFixtures = this.fixturesController.getUpcomingFixtures();
 
         CacheControl cc = new CacheControl();
         cc.setMaxAge(604800);
