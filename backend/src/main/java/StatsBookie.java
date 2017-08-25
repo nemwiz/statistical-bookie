@@ -1,8 +1,10 @@
 import aggregator.*;
 import com.meltmedia.dropwizard.mongo.MongoBundle;
 import controller.FixturesController;
+import controller.LeaguesController;
 import controller.MainController;
 import dao.FixturesDAO;
+import dao.LeaguesDAO;
 import dao.MatchDAO;
 import dao.MorphiaDatastore;
 import healthchecks.DatabaseHealthCheck;
@@ -11,6 +13,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import resource.FixturesResource;
+import resource.LeaguesResource;
 import resource.NumberOfGoalsPerMatchResource;
 
 import javax.servlet.DispatcherType;
@@ -67,14 +70,18 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
                 exactResultAggregator);
 
         FixturesDAO fixturesDAO = new FixturesDAO(morphiaDatastore);
+        LeaguesDAO leaguesDAO = new LeaguesDAO(morphiaDatastore);
 
         final FixturesController fixturesController = new FixturesController(fixturesDAO);
+        final LeaguesController leaguesController = new LeaguesController(leaguesDAO);
 
         final NumberOfGoalsPerMatchResource numberOfGoalsPerMatchResource = new NumberOfGoalsPerMatchResource(mainController);
         final FixturesResource fixturesResource = new FixturesResource(fixturesController);
+        final LeaguesResource leaguesResource = new LeaguesResource(leaguesController);
 
         environment.jersey().register(numberOfGoalsPerMatchResource);
         environment.jersey().register(fixturesResource);
+        environment.jersey().register(leaguesResource);
 
         // Enable CORS headers
         final FilterRegistration.Dynamic cors =
