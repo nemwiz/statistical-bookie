@@ -1,0 +1,33 @@
+@import "../../../assets/variables";
+
+.header-bar-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: $top-navbar-height;
+  padding: $standard-padding;
+  position: fixed;
+  background-color: $primary-color;
+  z-index: 999;
+
+  .header-title {
+    font-size: $header-font;
+    font-weight: bold;
+    margin-left:28px;
+    color: $primary-white
+  }
+
+  .back-arrow-icon {
+    $icon-height: 32px;
+
+    @media (max-width: $iphone6-plus-screen-size) {
+      height: $icon-height;
+    }
+    @media (max-width: $iphone6-screen-size) {
+      height: $icon-height - 2px;
+    }
+    @media (max-width: $iphone5-screen-size) {
+      height: $icon-height - 8px;
+    }
+  }
+}

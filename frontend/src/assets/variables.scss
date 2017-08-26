@@ -17,6 +17,9 @@ $standard-padding: 20px;
 $list-row-padding: 15px;
 
 $ipad-screen-size: 767px;
+$iphone6-plus-screen-size: 414px;
+$iphone6-screen-size: 375px;
+$iphone5-screen-size: 320px;
 
 $top-navbar-height: 56px;
 $bottom-navbar-height: 48px;
@@ -44,6 +47,10 @@ a:hover {
 
 .ui.inverted.list .item a:not(.ui):hover {
   color: white !important;
+}
+
+.scrollable-content {
+  margin-top: $top-navbar-height;
 }
 
 .list-row {

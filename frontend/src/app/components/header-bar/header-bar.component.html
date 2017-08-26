@@ -1,0 +1,7 @@
+<div class="header-bar-container">
+  <img *ngIf="currentRoute !== '/home' || currentRoute"
+       (click)="navigateBack()"
+       class="back-arrow-icon"
+       src="../../../assets/icons/ic_arrow_back_white_24px.svg">
+  <div class="header-title">Stats bookie</div>
+</div>

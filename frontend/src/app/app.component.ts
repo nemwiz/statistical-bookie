@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {Location} from '@angular/common';
-import {NavigationEnd, Router} from "@angular/router";
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -10,25 +8,13 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class AppComponent {
 
-  currentRoute: string = '';
 
-  constructor(private location: Location,
-              private router: Router,
-              private translationService: TranslateService) {
-    this.router.events.subscribe((route) => {
-      if (route instanceof NavigationEnd) {
-        this.currentRoute = (<NavigationEnd> route ).url;
-      }
-    });
+  constructor(private translationService: TranslateService) {
 
     this.translationService.setDefaultLang('en');
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
     this.translationService.use('rs');
-  }
-
-  navigateBack(): void {
-    this.location.back();
   }
 
   changeLanguage(): void {
