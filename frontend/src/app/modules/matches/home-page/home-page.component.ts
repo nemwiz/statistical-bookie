@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {FixturesService} from "../../../services/fixtures.service";
-import {Fixture} from "../../../interfaces/fixture";
-import {groupBy, sortBy} from "lodash";
+import {LeaguesService} from "../../../services/leagues.service";
+import {League} from "../../../interfaces/league";
 
 @Component({
   selector: 'home-page',
@@ -10,22 +9,19 @@ import {groupBy, sortBy} from "lodash";
 })
 export class HomePageComponent implements OnInit {
 
-  fixtures: Fixture[] = [];
-  groupedFixtures: object = {};
   isLoading: boolean = true;
+  leagues: League[] = [];
 
-  constructor(private fixturesService: FixturesService) {
+  constructor(private leaguesService: LeaguesService) {
   }
 
   ngOnInit() {
 
-    this.fixturesService.getUpcomingFixtures()
-      .subscribe(fixtures => {
-        this.fixtures = fixtures;
-        this.groupedFixtures = groupBy(sortBy(this.fixtures, ['leagueId', 'homeTeam']), 'leagueName');
+    this.leaguesService.getAllLeagues()
+      .subscribe((leagues) => {
+        this.leagues = leagues.sort((a, b) => { return a.id - b.id});
         this.isLoading = false;
       });
-
   }
 
 }

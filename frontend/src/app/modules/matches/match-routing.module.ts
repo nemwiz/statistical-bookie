@@ -6,7 +6,7 @@ import {MatchDetailComponent} from "./match-detail/match-detail.component";
 
 export const routes:Routes = [
   {path: 'home', component: HomePageComponent},
-  {path: 'fixtures/:homeTeam-:awayTeam', component: MatchComponent},
+  {path: 'league/:leagueId', component: MatchComponent},
   {path: 'fixtures/:homeTeam-:awayTeam/:details', component: MatchDetailComponent}
 ];
 

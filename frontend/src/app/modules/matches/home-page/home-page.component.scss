@@ -1,39 +1,32 @@
 @import "../../../../assets/variables";
 
-.league-header {
+.league-row {
   display: flex;
   align-items: center;
-  padding: 10px;
-  background-color: $primary-color;
-  color: $primary-white;
+  padding: $standard-padding - 5px;
+  border-bottom: 1px solid $separator-color;
 
-  .league-flag {
-    $flag-icon-size: 30px;
-    width: $flag-icon-size;
-    height: $flag-icon-size;
+  $icon-container-width: 20%;
+  $icon-width: 35px;
+  $icon-height: 30px;
+  .icon-container {
+    width: $icon-container-width;
   }
 
-  .league-title {
-    margin-left: 10px;
-    font-size: $header-font;
+  .league-icon {
+    width: $icon-width;
+    height: $icon-height;
+  }
+
+  .league-name {
+    width: $icon-container-width * 3;
+    font-size: 4.5vw;
     font-weight: bold;
-
-    @media(min-width: $ipad-screen-size) {
-      font-size: $header-font-large-screen;
-    }
   }
 
-}
-
-.fixture-list {
-
-  padding: $standard-padding !important;
-  padding-top: 0 !important;
-  font-size: $item-list-font;
-
-  @media(min-width: $ipad-screen-size) {
-    font-size: $item-list-font-large-screen;
+  .country-flag {
+    width: $icon-height;
+    height: $icon-height - 5px;
+    border: 1px solid $separator-color;
   }
 }
-
-

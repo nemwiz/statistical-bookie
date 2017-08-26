@@ -1,22 +1,12 @@
 <loader [isLoading]="isLoading"></loader>
 
-<div *ngFor="let league of groupedFixtures | keys">
-
-  <div class="league-header">
-    <img class="league-flag"
-         src="../../../../assets/flags/{{groupedFixtures[league.key][0].countryName}}.svg">
-    <div class="league-title">{{league.key}}</div>
-  </div>
-
-  <div class="ui relaxed divided list fixture-list">
-    <div class="item" *ngFor="let fixture of groupedFixtures[league.key]"
-         [routerLink]="['/fixtures/' + fixture.homeTeam + '-' + fixture.awayTeam]">
-      <div class="content">
-        <div class="header">{{fixture.homeTeam}} vs. {{fixture.awayTeam}}</div>
-        <div class="description">{{fixture.date}}</div>
-      </div>
+<div class="league-row" *ngFor="let league of leagues" [routerLink]="['/league/', league.id]">
+    <div class="icon-container">
+      <img class="league-icon" src="../../../../assets/league-icons/{{league.leagueCode}}.png">
     </div>
-  </div>
+    <div class="league-name">{{league.leagueName}}</div>
+    <div class="icon-container">
+      <img class="country-flag" src="../../../../assets/flags/{{league.countryName}}.svg">
+    </div>
+
 </div>
-
-

@@ -14,6 +14,7 @@ import {FixturesService} from "../../services/fixtures.service";
 import {BarChartComponent} from "../../components/charts/bar-chart/bar-chart.component";
 import {LoaderComponent} from "../../components/loader/loader.component";
 import {TranslateModule} from '@ngx-translate/core';
+import {LeaguesService} from "../../services/leagues.service";
 
 @NgModule({
   imports: [
@@ -33,6 +34,6 @@ import {TranslateModule} from '@ngx-translate/core';
     MatchDetailComponent,
     LoaderComponent
   ],
-  providers: [MatchService, FixturesService],
+  providers: [MatchService, FixturesService, LeaguesService],
 })
 export class MatchModule { }
