@@ -15,6 +15,7 @@ import {BarChartComponent} from "../../components/charts/bar-chart/bar-chart.com
 import {LoaderComponent} from "../../components/loader/loader.component";
 import {TranslateModule} from '@ngx-translate/core';
 import {LeaguesService} from "../../services/leagues.service";
+import { LeagueMainPageComponent } from './league-main-page/league-main-page.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import {LeaguesService} from "../../services/leagues.service";
     PieChartComponent,
     BarChartComponent,
     MatchDetailComponent,
-    LoaderComponent
+    LoaderComponent,
+    LeagueMainPageComponent
   ],
   providers: [MatchService, FixturesService, LeaguesService],
 })

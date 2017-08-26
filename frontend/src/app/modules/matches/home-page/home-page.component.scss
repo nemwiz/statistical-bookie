@@ -1,10 +1,7 @@
 @import "../../../../assets/variables";
 
 .league-row {
-  display: flex;
-  align-items: center;
-  padding: $standard-padding - 5px;
-  border-bottom: 1px solid $separator-color;
+ @extend .list-row;
 
   $icon-container-width: 20%;
   $icon-width: 35px;

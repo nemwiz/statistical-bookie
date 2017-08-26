@@ -14,7 +14,12 @@ export class FixturesService extends BaseService {
   }
 
   getUpcomingFixtures(): Observable<Fixture[]> {
-    let endpoint = `${this.BASE_ENDPOINT}/upcoming`;
+    let endpoint = `${this.BASE_ENDPOINT}`;
+    return this.get(endpoint);
+  }
+
+  getUpcomingLeagueFixtures(leagueId: number): Observable<Fixture[]> {
+    let endpoint = `${this.BASE_ENDPOINT}/${leagueId}/upcoming`;
     return this.get(endpoint);
   }
 

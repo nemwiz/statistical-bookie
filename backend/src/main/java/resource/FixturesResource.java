@@ -5,6 +5,7 @@ import model.Fixture;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.*;
 import java.util.List;
@@ -21,7 +22,6 @@ public class FixturesResource {
     }
 
     @GET
-    @Path("/upcoming")
     public Response getUpcomingFixtures(@Context final Request request) {
 
        List<Fixture> upcomingFixtures = this.fixturesController.getUpcomingFixtures();
@@ -33,6 +33,20 @@ public class FixturesResource {
                 .cacheControl(cc)
                 .build();
 
+    }
+
+    @GET
+    @Path("/{leagueId}/upcoming")
+    public Response getUpcomingFixturesForLeague(@PathParam("leagueId") int leagueId) {
+
+        List<Fixture> upcomingLeagueFixtures = this.fixturesController.getUpcomingFixturesForLeague(leagueId);
+
+        CacheControl cc = new CacheControl();
+        cc.setMaxAge(604800);
+
+        return Response.ok(upcomingLeagueFixtures)
+                .cacheControl(cc)
+                .build();
     }
 
 }

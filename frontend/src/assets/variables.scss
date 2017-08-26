@@ -7,10 +7,14 @@ $small-font: 14px;
 $item-list-font: 4vw;
 $item-list-font-large-screen: 3.5vw;
 
+$list-row-primary-item-font: 4vw;
+$list-row-secondary-item-font: 3.5vw;
+
 $header-font: 5.5vw;
 $header-font-large-screen: 5vw;
 
 $standard-padding: 20px;
+$list-row-padding: 15px;
 
 $ipad-screen-size: 767px;
 
@@ -40,6 +44,13 @@ a:hover {
 
 .ui.inverted.list .item a:not(.ui):hover {
   color: white !important;
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  padding: $list-row-padding;
+  border-bottom: 1px solid $separator-color;
 }
 
 

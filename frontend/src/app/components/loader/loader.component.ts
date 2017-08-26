@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class LoaderComponent implements OnInit {
 
   isLoading: boolean = false;
+  loadingTranslationKey: string = 'loading';
 
   constructor() { }
 

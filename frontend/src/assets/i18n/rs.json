@@ -1,5 +1,6 @@
 {
   "noDataAvailable" : "Podaci nisu dostupni",
+  "loading" : "Učitava se",
 
   "numberOfGoalsFullTime": "Ukupno golova - kraj",
   "numberOfGoalsFirstHalf": "Ukupno golova - prvo poluvreme",

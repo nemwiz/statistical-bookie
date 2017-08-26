@@ -19,4 +19,10 @@ public class FixturesController {
         List<String> daysOfCurrentWeek = SeasonsAndDates.getEachDayOfTheCurrentWeek();
         return this.fixturesDAO.getUpcomingFixtures(daysOfCurrentWeek);
     }
+
+    public List<Fixture> getUpcomingFixturesForLeague(int leagueId) {
+
+        List<String> daysOfCurrentWeek = SeasonsAndDates.getEachDayOfTheCurrentWeek();
+        return this.fixturesDAO.getUpcomingFixturesForLeague(leagueId, daysOfCurrentWeek);
+    }
 }

@@ -1,0 +1,22 @@
+@import "../../../../assets/variables";
+
+.active-tab {
+  border-bottom: 2px solid $primary-white;
+  color: $primary-white;
+}
+
+.fixture-row {
+  @extend .list-row;
+  align-items: flex-start;
+  flex-direction: column;
+
+  .team-names {
+    font-size: $list-row-primary-item-font;
+    font-weight: bold;
+  }
+
+  .fixture-date {
+    margin-top: 5px;
+    font-size: $list-row-secondary-item-font;
+  }
+}

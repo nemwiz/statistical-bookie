@@ -1,0 +1,29 @@
+<div class="fixed-bottom-menu">
+  <ul class="tabs blue">
+    <li class="tab col s3 {{activeTab === 1 ? 'active-tab' : ''}}">
+      <div (click)="setActiveTab(1)">Fixtures</div>
+    </li>
+    <li class="tab col s3 {{activeTab === 2 ? 'active-tab' : ''}}">
+      <div (click)="setActiveTab(2)">League</div>
+    </li>
+  </ul>
+</div>
+
+<loader [isLoading]="isLoading"></loader>
+
+<div class="scrollable-content">
+
+  <div *ngIf="activeTab === 1">
+    <div class="fixture-row" *ngFor="let fixture of leagueFixtures">
+      <div class="team-names">{{fixture.homeTeam}} - {{fixture.awayTeam}}</div>
+      <div class="fixture-date">{{fixture.date}} {{fixture.time}}</div>
+    </div>
+  </div>
+
+  <div *ngIf="activeTab === 2">
+    tab2
+  </div>
+
+</div>
+
+
