@@ -2,7 +2,7 @@ import aggregator.HalfTimeWithMoreGoalsAggregator;
 import model.Match;
 import org.junit.Before;
 import org.junit.Test;
-import viewmodel.HalfTimeWithMoreGoalsView;
+import viewmodel.HalfTimeWithMoreGoals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import static junit.framework.TestCase.assertEquals;
 public class HalfTimeWithMoreGoalsAggregatorTest {
 
     private HalfTimeWithMoreGoalsAggregator halfTimeWithMoreGoalsAggregator;
-    private HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView;
+    private HalfTimeWithMoreGoals halfTimeWithMoreGoals;
     private List<Match> matches;
 
     @Before
@@ -30,9 +30,9 @@ public class HalfTimeWithMoreGoalsAggregatorTest {
                 firstHalfTimeGoals, totalGoals);
         halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator();
 
-        halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount(this.matches);
+        halfTimeWithMoreGoals = halfTimeWithMoreGoalsAggregator.getAggregatedCount(this.matches);
 
-        assertEquals(numberOfMatchesWhereMoreGoalsAreScoredInFirstHalfTime, halfTimeWithMoreGoalsView.getMoreGoalsWillBeScoredInFirstHalfTime());
+        assertEquals(numberOfMatchesWhereMoreGoalsAreScoredInFirstHalfTime, halfTimeWithMoreGoals.getMoreGoalsWillBeScoredInFirstHalfTime());
     }
 
     @Test
@@ -45,9 +45,9 @@ public class HalfTimeWithMoreGoalsAggregatorTest {
                 firstHalfTimeGoals, totalGoals);
         halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator();
 
-        halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount(this.matches);
+        halfTimeWithMoreGoals = halfTimeWithMoreGoalsAggregator.getAggregatedCount(this.matches);
 
-        assertEquals(numberOfMatchesWhereMoreGoalsAreScoredInSecondHalfTime, halfTimeWithMoreGoalsView.getMoreGoalsWillBeScoredInSecondtHalfTime());
+        assertEquals(numberOfMatchesWhereMoreGoalsAreScoredInSecondHalfTime, halfTimeWithMoreGoals.getMoreGoalsWillBeScoredInSecondtHalfTime());
     }
 
     @Test
@@ -60,9 +60,9 @@ public class HalfTimeWithMoreGoalsAggregatorTest {
                 firstHalfTimeGoals, totalGoals);
         halfTimeWithMoreGoalsAggregator = new HalfTimeWithMoreGoalsAggregator();
 
-        halfTimeWithMoreGoalsView = halfTimeWithMoreGoalsAggregator.getAggregatedCount(this.matches);
+        halfTimeWithMoreGoals = halfTimeWithMoreGoalsAggregator.getAggregatedCount(this.matches);
 
-        assertEquals(numberOfMatchesWhereEvenNumberOfGoalsIsScoredInBothHalfTimes, halfTimeWithMoreGoalsView.getEvenNumberOfGoalsWillBeScoredInBothHalfTimes());
+        assertEquals(numberOfMatchesWhereEvenNumberOfGoalsIsScoredInBothHalfTimes, halfTimeWithMoreGoals.getEvenNumberOfGoalsWillBeScoredInBothHalfTimes());
     }
 
 

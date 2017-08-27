@@ -1,6 +1,6 @@
 package viewmodel;
 
-public class MatchDetailOutcomeView implements ViewModel {
+public class HalfTimeFullTime implements ViewModel {
     
     private long homeTeamWonOnHalfTimeAndWonInTheEnd;
     private long homeTeamWonOnHalfTimeAndDrewInTheEnd;
@@ -12,7 +12,7 @@ public class MatchDetailOutcomeView implements ViewModel {
     private long awayTeamWonOnHalfTimeAndDrewInTheEnd;
     private long awayTeamWonOnHalfTimeAndLostInTheEnd;
 
-    public MatchDetailOutcomeView(long homeTeamWonOnHalfTimeAndWonInTheEnd, long homeTeamWonOnHalfTimeAndDrewInTheEnd, long homeTeamWonOnHalfTimeAndLostInTheEnd, long halfTimeWasDrawAndHomeTeamWonInTheEnd, long halfTimeWasDrawAndWasDrawInTheEnd, long halfTimeWasDrawAndAwayTeamWonInTheEnd, long awayTeamWonOnHalfTimeAndWonInTheEnd, long awayTeamWonOnHalfTimeAndDrewInTheEnd, long awayTeamWonOnHalfTimeAndLostInTheEnd) {
+    public HalfTimeFullTime(long homeTeamWonOnHalfTimeAndWonInTheEnd, long homeTeamWonOnHalfTimeAndDrewInTheEnd, long homeTeamWonOnHalfTimeAndLostInTheEnd, long halfTimeWasDrawAndHomeTeamWonInTheEnd, long halfTimeWasDrawAndWasDrawInTheEnd, long halfTimeWasDrawAndAwayTeamWonInTheEnd, long awayTeamWonOnHalfTimeAndWonInTheEnd, long awayTeamWonOnHalfTimeAndDrewInTheEnd, long awayTeamWonOnHalfTimeAndLostInTheEnd) {
         this.homeTeamWonOnHalfTimeAndWonInTheEnd = homeTeamWonOnHalfTimeAndWonInTheEnd;
         this.homeTeamWonOnHalfTimeAndDrewInTheEnd = homeTeamWonOnHalfTimeAndDrewInTheEnd;
         this.homeTeamWonOnHalfTimeAndLostInTheEnd = homeTeamWonOnHalfTimeAndLostInTheEnd;
@@ -62,7 +62,7 @@ public class MatchDetailOutcomeView implements ViewModel {
 
     @Override
     public String toString() {
-        return "MatchDetailOutcomeView{" +
+        return "HalfTimeFullTime{" +
                 "homeTeamWonOnHalfTimeAndWonInTheEnd=" + homeTeamWonOnHalfTimeAndWonInTheEnd +
                 ", homeTeamWonOnHalfTimeAndDrewInTheEnd=" + homeTeamWonOnHalfTimeAndDrewInTheEnd +
                 ", homeTeamWonOnHalfTimeAndLostInTheEnd=" + homeTeamWonOnHalfTimeAndLostInTheEnd +

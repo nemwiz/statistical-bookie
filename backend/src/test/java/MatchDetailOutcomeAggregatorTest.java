@@ -2,7 +2,7 @@ import aggregator.MatchDetailOutcomeAggregator;
 import model.Match;
 import org.junit.Before;
 import org.junit.Test;
-import viewmodel.MatchDetailOutcomeView;
+import viewmodel.HalfTimeFullTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import static junit.framework.TestCase.assertEquals;
 public class MatchDetailOutcomeAggregatorTest {
 
     private MatchDetailOutcomeAggregator matchDetailOutcomeAggregator;
-    private MatchDetailOutcomeView matchDetailOutcomeView;
+    private HalfTimeFullTime halfTimeFullTime;
     private List<Match> matches;
     private long countOfMatches;
 
@@ -28,7 +28,7 @@ public class MatchDetailOutcomeAggregatorTest {
         countOfMatches = 5;
         setUpWithParameters(countOfMatches, HOME_TEAM_WIN, HOME_TEAM_WIN);
 
-        assertEquals(countOfMatches, matchDetailOutcomeView.getHomeTeamWonOnHalfTimeAndWonInTheEnd());
+        assertEquals(countOfMatches, halfTimeFullTime.getHomeTeamWonOnHalfTimeAndWonInTheEnd());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class MatchDetailOutcomeAggregatorTest {
         countOfMatches = 3;
         setUpWithParameters(countOfMatches, HOME_TEAM_WIN, DRAW);
 
-        assertEquals(countOfMatches, matchDetailOutcomeView.getHomeTeamWonOnHalfTimeAndDrewInTheEnd());
+        assertEquals(countOfMatches, halfTimeFullTime.getHomeTeamWonOnHalfTimeAndDrewInTheEnd());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class MatchDetailOutcomeAggregatorTest {
         countOfMatches = 4;
         setUpWithParameters(countOfMatches, HOME_TEAM_WIN, AWAY_TEAM_WIN);
 
-        assertEquals(countOfMatches, matchDetailOutcomeView.getHomeTeamWonOnHalfTimeAndLostInTheEnd());
+        assertEquals(countOfMatches, halfTimeFullTime.getHomeTeamWonOnHalfTimeAndLostInTheEnd());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class MatchDetailOutcomeAggregatorTest {
         countOfMatches = 14;
         setUpWithParameters(countOfMatches, DRAW, HOME_TEAM_WIN);
 
-        assertEquals(countOfMatches, matchDetailOutcomeView.getHalfTimeWasDrawAndHomeTeamWonInTheEnd());
+        assertEquals(countOfMatches, halfTimeFullTime.getHalfTimeWasDrawAndHomeTeamWonInTheEnd());
     }
 
     @Test
@@ -64,7 +64,7 @@ public class MatchDetailOutcomeAggregatorTest {
         countOfMatches = 2;
         setUpWithParameters(countOfMatches, DRAW, DRAW);
 
-        assertEquals(countOfMatches, matchDetailOutcomeView.getHalfTimeWasDrawAndWasDrawInTheEnd());
+        assertEquals(countOfMatches, halfTimeFullTime.getHalfTimeWasDrawAndWasDrawInTheEnd());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class MatchDetailOutcomeAggregatorTest {
         countOfMatches = 8;
         setUpWithParameters(countOfMatches, DRAW, AWAY_TEAM_WIN);
 
-        assertEquals(countOfMatches, matchDetailOutcomeView.getHalfTimeWasDrawAndAwayTeamWonInTheEnd());
+        assertEquals(countOfMatches, halfTimeFullTime.getHalfTimeWasDrawAndAwayTeamWonInTheEnd());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class MatchDetailOutcomeAggregatorTest {
         countOfMatches = 5;
         setUpWithParameters(countOfMatches, AWAY_TEAM_WIN, AWAY_TEAM_WIN);
 
-        assertEquals(countOfMatches, matchDetailOutcomeView.getAwayTeamWonOnHalfTimeAndWonInTheEnd());
+        assertEquals(countOfMatches, halfTimeFullTime.getAwayTeamWonOnHalfTimeAndWonInTheEnd());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class MatchDetailOutcomeAggregatorTest {
         countOfMatches = 3;
         setUpWithParameters(countOfMatches, AWAY_TEAM_WIN, DRAW);
 
-        assertEquals(countOfMatches, matchDetailOutcomeView.getAwayTeamWonOnHalfTimeAndDrewInTheEnd());
+        assertEquals(countOfMatches, halfTimeFullTime.getAwayTeamWonOnHalfTimeAndDrewInTheEnd());
     }
 
     @Test
@@ -100,13 +100,13 @@ public class MatchDetailOutcomeAggregatorTest {
         countOfMatches = 9;
         setUpWithParameters(countOfMatches, AWAY_TEAM_WIN, HOME_TEAM_WIN);
 
-        assertEquals(countOfMatches, matchDetailOutcomeView.getAwayTeamWonOnHalfTimeAndLostInTheEnd());
+        assertEquals(countOfMatches, halfTimeFullTime.getAwayTeamWonOnHalfTimeAndLostInTheEnd());
     }
 
     private long setUpWithParameters(long countOfMatches, String halfTimeOutcome, String finalOutcome) {
         createMatches(countOfMatches, halfTimeOutcome, finalOutcome);
         matchDetailOutcomeAggregator = new MatchDetailOutcomeAggregator();
-        matchDetailOutcomeView = matchDetailOutcomeAggregator.getAggregatedCount(this.matches);
+        halfTimeFullTime = matchDetailOutcomeAggregator.getAggregatedCount(this.matches);
         return countOfMatches;
     }
 

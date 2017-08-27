@@ -2,16 +2,16 @@ package viewmodel;
 
 import java.util.Map;
 
-public class TeamGoalsModel {
+public class HalftimesOutcomeAndMatchOutcomeModel {
 
     private Map<String, Long> homeTeam;
     private Map<String, Long> awayTeam;
-    private Map<String, Long> bothTeams;
+    private Map<String, Long> draw;
 
-    public TeamGoalsModel(Map<String, Long> homeTeam, Map<String, Long> awayTeam, Map<String, Long> bothTeams) {
+    public HalftimesOutcomeAndMatchOutcomeModel(Map<String, Long> homeTeam, Map<String, Long> awayTeam, Map<String, Long> draw) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        this.bothTeams = bothTeams;
+        this.draw = draw;
     }
 
     public Map<String, Long> getHomeTeam() {
@@ -22,16 +22,16 @@ public class TeamGoalsModel {
         return awayTeam;
     }
 
-    public Map<String, Long> getBothTeams() {
-        return bothTeams;
+    public Map<String, Long> getDraw() {
+        return draw;
     }
 
     @Override
     public String toString() {
-        return "TeamGoalsModel{" +
+        return "HalftimesOutcomeAndMatchOutcomeModel{" +
                 "homeTeam=" + homeTeam +
                 ", awayTeam=" + awayTeam +
-                ", bothTeams=" + bothTeams +
+                ", draw=" + draw +
                 '}';
     }
 }

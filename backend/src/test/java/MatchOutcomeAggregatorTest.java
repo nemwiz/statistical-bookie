@@ -2,7 +2,7 @@ import aggregator.MatchOutcomeAggregator;
 import model.Match;
 import org.junit.Before;
 import org.junit.Test;
-import viewmodel.MatchOutcomeModel;
+import viewmodel.HalftimesOutcomeAndMatchOutcomeModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import static junit.framework.TestCase.assertEquals;
 public class MatchOutcomeAggregatorTest {
 
     private MatchOutcomeAggregator matchOutcomeAggregator;
-    private MatchOutcomeModel matchOutcomeView;
+    private HalftimesOutcomeAndMatchOutcomeModel matchOutcomeView;
     private List<Match> matches;
 
     @Before

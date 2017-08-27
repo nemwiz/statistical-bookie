@@ -1,7 +1,7 @@
 package aggregator;
 
 import model.Match;
-import viewmodel.MatchDetailOutcomeView;
+import viewmodel.HalfTimeFullTime;
 
 import java.util.List;
 
@@ -14,11 +14,11 @@ public class MatchDetailOutcomeAggregator {
     public MatchDetailOutcomeAggregator() {
     }
 
-    public MatchDetailOutcomeView getAggregatedCount(List<Match> matches) {
+    public HalfTimeFullTime getAggregatedCount(List<Match> matches) {
 
         this.matches = matches;
 
-        return new MatchDetailOutcomeView(
+        return new HalfTimeFullTime(
                 countMatches(HOME_TEAM_WIN, HOME_TEAM_WIN),
                 countMatches(HOME_TEAM_WIN, DRAW),
                 countMatches(HOME_TEAM_WIN, AWAY_TEAM_WIN),

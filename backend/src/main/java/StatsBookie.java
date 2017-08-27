@@ -14,7 +14,7 @@ import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import resource.FixturesResource;
 import resource.LeaguesResource;
-import resource.NumberOfGoalsPerMatchResource;
+import resource.AggregatedMatchResource;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -75,11 +75,11 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
         final FixturesController fixturesController = new FixturesController(fixturesDAO);
         final LeaguesController leaguesController = new LeaguesController(leaguesDAO);
 
-        final NumberOfGoalsPerMatchResource numberOfGoalsPerMatchResource = new NumberOfGoalsPerMatchResource(mainController);
+        final AggregatedMatchResource aggregatedMatchResource = new AggregatedMatchResource(mainController);
         final FixturesResource fixturesResource = new FixturesResource(fixturesController);
         final LeaguesResource leaguesResource = new LeaguesResource(leaguesController);
 
-        environment.jersey().register(numberOfGoalsPerMatchResource);
+        environment.jersey().register(aggregatedMatchResource);
         environment.jersey().register(fixturesResource);
         environment.jersey().register(leaguesResource);
 

@@ -2,7 +2,7 @@ package aggregator;
 
 import collecter.NumberOfGoalsCollecter;
 import model.Match;
-import viewmodel.HalfTimeWithMoreGoalsView;
+import viewmodel.HalfTimeWithMoreGoals;
 
 import java.util.List;
 import java.util.function.Function;
@@ -12,8 +12,8 @@ public class HalfTimeWithMoreGoalsAggregator {
     public HalfTimeWithMoreGoalsAggregator() {
     }
 
-    public HalfTimeWithMoreGoalsView getAggregatedCount(List<Match> matches) {
-        return new HalfTimeWithMoreGoalsView(
+    public HalfTimeWithMoreGoals getAggregatedCount(List<Match> matches) {
+        return new HalfTimeWithMoreGoals(
                 countMatches(matches, this::isMoreGoalsScoredInFirstHalfTime),
                 countMatches(matches, this::isMoreGoalsScoredInSecondHalfTime),
                 countMatches(matches, this::isEvenNumberOfGoalsScoredInBothHalfTimes)

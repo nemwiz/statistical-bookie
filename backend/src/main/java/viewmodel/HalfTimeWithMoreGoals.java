@@ -1,11 +1,11 @@
 package viewmodel;
 
-public class HalfTimeWithMoreGoalsView implements ViewModel {
+public class HalfTimeWithMoreGoals implements ViewModel {
     private long moreGoalsWillBeScoredInFirstHalfTime;
     private long moreGoalsWillBeScoredInSecondtHalfTime;
     private long evenNumberOfGoalsWillBeScoredInBothHalfTimes;
 
-    public HalfTimeWithMoreGoalsView(long moreGoalsWillBeScoredInFirstHalfTime, long moreGoalsWillBeScoredInSecondtHalfTime, long evenNumberOfGoalsWillBeScoredInBothHalfTimes) {
+    public HalfTimeWithMoreGoals(long moreGoalsWillBeScoredInFirstHalfTime, long moreGoalsWillBeScoredInSecondtHalfTime, long evenNumberOfGoalsWillBeScoredInBothHalfTimes) {
         this.moreGoalsWillBeScoredInFirstHalfTime = moreGoalsWillBeScoredInFirstHalfTime;
         this.moreGoalsWillBeScoredInSecondtHalfTime = moreGoalsWillBeScoredInSecondtHalfTime;
         this.evenNumberOfGoalsWillBeScoredInBothHalfTimes = evenNumberOfGoalsWillBeScoredInBothHalfTimes;
@@ -25,7 +25,7 @@ public class HalfTimeWithMoreGoalsView implements ViewModel {
 
     @Override
     public String toString() {
-        return "HalfTimeWithMoreGoalsView{" +
+        return "HalfTimeWithMoreGoals{" +
                 "moreGoalsWillBeScoredInFirstHalfTime=" + moreGoalsWillBeScoredInFirstHalfTime +
                 ", moreGoalsWillBeScoredInSecondtHalfTime=" + moreGoalsWillBeScoredInSecondtHalfTime +
                 ", evenNumberOfGoalsWillBeScoredInBothHalfTimes=" + evenNumberOfGoalsWillBeScoredInBothHalfTimes +
