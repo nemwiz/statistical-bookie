@@ -2,9 +2,11 @@ package resource;
 
 import controller.LeaguesController;
 import model.League;
+import viewmodel.LeagueTable;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.MediaType;
@@ -30,6 +32,20 @@ public class LeaguesResource {
         cc.setMaxAge(15778463);
 
         return Response.ok(leagueList)
+                .cacheControl(cc)
+                .build();
+    }
+
+    @GET
+    @Path("/{leagueCode}/table")
+    public Response getLeagueTable(@PathParam("leagueCode") String leagueCode) {
+
+        List<LeagueTable> leagueTable = this.leaguesController.getLeagueStats(leagueCode);
+
+        CacheControl cc = new CacheControl();
+        cc.setMaxAge(604800);
+
+        return Response.ok(leagueTable)
                 .cacheControl(cc)
                 .build();
     }

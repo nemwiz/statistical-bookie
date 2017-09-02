@@ -1,10 +1,13 @@
 package aggregator;
 
-import dao.MatchDAO;
-import helper.Constants;
 import model.Match;
+import model.TeamScore;
+import viewmodel.LeagueTable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -12,80 +15,62 @@ import static helper.Constants.*;
 
 public class LeagueTableAggregator {
 
-    private class TeamScore {
+    private static int NUMBER_OF_POINTS_FOR_WIN = 3;
+    private static int NUMBER_OF_POINTS_FOR_DRAW = 1;
+    private static int NUMBER_OF_POINTS_FOR_LOSS = 0;
 
-        private String teamName;
-        private int numberOfGoals;
-        private int pointsWon;
-
-        public TeamScore(String teamName, int numberOfGoals, int pointsWon) {
-            this.teamName = teamName;
-            this.numberOfGoals = numberOfGoals;
-            this.pointsWon = pointsWon;
-        }
-
-        public String getTeamName() {
-            return teamName;
-        }
-
-        public int getNumberOfGoals() {
-            return numberOfGoals;
-        }
-
-        public int getPointsWon() {
-            return pointsWon;
-        }
-
-        @Override
-        public String toString() {
-            return "TeamScore{" +
-                    "teamName='" + teamName + '\'' +
-                    ", numberOfGoals=" + numberOfGoals +
-                    ", pointsWon=" + pointsWon +
-                    '}';
-        }
+    public LeagueTableAggregator() {
     }
 
-    private List<Match> matches;
+    public List<LeagueTable> aggregate(List<Match> matches) {
 
-    public LeagueTableAggregator(List<Match> matches) {
-        this.matches = matches;
-    }
-
-    public void aggregate() {
-
-        List<TeamScore> teamScores = new ArrayList<>();
-
-        teamScores = this.matches.stream()
-                .filter(match -> match.getLeagueCode().equals("E0"))
+        List<TeamScore> teamScores = matches.stream()
                 .flatMap(match -> Stream.of(
-                        new TeamScore(match.getHomeTeam(), match.getHomeTeamGoals(), this.getPointsWonBasedOnMatchOutcome(HOME_TEAM_WIN, match.getFinalOutcome())),
-                        new TeamScore(match.getAwayTeam(), match.getAwayTeamGoals(), this.getPointsWonBasedOnMatchOutcome(AWAY_TEAM_WIN, match.getFinalOutcome()))))
+                        new TeamScore(match.getHomeTeam(), this.getPointsWonBasedOnMatchOutcome(HOME_TEAM_WIN, match.getFinalOutcome())),
+                        new TeamScore(match.getAwayTeam(), this.getPointsWonBasedOnMatchOutcome(AWAY_TEAM_WIN, match.getFinalOutcome()))))
                 .collect(Collectors.toList());
 
 
-        Map<String, Integer> leagueTable = teamScores
+        Map<String, Integer> pointsWon = teamScores
                 .stream()
                 .collect(Collectors.groupingBy(TeamScore::getTeamName, Collectors.summingInt(TeamScore::getPointsWon)));
 
-        TreeMap<String, Integer> sortedLeagueTable = new TreeMap<>(leagueTable);
+        Map<String, Long> wins = teamScores
+                .stream()
+                .filter(getTeamScorePredicate(NUMBER_OF_POINTS_FOR_WIN))
+                .collect(Collectors.groupingBy(TeamScore::getTeamName, Collectors.counting()));
 
-        //TODO finish endpoint, extract TeamScore to separate location, map also by goals (home and away), write table to database etc.
-        // TODO Write unit tests
+        Map<String, Long> losses = teamScores
+                .stream()
+                .filter(getTeamScorePredicate(NUMBER_OF_POINTS_FOR_LOSS))
+                .collect(Collectors.groupingBy(TeamScore::getTeamName, Collectors.counting()));
 
+        Map<String, Long> draws = teamScores
+                .stream()
+                .filter(getTeamScorePredicate(NUMBER_OF_POINTS_FOR_DRAW))
+                .collect(Collectors.groupingBy(TeamScore::getTeamName, Collectors.counting()));
 
+        List<LeagueTable> leagueTable = new ArrayList<>();
+
+        pointsWon.forEach((key, value) -> leagueTable.add(new LeagueTable(key, wins.get(key), draws.get(key), losses.get(key), value)));
+
+        return leagueTable;
     }
 
     private int getPointsWonBasedOnMatchOutcome(String homeOrAwayFixture, String finalOutcome) {
 
         if (homeOrAwayFixture.equals(finalOutcome)) {
-            return 3;
+            return NUMBER_OF_POINTS_FOR_WIN;
         } else if (finalOutcome.equals(DRAW)) {
-            return 1;
+            return NUMBER_OF_POINTS_FOR_DRAW;
         } else {
-            return 0;
+            return NUMBER_OF_POINTS_FOR_LOSS;
         }
 
+    }
+
+    private Predicate<TeamScore> getTeamScorePredicate(int numberOfPoints) {
+        return teamScore -> teamScore.getPointsWon() == numberOfPoints;
     }
 
 }

@@ -73,7 +73,7 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
         LeaguesDAO leaguesDAO = new LeaguesDAO(morphiaDatastore);
 
         final FixturesController fixturesController = new FixturesController(fixturesDAO);
-        final LeaguesController leaguesController = new LeaguesController(leaguesDAO);
+        final LeaguesController leaguesController = new LeaguesController(leaguesDAO, matchDAO);
 
         final AggregatedMatchResource aggregatedMatchResource = new AggregatedMatchResource(mainController);
         final FixturesResource fixturesResource = new FixturesResource(fixturesController);

@@ -36,10 +36,11 @@ public class MatchDAO {
 
     }
 
-    public List<Match> getAllMatchesForCurrentSeason() {
+    public List<Match> getAllMatchesForCurrentSeason(String leagueCode) {
 
         return this.datastore.getDatastore().createQuery(Match.class)
                 .field("seasonYear").contains(SeasonsAndDates.getCurrentSeasonYearWithDash(LocalDate.now()))
+                .field("leagueCode").equal(leagueCode)
                 .asList();
 
     }
