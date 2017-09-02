@@ -1,4 +1,4 @@
-export interface MatchDetailOutcome {
+export interface HalfTimeFullTime {
   homeTeamWonOnHalfTimeAndWonInTheEnd: number;
   homeTeamWonOnHalfTimeAndDrewInTheEnd: number;
   homeTeamWonOnHalfTimeAndLostInTheEnd: number;

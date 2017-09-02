@@ -1,4 +1,4 @@
-import {MatchDetailOutcome} from "./match-detail-outcome";
+import {HalfTimeFullTime} from "./match-detail-outcome";
 import {MatchOutcomeView, NumberOfGoalsAndWinsView, NumberOfGoalsMetaView, TeamGoalsView} from "./match-object";
 import {HalftimeWithMoreGoals} from "./halftime-with-more-goals";
 
@@ -11,7 +11,7 @@ export interface ResultsTableData {
 type Data = NumberOfGoalsMetaView |
   TeamGoalsView |
   MatchOutcomeView |
-  MatchDetailOutcome |
+  HalfTimeFullTime |
   NumberOfGoalsAndWinsView |
   HalftimeWithMoreGoals |
   object;

@@ -1,45 +1,22 @@
 @import "../../../../assets/variables";
 
-$margin-offset: 10px;
-
-
-.fixed-bottom-menu {
-  position: fixed;
-  width: 100%;
-  top: $top-navbar-height;
-  z-index: 1000;
-
-  .active-item {
-    color: $primary-white;
-    border-bottom: 3px solid $primary-white;
-  }
-
-  .icon {
-    font-size: $icon-font-size;
-  }
-
+.chart-container {
+  margin-top: $list-row-padding;
 }
 
-.chart-container {
+.results-table-container {
+  padding: $list-row-padding;
+}
+
+.legend-container {
   display: flex;
+  padding-left: $list-row-padding;
+  padding-right: $list-row-padding;
 
-  @media(max-width: $ipad-screen-size) {
-    flex-direction: column;
+  $legend-dimensions: 16px;
+  .legend {
+    height: $legend-dimensions;
+    width: $legend-dimensions;
+    margin-right: $legend-dimensions;
   }
-
-  h3 {
-    color: $primary-white;
-  }
-
-  .legend-container {
-    display: flex;
-
-    $legend-dimensions: 16px;
-    .legend {
-      height: $legend-dimensions;
-      width: $legend-dimensions;
-      margin-right: $legend-dimensions;
-    }
-  }
-
 }

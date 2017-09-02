@@ -1,6 +1,6 @@
 <loader [isLoading]="isLoading"></loader>
 
-<div class="league-row" *ngFor="let league of leagues" [routerLink]="['/league/', league.id]">
+<div class="league-row" *ngFor="let league of leagues" [routerLink]="['/leagues/', league.id]">
     <div class="icon-container">
       <img class="league-icon" src="../../../../assets/league-icons/{{league.leagueCode}}.png">
     </div>

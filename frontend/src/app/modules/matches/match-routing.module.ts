@@ -7,8 +7,9 @@ import {LeagueMainPageComponent} from "./league-main-page/league-main-page.compo
 
 export const routes:Routes = [
   {path: 'home', component: HomePageComponent},
-  {path: 'league/:leagueId', component: LeagueMainPageComponent},
-  {path: 'fixtures/:homeTeam-:awayTeam/:details', component: MatchDetailComponent}
+  {path: 'leagues/:leagueId', component: LeagueMainPageComponent},
+  {path: 'fixtures/:fixtureId', component: MatchComponent},
+  {path: 'fixtures/:fixtureId/:details', component: MatchDetailComponent}
 ];
 
 @NgModule({

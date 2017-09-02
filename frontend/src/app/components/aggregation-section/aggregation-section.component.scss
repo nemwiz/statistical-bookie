@@ -1,0 +1,15 @@
+@import "../../../assets/variables";
+
+.row-header {
+  padding: $list-row-padding;
+  color: $primary-color;
+  font-size: $item-list-font;
+
+  &.border-top {
+    border-top: 1px solid $separator-color;
+  }
+}
+
+.aggregation-title {
+  padding-left: $list-row-padding * 2;
+}

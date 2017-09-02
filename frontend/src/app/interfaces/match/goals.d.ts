@@ -4,14 +4,4 @@ export interface Goals {
   twoGoals: number;
   threeGoals: number;
   fourOrMoreGoals: number
-  noGoalsHalfTime: number;
-  oneGoalHalfTime: number;
-  twoGoalsHalfTime: number;
-  threeGoalsHalfTime: number;
-  fourOrMoreGoalsHalfTime: number;
-  noGoalsInSecondHalfTime: number;
-  oneGoalInSecondHalfTime: number;
-  twoGoalsInSecondHalfTime: number;
-  threeGoalsInSecondHalfTime: number
-  fourOrMoreGoalsInSecondHalfTime: number;
 }

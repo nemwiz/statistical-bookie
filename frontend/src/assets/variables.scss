@@ -58,6 +58,11 @@ a:hover {
   align-items: center;
   padding: $list-row-padding;
   border-bottom: 1px solid $separator-color;
+
+  &.borderless {
+    border-bottom: none;
+  }
+
 }
 
 

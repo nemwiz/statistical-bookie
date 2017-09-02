@@ -15,7 +15,6 @@ import {chartColors} from "../../../common/chart-colors";
 export class MatchDetailComponent implements OnInit, OnDestroy {
   matchDataSubscription: Subscription;
 
-  activeTab: number = 1;
   matchStats: ResultsTableData;
   detailsParam: string;
   isLoading = true;
@@ -29,15 +28,8 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.matchDataSubscription = this.matchService.matchDataObservable
-      .subscribe(matchStats => this.matchStats = matchStats);
-
-  }
-
-  setActiveTab(tab: number) {
-    this.activeTab = tab;
-    this.isLoading = true;
+      .subscribe(matchStats =>  this.matchStats = matchStats);
   }
 
   mapLabels(data: object): string[] {

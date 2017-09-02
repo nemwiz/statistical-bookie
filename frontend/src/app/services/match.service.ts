@@ -14,6 +14,8 @@ export class MatchService extends BaseService {
 
   private matchDataSubject: Subject<ResultsTableData>;
   matchDataObservable: Observable<ResultsTableData>;
+  currentHomeTeam: string;
+  currentAwayTeam: string;
 
   constructor(http: Http) {
     super(http);
@@ -21,13 +23,26 @@ export class MatchService extends BaseService {
     this.matchDataObservable = this.matchDataSubject.asObservable();
   }
 
-  getMatchesByTeams(homeTeamName: string, awayTeamName: string): Observable<MatchObject[]> {
-    let endpoint = `${this.BASE_ENDPOINT}/aggregate/?homeTeam=${encodeURIComponent(homeTeamName)}&awayTeam=${encodeURIComponent(awayTeamName)}`;
+  getMatchesByTeams(): Observable<[MatchObject[]]> {
+    let endpoint = `${this.BASE_ENDPOINT}/aggregate/?homeTeam=${encodeURIComponent(this.currentHomeTeam)}&awayTeam=${encodeURIComponent(this.currentAwayTeam)}`;
     return this.get<any>(endpoint);
   }
 
   pushMatchData(data: ResultsTableData) {
     this.matchDataSubject.next(data);
+  }
+
+  setCurrentTeams(homeTeamName: string, awayTeamName: string) {
+    this.currentHomeTeam = homeTeamName;
+    this.currentAwayTeam = awayTeamName;
+  }
+
+  getHomeTeam(): string {
+    return this.currentHomeTeam;
+  }
+
+  getAwayTeam(): string {
+    return this.currentAwayTeam;
   }
 
 }

@@ -14,7 +14,9 @@
 <div>
 
   <div *ngIf="activeTab === 1">
-    <div class="fixture-row" *ngFor="let fixture of leagueFixtures">
+    <div class="fixture-row"
+         *ngFor="let fixture of leagueFixtures"
+         (click)="navigateToFixture(fixture.homeTeam, fixture.awayTeam, fixture.fixtureId.counter)">
       <div class="team-names">{{fixture.homeTeam}} - {{fixture.awayTeam}}</div>
       <div class="fixture-date">{{fixture.date}} {{fixture.time}}</div>
     </div>

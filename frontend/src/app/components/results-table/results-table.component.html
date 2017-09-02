@@ -1,26 +1,4 @@
-<div *ngIf="isStructured">
-    <table *ngFor="let key of tabKeys;" class="ui three column unstackable small table">
-      <thead>
-      <tr class="center-align">
-        <th colspan="3">{{key | translate}}</th>
-      </tr>
-      </thead>
-      <thead>
-      <th>{{ 'onLastMatches' | translate }}</th>
-      <th>{{ 'lastFiveMatches' | translate }}</th>
-      <th>{{ 'lastTenMatches' | translate }}</th>
-      </thead>
-      <tbody>
-      <tr *ngFor="let fiveMatch of fiveMatches[key] | keys">
-        <td>{{fiveMatch.key | translate}}</td>
-        <td>{{fiveMatch.value}}</td>
-        <td>{{tenMatches[key][fiveMatch.key]}}</td>
-      </tr>
-      </tbody>
-    </table>
-</div>
-
-<table *ngIf="!isStructured" class="ui three column unstackable small table">
+<table class="ui three column unstackable small table">
   <thead>
   <th>{{ 'onLastMatches' | translate }}</th>
   <th>{{ 'lastFiveMatches' | translate }}</th>

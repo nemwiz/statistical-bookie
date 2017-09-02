@@ -5,14 +5,13 @@ import {Data} from "@angular/router";
   selector: 'results-table',
   templateUrl: './results-table.component.html',
   styleUrls: ['./results-table.component.scss'],
-  inputs: ['fiveMatches', 'tenMatches', 'isStructured']
+  inputs: ['fiveMatches', 'tenMatches']
 })
 export class ResultsTableComponent implements OnInit {
 
   tabKeys: string[] = [];
   fiveMatches: Data;
   tenMatches: Data;
-  isStructured: boolean = true;
 
   constructor() { }
 
