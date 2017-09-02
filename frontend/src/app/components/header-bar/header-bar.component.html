@@ -1,7 +1,7 @@
 <div class="header-bar-container">
-  <img *ngIf="currentRoute !== '/home' || currentRoute"
+  <img *ngIf="title !== 'statsBookie'"
        (click)="navigateBack()"
        class="back-arrow-icon"
        src="../../../assets/icons/ic_arrow_back_white_24px.svg">
-  <div class="header-title">Stats bookie</div>
+  <div class="header-title">{{title | translate}}</div>
 </div>

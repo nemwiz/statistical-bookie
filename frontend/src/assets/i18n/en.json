@@ -2,6 +2,11 @@
   "noDataAvailable" : "No data available",
   "loading" : "Loading",
 
+  "statsBookie" : "Stats bookie",
+  "leagueTitle" : "League",
+  "matchStats" : "Match stats",
+  "matchDetails" : "Match details",
+
   "numberOfGoalsFulltime": "Total goals - full time",
   "numberOfGoalsFirstHalf": "Total goals - first half",
   "numberOfGoalsSecondHalf": "Total goals - second half",

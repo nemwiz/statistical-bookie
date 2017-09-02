@@ -6,10 +6,10 @@ import {MatchDetailComponent} from "./match-detail/match-detail.component";
 import {LeagueMainPageComponent} from "./league-main-page/league-main-page.component";
 
 export const routes:Routes = [
-  {path: 'home', component: HomePageComponent},
-  {path: 'leagues/:leagueId', component: LeagueMainPageComponent},
-  {path: 'fixtures/:fixtureId', component: MatchComponent},
-  {path: 'fixtures/:fixtureId/:details', component: MatchDetailComponent}
+  {path: 'home', component: HomePageComponent, data: {title: 'statsBookie'}},
+  {path: 'leagues/:leagueId', component: LeagueMainPageComponent, data: {title: 'leagueTitle'}},
+  {path: 'fixtures/:fixtureId', component: MatchComponent, data: {title: 'matchStats'}},
+  {path: 'fixtures/:fixtureId/:details', component: MatchDetailComponent, data: {title: 'matchDetails'}}
 ];
 
 @NgModule({

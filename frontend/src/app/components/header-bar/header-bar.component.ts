@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from "@angular/router";
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Location} from "@angular/common";
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
+
 
 @Component({
   selector: 'header-bar',
@@ -10,14 +14,23 @@ import {Location} from "@angular/common";
 export class HeaderBarComponent implements OnInit {
 
   currentRoute: string = '';
+  title: string = '';
 
   constructor(private router: Router,
-              private location: Location) {
-    this.router.events.subscribe((route) => {
-      if (route instanceof NavigationEnd) {
-        this.currentRoute = (<NavigationEnd> route ).url;
-      }
-    });
+              private location: Location,
+              private route: ActivatedRoute) {
+
+    this.router.events
+      .filter((event) => event instanceof NavigationEnd)
+      .map(() => this.route)
+      .map((route) => {
+        while (route.firstChild) route = route.firstChild;
+        return route;
+      })
+      .filter((route) => route.outlet === 'primary')
+      .mergeMap((route) => route.data)
+      .subscribe((event) => this.title = event['title']);
+
   }
 
   ngOnInit() {
