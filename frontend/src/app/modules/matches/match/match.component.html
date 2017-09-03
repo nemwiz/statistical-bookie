@@ -1,5 +1,9 @@
 <loader [isLoading]="isLoading && lastFiveMatches"></loader>
 
+<div *ngIf="lastFiveMatches.length === 0 || lastTenMatches.length === 0">
+  <error-message [isError]="shouldShowErrorMessage" [errorMessage]="errorMessage"></error-message>
+</div>
+
 <div *ngFor="let aggregation of lastFiveMatches; let i = index">
   <aggregation-section [aggregationFiveMatches]="aggregation"
                        [aggregationTenMatches]="lastTenMatches[i]"

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FixturesService} from "../../../services/fixtures.service";
 import {Fixture} from "../../../interfaces/fixture";
@@ -20,6 +20,9 @@ export class LeagueMainPageComponent implements OnInit {
   activeTab: number = 1;
   leagueTable: LeagueTable[] = [];
 
+  shouldShowErrorMessage: boolean = false;
+  errorMessage: string;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private fixtureService: FixturesService,
@@ -33,9 +36,16 @@ export class LeagueMainPageComponent implements OnInit {
       this.fixtureService.getUpcomingLeagueFixtures(leagueId)
         .subscribe(leagueFixtures => {
           this.leagueFixtures = sortBy(leagueFixtures, ['homeTeam']);
-          if (this.leagueFixtures.length !== 0) {
-            this.leagueCode = this.leagueFixtures[0].leagueCode;
+          if (this.leagueFixtures.length === 0) {
+            this.isLoading = false;
+            this.errorMessage = 'noDataAvailable';
+            return;
           }
+          this.leagueCode = this.leagueFixtures[0].leagueCode;
+          this.isLoading = false;
+        }, error => {
+          this.shouldShowErrorMessage = true;
+          this.errorMessage = 'serverError';
           this.isLoading = false;
         });
     });
@@ -60,7 +70,18 @@ export class LeagueMainPageComponent implements OnInit {
   private loadLeagueTable() {
     this.leagueService.getLeagueTable(this.leagueCode)
       .subscribe(leagueTable => {
+        this.isLoading = true;
         this.leagueTable = sortBy(leagueTable, ['pointsWon', 'wins', 'losses']).reverse();
+        if (this.leagueTable.length === 0) {
+          this.isLoading = false;
+          this.errorMessage = 'noDataAvailable';
+          return;
+        }
+        this.isLoading = false;
+      }, error => {
+        this.shouldShowErrorMessage = true;
+        this.errorMessage = 'serverError';
+        this.isLoading = false;
       });
   }
 }

@@ -1,0 +1,20 @@
+@import '../../../assets/variables';
+
+.error-message-container {
+  position: absolute;
+  width: 100%;
+  top: 40%;
+  text-align: center;
+
+  .error-image {
+    opacity: 0.2;
+  }
+
+  .error-text {
+    font-size: $header-font;
+    margin-top: $standard-padding;
+    padding: $standard-padding;
+  }
+
+}
+

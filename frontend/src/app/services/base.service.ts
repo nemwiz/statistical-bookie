@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 
 // Operators
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 let API: string = '/api/';
 
@@ -17,13 +18,11 @@ export abstract class BaseService {
 
   get<T>(resource: string): Observable<T> {
     let query = `${environment.apiUrl}${API}${resource}`;
-    //noinspection TypeScriptValidateTypes
-
-    // TODO - Handle other error codes e.g. 500
     return this.http.get(query)
       .map((response: Response) => {
         return <T> response.json();
-      });
+      })
+      .catch(error => { return Observable.throw(error)});
   }
 
 

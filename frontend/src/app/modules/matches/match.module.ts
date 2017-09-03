@@ -17,6 +17,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {LeaguesService} from "../../services/leagues.service";
 import { LeagueMainPageComponent } from './league-main-page/league-main-page.component';
 import {AggregationSectionComponent} from "../../components/aggregation-section/aggregation-section.component";
+import {ErrorMessageComponent} from "../../components/error-message/error-message.component";
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import {AggregationSectionComponent} from "../../components/aggregation-section/
     MatchDetailComponent,
     LoaderComponent,
     LeagueMainPageComponent,
-    AggregationSectionComponent
+    AggregationSectionComponent,
+    ErrorMessageComponent
   ],
   providers: [MatchService, FixturesService, LeaguesService],
 })

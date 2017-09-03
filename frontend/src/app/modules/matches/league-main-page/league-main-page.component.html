@@ -1,4 +1,4 @@
-<div class="fixed-bottom-menu">
+<div class="fixed-bottom-menu" *ngIf="leagueFixtures.length !== 0">
   <ul class="tabs blue">
     <li class="tab col s3 {{activeTab === 1 ? 'active-tab' : ''}}">
       <div (click)="setActiveTab(1)">{{'fixtures' | translate}}</div>
@@ -14,6 +14,11 @@
 <div>
 
   <div *ngIf="activeTab === 1">
+
+    <div *ngIf="leagueFixtures.length === 0">
+      <error-message [isError]="shouldShowErrorMessage" [errorMessage]="errorMessage"></error-message>
+    </div>
+
     <div class="fixture-row"
          *ngFor="let fixture of leagueFixtures"
          (click)="navigateToFixture(fixture.homeTeam, fixture.awayTeam, fixture.fixtureId.counter)">
@@ -23,6 +28,10 @@
   </div>
 
   <div *ngIf="activeTab === 2">
+
+    <div *ngIf="leagueTable.length === 0">
+      <error-message [isError]="shouldShowErrorMessage" [errorMessage]="errorMessage"></error-message>
+    </div>
 
     <div class="league-table-container">
       <table class="ui five column unstackable small table">

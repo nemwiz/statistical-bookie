@@ -16,6 +16,9 @@ export class MatchComponent implements OnInit {
   lastFiveMatches: MatchObject[] = [];
   lastTenMatches: MatchObject[] = [];
 
+  shouldShowErrorMessage: boolean = false;
+  errorMessage: string;
+
   constructor(private route: ActivatedRoute,
               private matchService: MatchService) {
 
@@ -25,6 +28,15 @@ export class MatchComponent implements OnInit {
       .subscribe((matches) => {
         this.lastFiveMatches = matches[0];
         this.lastTenMatches = matches[1];
+        if (matches.length === 0) {
+          this.isLoading = false;
+          this.errorMessage = 'noDataAvailable';
+          return;
+        }
+        this.isLoading = false;
+      }, error => {
+        this.shouldShowErrorMessage = true;
+        this.errorMessage = 'serverError';
         this.isLoading = false;
       });
   }

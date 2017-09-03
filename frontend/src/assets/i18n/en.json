@@ -1,5 +1,6 @@
 {
   "noDataAvailable" : "No data available",
+  "serverError" : "Something went wrong. We are working to fix the issue, please come back later.",
   "loading" : "Loading",
 
   "statsBookie" : "Stats bookie",

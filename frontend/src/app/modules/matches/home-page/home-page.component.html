@@ -1,5 +1,9 @@
 <loader [isLoading]="isLoading"></loader>
 
+<div *ngIf="leagues.length === 0">
+  <error-message [isError]="shouldShowErrorMessage" [errorMessage]="errorMessage"></error-message>
+</div>
+
 <div class="league-row" *ngFor="let league of leagues" [routerLink]="['/leagues/', league.id]">
     <div class="icon-container">
       <img class="league-icon" src="../../../../assets/league-icons/{{league.leagueCode}}.png">
