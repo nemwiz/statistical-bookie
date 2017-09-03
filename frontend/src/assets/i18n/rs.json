@@ -25,6 +25,8 @@
   "halfTimeFullTime": "Prelazi",
   "halfTimeWithMoreGoals": "Poluvreme sa više golova",
   "exactResults": "Tačan rezultat",
+  "drawOutcome" : "Nerešeno",
+  "drawOutcomeAndGoalsScored" : "Nerešeno i golovi",
 
   "homeTeam": "Domaćin",
   "awayTeam": "Gost",
@@ -47,10 +49,19 @@
   "winFirstHalftime" : "Pobeda prvo poluvreme",
   "winSecondHalftime" : "Pobeda drugo poluvreme",
 
+  "drawFulltime" : "Nerešeno na meču",
+  "drawFirstHalftime" : "Nerešeno prvo poluvreme",
+  "drawSecondHalftime" : "Nerešeno drugo poluvreme",
+
   "winAndOneGoalScored" : "Pobeda i 1 gol",
   "winAndTwoGoalsScored" : "Pobeda i 2 gola",
   "winAndThreeGoalsScored" : "Pobeda i 3 gola",
   "winAndFourOrMoreGoalsScored" : "Pobeda i 4 ili više golova",
+
+  "drawAndOneGoalScored" : "Nerešeno i 1 gol",
+  "drawAndTwoGoalsScored" : "Nerešeno i 2 gola",
+  "drawAndThreeGoalsScored" : "Nerešeno i 3 gola",
+  "drawAndFourOrMoreGoalsScored" : "Nerešeno i 4 ili više golova",
 
   "homeTeamWonOnHalfTimeAndWonInTheEnd" : "Iz 1 u 1",
   "homeTeamWonOnHalfTimeAndDrewInTheEnd" : "Iz 1 u X",

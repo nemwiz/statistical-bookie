@@ -25,6 +25,8 @@
   "halfTimeFullTime": "Half time / full time",
   "halfTimeWithMoreGoals": "Half time with more goals",
   "exactResults": "Correct score",
+  "drawOutcome" : "Draw",
+  "drawOutcomeAndGoalsScored" : "Draw and goals scored",
 
   "homeTeam": "Home team",
   "awayTeam": "Away team",
@@ -47,10 +49,19 @@
   "winFirstHalftime" : "Win - first half",
   "winSecondHalftime" : "Win - second half",
 
+  "drawFulltime" : "Draw - full time",
+  "drawFirstHalftime" : "Draw - first half",
+  "drawSecondHalftime" : "Draw - second half",
+
   "winAndOneGoalScored" : "Win and 1 goal",
   "winAndTwoGoalsScored" : "Win and 2 goals",
   "winAndThreeGoalsScored" : "Win and 3 goals",
   "winAndFourOrMoreGoalsScored" : "Win and 4 or more goals",
+
+  "drawAndOneGoalScored" : "Draw and 1 goal",
+  "drawAndTwoGoalsScored" : "Draw and 2 goals",
+  "drawAndThreeGoalsScored" : "Draw and 3 goals",
+  "drawAndFourOrMoreGoalsScored" : "Draw and 4 or more goals",
 
   "homeTeamWonOnHalfTimeAndWonInTheEnd" : "1/1",
   "homeTeamWonOnHalfTimeAndDrewInTheEnd" : "1/X",
