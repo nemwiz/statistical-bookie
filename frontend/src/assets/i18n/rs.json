@@ -7,6 +7,15 @@
   "matchStats" : "Meč statistika",
   "matchDetails" : "Meč detalji",
 
+  "teamName" : "Tim",
+  "teamWins" : "P",
+  "teamDraws" : "N",
+  "teamLosses" : "I",
+  "teamPointsWon" : "Poeni",
+
+  "fixtures" : "Mečevi",
+  "league" : "Liga",
+
   "numberOfGoalsFulltime": "Ukupno golova - kraj",
   "numberOfGoalsFirstHalf": "Ukupno golova - prvo poluvreme",
   "numberOfGoalsSecondHalf": "Ukupno golova - drugo poluvreme",

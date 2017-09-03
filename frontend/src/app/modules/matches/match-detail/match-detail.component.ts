@@ -30,6 +30,7 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.matchDataSubscription = this.matchService.matchDataObservable
       .subscribe(matchStats =>  this.matchStats = matchStats);
+    this.scrollToTop();
   }
 
   mapLabels(data: object): string[] {
@@ -52,6 +53,10 @@ export class MatchDetailComponent implements OnInit, OnDestroy {
 
   shouldShowLoadingSpinner(event: boolean){
     this.isLoading = event;
+  }
+
+  scrollToTop() {
+    document.body.scrollTop = 0;
   }
 
   ngOnDestroy(): void {

@@ -40,7 +40,7 @@ public class LeaguesResource {
     @Path("/{leagueCode}/table")
     public Response getLeagueTable(@PathParam("leagueCode") String leagueCode) {
 
-        List<LeagueTable> leagueTable = this.leaguesController.getLeagueStats(leagueCode);
+        List<LeagueTable> leagueTable = this.leaguesController.getLeagueTable(leagueCode);
 
         CacheControl cc = new CacheControl();
         cc.setMaxAge(604800);

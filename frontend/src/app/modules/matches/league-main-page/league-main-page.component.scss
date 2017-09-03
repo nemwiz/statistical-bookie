@@ -19,5 +19,15 @@
   .fixture-date {
     margin-top: 5px;
     font-size: $list-row-secondary-item-font;
+    color: $primary-contrast;
+  }
+}
+
+.league-table-container {
+  font-size: $list-row-primary-item-font;
+  padding: $list-row-padding;
+
+  .team-name {
+    font-weight: bold;
   }
 }

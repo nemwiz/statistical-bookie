@@ -23,7 +23,7 @@ public class LeaguesController {
         return this.leaguesDAO.getAllLeagues();
     }
 
-    public List<LeagueTable> getLeagueStats(String leagueCode) {
+    public List<LeagueTable> getLeagueTable(String leagueCode) {
 
         LeagueTableAggregator leagueTableAggregator = new LeagueTableAggregator();
 

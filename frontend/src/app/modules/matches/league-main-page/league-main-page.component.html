@@ -1,10 +1,10 @@
 <div class="fixed-bottom-menu">
   <ul class="tabs blue">
     <li class="tab col s3 {{activeTab === 1 ? 'active-tab' : ''}}">
-      <div (click)="setActiveTab(1)">Fixtures</div>
+      <div (click)="setActiveTab(1)">{{'fixtures' | translate}}</div>
     </li>
     <li class="tab col s3 {{activeTab === 2 ? 'active-tab' : ''}}">
-      <div (click)="setActiveTab(2)">League</div>
+      <div (click)="setActiveTab(2)">{{'league' | translate}}</div>
     </li>
   </ul>
 </div>
@@ -23,7 +23,28 @@
   </div>
 
   <div *ngIf="activeTab === 2">
-    tab2
+
+    <div class="league-table-container">
+      <table class="ui five column unstackable small table">
+        <thead>
+        <th>{{'teamName' | translate}}</th>
+        <th>{{'teamWins' | translate}}</th>
+        <th>{{'teamDraws' | translate}}</th>
+        <th>{{'teamLosses' | translate}}</th>
+        <th>{{'teamPointsWon' | translate}}</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let team of leagueTable">
+          <td class="team-name">{{team.teamName}}</td>
+          <td>{{team.wins}}</td>
+          <td>{{team.draws}}</td>
+          <td>{{team.losses}}</td>
+          <td>{{team.pointsWon}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
 
 </div>

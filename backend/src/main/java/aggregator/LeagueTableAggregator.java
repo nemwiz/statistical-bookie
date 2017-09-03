@@ -30,7 +30,6 @@ public class LeagueTableAggregator {
                         new TeamScore(match.getAwayTeam(), this.getPointsWonBasedOnMatchOutcome(AWAY_TEAM_WIN, match.getFinalOutcome()))))
                 .collect(Collectors.toList());
 
-
         Map<String, Integer> pointsWon = teamScores
                 .stream()
                 .collect(Collectors.groupingBy(TeamScore::getTeamName, Collectors.summingInt(TeamScore::getPointsWon)));
@@ -52,7 +51,7 @@ public class LeagueTableAggregator {
 
         List<LeagueTable> leagueTable = new ArrayList<>();
 
-        pointsWon.forEach((key, value) -> leagueTable.add(new LeagueTable(key, wins.get(key), draws.get(key), losses.get(key), value)));
+        pointsWon.forEach((key, value) -> leagueTable.add(new LeagueTable(key, wins.getOrDefault(key, 0L), draws.getOrDefault(key, 0L), losses.getOrDefault(key, 0L), value)));
 
         return leagueTable;
     }

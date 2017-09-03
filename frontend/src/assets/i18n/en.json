@@ -7,6 +7,15 @@
   "matchStats" : "Match stats",
   "matchDetails" : "Match details",
 
+  "teamName" : "Team",
+  "teamWins" : "W",
+  "teamDraws" : "D",
+  "teamLosses" : "L",
+  "teamPointsWon" : "Pts.",
+
+  "fixtures" : "Fixtures",
+  "league" : "League",
+
   "numberOfGoalsFulltime": "Total goals - full time",
   "numberOfGoalsFirstHalf": "Total goals - first half",
   "numberOfGoalsSecondHalf": "Total goals - second half",
