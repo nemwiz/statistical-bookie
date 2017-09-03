@@ -78,7 +78,7 @@ public class MatchScraper extends LiveScoreScraper {
 
         int currentRound = this.getCurrentRound(league);
 
-        for (int i = round; i < currentRound; i++) {
+        for (int i = round; i <= currentRound; i++) {
             scrape(league, i);
         }
 

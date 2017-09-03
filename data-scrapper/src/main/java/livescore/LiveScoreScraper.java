@@ -35,7 +35,7 @@ abstract class LiveScoreScraper {
 
         Document roundPicker = Jsoup.parse(leaguePage.getDocument().query(".abs").toString());
 
-        return Integer.parseInt(roundPicker.getAllElements().get(0).getElementsByTag("a").attr(DATA_ID));
+        return Integer.parseInt(roundPicker.getElementsByClass("item b").get(0).getElementsByTag("a").attr(DATA_ID));
     }
 
     Document navigateToAndReturnRoundPage(League league, int round) {

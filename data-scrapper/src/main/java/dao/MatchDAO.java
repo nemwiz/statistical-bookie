@@ -27,7 +27,6 @@ public class MatchDAO {
                     .set("leagueName", match.getLeagueName())
                     .set("countryName", match.getCountryName())
                     .set("currentRound", match.getCurrentRound())
-                    .set("date", match.getDate())
                     .set("seasonYear", match.getSeasonYear())
                     .set("homeTeam", match.getHomeTeam())
                     .set("awayTeam", match.getAwayTeam())
@@ -44,7 +43,6 @@ public class MatchDAO {
                             .field("homeTeam").equal(match.getHomeTeam())
                             .field("awayTeam").equal(match.getAwayTeam())
                             .field("seasonYear").equal(match.getSeasonYear())
-                            .field("date").equal(match.getDate())
                             .field("currentRound").equal(match.getCurrentRound())
                             .field("leagueCode").equal(match.getLeagueCode()), updateOperations, true);
         });
