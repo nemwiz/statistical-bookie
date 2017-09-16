@@ -56,8 +56,8 @@ public class NumberOfGoalsAndWinsAggregatorTest {
 
         numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount(this.matches);
 
-        long drawAndOneGoalScored = numberOfGoalsAndWinsView.getDraw().get("winAndOneGoalScored");
-        long drawAndTwoGoalsScored = numberOfGoalsAndWinsView.getDraw().get("winAndTwoGoalsScored");
+        long drawAndOneGoalScored = numberOfGoalsAndWinsView.getDraw().get("drawAndOneGoalScored");
+        long drawAndTwoGoalsScored = numberOfGoalsAndWinsView.getDraw().get("drawAndTwoGoalsScored");
         long awayWinAndOneGoalScored =numberOfGoalsAndWinsView.getAwayTeam().get("winAndOneGoalScored");
         long awayWinAndTwoGoalsScored = numberOfGoalsAndWinsView.getAwayTeam().get("winAndTwoGoalsScored");
 
@@ -83,11 +83,11 @@ public class NumberOfGoalsAndWinsAggregatorTest {
         numberOfGoalsAndWinsView = numberOfGoalsAndWinsAggregator.getAggregatedCount(this.matches);
 
         long winAndOneGoalScored = numberOfGoalsAndWinsView.getHomeTeam().get("winAndOneGoalScored");
-        long drawAndOneGoalScored = numberOfGoalsAndWinsView.getDraw().get("winAndOneGoalScored");
+        long drawAndOneGoalScored = numberOfGoalsAndWinsView.getDraw().get("drawAndOneGoalScored");
         long awayWinAndOneGoalScored =numberOfGoalsAndWinsView.getAwayTeam().get("winAndOneGoalScored");
 
         long homeWinAndFourOrMoreGoalsScored = numberOfGoalsAndWinsView.getHomeTeam().get("winAndFourOrMoreGoalsScored");
-        long drawAndFourOrMoreGoalsScored = numberOfGoalsAndWinsView.getDraw().get("winAndFourOrMoreGoalsScored");
+        long drawAndFourOrMoreGoalsScored = numberOfGoalsAndWinsView.getDraw().get("drawAndFourOrMoreGoalsScored");
         long awayWinAndFourOrMoreGoalsScored =numberOfGoalsAndWinsView.getAwayTeam().get("winAndFourOrMoreGoalsScored");
 
         assertEquals(expectedCountOfHomeMatches, winAndOneGoalScored);
