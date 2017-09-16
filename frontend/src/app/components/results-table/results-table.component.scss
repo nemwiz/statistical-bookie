@@ -1,0 +1,9 @@
+@import "../../../assets/variables";
+
+.results-table {
+
+  @media (min-width: $ipad-screen-size) {
+    font-size: $list-row-primary-item-font - 1vw !important;
+  }
+
+}

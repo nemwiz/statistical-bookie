@@ -14,7 +14,7 @@ export class AppComponent {
     this.translationService.setDefaultLang('en');
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-    this.translationService.use('rs');
+    this.translationService.use('en');
   }
 
   changeLanguage(): void {

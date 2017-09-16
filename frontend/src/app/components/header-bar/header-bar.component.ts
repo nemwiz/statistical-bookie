@@ -15,6 +15,7 @@ export class HeaderBarComponent implements OnInit {
 
   currentRoute: string = '';
   title: string = '';
+  homePageTitle: string = 'statsBookie';
 
   constructor(private router: Router,
               private location: Location,

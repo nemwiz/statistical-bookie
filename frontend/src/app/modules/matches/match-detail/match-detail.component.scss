@@ -14,9 +14,20 @@
   padding-right: $list-row-padding;
 
   $legend-dimensions: 16px;
+  $legend-dimensions-ipad: $legend-dimensions + 10px;
   .legend {
     height: $legend-dimensions;
     width: $legend-dimensions;
     margin-right: $legend-dimensions;
+
+    @media (min-width: $ipad-screen-size) {
+      height: $legend-dimensions-ipad;
+      width: $legend-dimensions-ipad;
+      margin-right: $legend-dimensions-ipad;
+    }
+  }
+
+  @media (min-width: $ipad-screen-size) {
+    font-size: $list-row-primary-item-font - 1vw !important;
   }
 }

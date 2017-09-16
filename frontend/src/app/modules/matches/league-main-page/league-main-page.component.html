@@ -1,10 +1,10 @@
 <div class="fixed-bottom-menu" *ngIf="leagueFixtures.length !== 0">
   <ul class="tabs blue">
     <li class="tab col s3 {{activeTab === 1 ? 'active-tab' : ''}}">
-      <div (click)="setActiveTab(1)">{{'fixtures' | translate}}</div>
+      <div class="tab-title" (click)="setActiveTab(1)">{{'fixtures' | translate}}</div>
     </li>
     <li class="tab col s3 {{activeTab === 2 ? 'active-tab' : ''}}">
-      <div (click)="setActiveTab(2)">{{'league' | translate}}</div>
+      <div class="tab-title" (click)="setActiveTab(2)">{{'league' | translate}}</div>
     </li>
   </ul>
 </div>
@@ -33,7 +33,7 @@
       <error-message [isError]="shouldShowErrorMessage" [errorMessage]="errorMessage"></error-message>
     </div>
 
-    <div class="league-table-container">
+    <div *ngIf="leagueTable.length !== 0" class="league-table-container">
       <table class="ui five column unstackable small table">
         <thead>
         <th>{{'teamName' | translate}}</th>

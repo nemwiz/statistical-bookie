@@ -13,12 +13,21 @@
   .league-icon {
     width: $icon-width;
     height: $icon-height;
+
+    @media (min-width: $ipad-screen-size) {
+      width: $icon-width + 10px;
+      height: $icon-height + 10px;
+    }
   }
 
   .league-name {
     width: $icon-container-width * 3;
     font-size: 4.5vw;
     font-weight: bold;
+
+    @media (min-width: $ipad-screen-size) {
+      font-size: $item-list-font-large-screen;
+    }
   }
 
   .country-flag {

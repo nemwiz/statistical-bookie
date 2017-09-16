@@ -5,6 +5,10 @@
   color: $primary-color;
   font-size: $item-list-font;
 
+  @media (min-width: $ipad-screen-size) {
+    font-size: $item-list-font - 0.5vw;
+  }
+
   &.border-top {
     border-top: 1px solid $separator-color;
   }
@@ -12,4 +16,8 @@
 
 .aggregation-title {
   padding-left: $list-row-padding * 2;
+
+  @media (min-width: $ipad-screen-size) {
+    font-size: $item-list-font - 1vw;
+  }
 }

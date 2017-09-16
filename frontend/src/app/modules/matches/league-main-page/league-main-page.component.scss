@@ -6,20 +6,42 @@
   font-weight: bold;
 }
 
+.tab-title {
+  font-size: $item-list-font;
+
+  @media (min-width: $ipad-screen-size) {
+    font-size: $item-list-font - 1vw;
+  }
+}
+
 .fixture-row {
   @extend .list-row;
   align-items: flex-start;
   flex-direction: column;
 
+  @media (min-width: $ipad-screen-size) {
+    padding: $standard-padding;
+  }
+
   .team-names {
     font-size: $list-row-primary-item-font;
     font-weight: bold;
+
+    @media (min-width: $ipad-screen-size) {
+      font-size: $list-row-primary-item-font - 1vw;
+    }
   }
 
   .fixture-date {
-    margin-top: 5px;
+    $date-margin: 5px;
+    margin-top: $date-margin;
     font-size: $list-row-secondary-item-font;
     color: $primary-contrast;
+
+    @media (min-width: $ipad-screen-size) {
+      font-size: $list-row-secondary-item-font - 1vw;
+      margin-top: $date-margin * 2;
+    }
   }
 }
 
@@ -29,5 +51,9 @@
 
   .team-name {
     font-weight: bold;
+  }
+
+  @media (min-width: $ipad-screen-size) {
+    font-size: $list-row-primary-item-font - 1;
   }
 }

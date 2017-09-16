@@ -38,6 +38,7 @@ $icon-font-size: 2em;
 
 body {
   background-color: white!important;
+  font-family: "Roboto", sans-serif;
 }
 
 a:hover {
@@ -75,6 +76,13 @@ a:hover {
   }
 
 }
+
+.ct-bar {
+  @media (min-width: $ipad-screen-size) {
+    stroke-width: 25px;
+  }
+}
+
 
 
 
