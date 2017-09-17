@@ -2,12 +2,14 @@ package helper;
 
 import org.joda.time.DateTime;
 
-import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 public class SeasonsAndDates {
 
@@ -45,19 +47,16 @@ public class SeasonsAndDates {
     }
 
     public static List<String> getEachDayOfTheCurrentWeek() {
-        Calendar now = Calendar.getInstance();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        List<String> days = new ArrayList<>();
 
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
+        LocalDate now = LocalDate.now();
+        LocalDate first = now.with(previousOrSame(DayOfWeek.MONDAY));
 
-        String[] days = new String[7];
-        int delta = -now.get(GregorianCalendar.DAY_OF_WEEK) - 1; //add 2 if your week start on monday
-        now.add(Calendar.DAY_OF_MONTH, delta );
-        for (int i = 0; i < 7; i++)
-        {
-            days[i] = format.format(now.getTime());
-            now.add(Calendar.DAY_OF_MONTH, 1);
+        for (DayOfWeek day: DayOfWeek.values()) {
+            days.add(first.with(nextOrSame(day)).format(formatter));
         }
 
-        return Arrays.asList(days);
+        return days;
     }
 }
