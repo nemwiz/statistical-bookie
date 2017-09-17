@@ -22,7 +22,6 @@
         "./semantic-ui-css-master/semantic.min.css",
         "../node_modules/chartist/dist/chartist.css",
         "../node_modules/materialize-css/dist/css/materialize.min.css",
-        "../node_modules/flag-icon-css/css/flag-icon.min.css",
         "./assets/variables.scss"
       ],
       "scripts": [

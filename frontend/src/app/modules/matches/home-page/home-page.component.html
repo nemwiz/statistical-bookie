@@ -6,11 +6,11 @@
 
 <div class="league-row" *ngFor="let league of leagues" [routerLink]="['/leagues/', league.id]">
     <div class="icon-container">
-      <img class="league-icon" src="../../../../assets/league-icons/{{league.leagueCode}}.png">
+      <img class="league-icon" src="assets/league-icons/{{league.leagueCode}}.png">
     </div>
     <div class="league-name">{{league.leagueName}}</div>
     <div class="icon-container">
-      <img class="country-flag" src="../../../../assets/flags/{{league.countryName}}.svg">
+      <img class="country-flag" src="assets/flags/{{league.countryName}}.svg">
     </div>
 
 </div>

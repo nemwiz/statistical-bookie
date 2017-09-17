@@ -7,8 +7,8 @@
        [routerLink]="['/fixtures', fixtureId, aggregatedData.key]"
        (click)="pushMatchData(aggregatedData.value, aggregationTenMatches[section.key][aggregatedData.key])">
 
-    <img *ngIf="odd" class="league-icon" src="../../../assets/icons/bar-chart24.png">
-    <img *ngIf="even" class="league-icon" src="../../../assets/icons/data-grid24.png">
+    <img *ngIf="odd" class="league-icon" src="assets/icons/bar-chart24.png">
+    <img *ngIf="even" class="league-icon" src="assets/icons/data-grid24.png">
     <div class="aggregation-title">{{aggregatedData.key | translate}}</div>
   </div>
 

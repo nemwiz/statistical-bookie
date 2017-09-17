@@ -8,21 +8,28 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class AppComponent {
 
-
   constructor(private translationService: TranslateService) {
 
-    this.translationService.setDefaultLang('en');
+    document.addEventListener('deviceready', () => {
 
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
-    this.translationService.use('en');
+      navigator['splashscreen'].hide();
+
+      if (navigator && navigator['globalization']) {
+        navigator['globalization'].getPreferredLanguage((language) => {
+          this.setLanguageForTranslations(language);
+        }, (error) => {
+          console.log('Error loading system language');
+        });
+      }
+    }, false);
+
   }
 
-  changeLanguage(): void {
-    if (this.translationService.currentLang === 'en') {
-      this.translationService.use('rs');
-    } else {
-      this.translationService.use('en');
-    }
+  private setLanguageForTranslations(language) {
+    let languageCode = language.value.substr(0, 2);
+    this.translationService.setDefaultLang(languageCode);
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+    this.translationService.use('en');
   }
 
 }
