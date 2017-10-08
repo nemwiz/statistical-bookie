@@ -105,8 +105,15 @@ gulp.task('copy-index-file', function () {
         .pipe(gulp.dest('dist'))
 });
 
+gulp.task('copy-node-files', function () {
+    gulp.src(['server.js'])
+        .pipe(gulp.dest('dist'))
+    gulp.src(['package.json'])
+        .pipe(gulp.dest('dist'))
+});
+
 // Default task
-gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy', 'copy-images', 'copy-index-file']);
+gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy', 'copy-images', 'copy-index-file', 'copy-node-files']);
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {

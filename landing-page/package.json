@@ -3,6 +3,9 @@
   "name": "startbootstrap-new-age",
   "version": "4.0.0-beta",
   "description": "A one page app landing page HTML theme for Bootstrap.",
+  "engines": {
+    "node": "6.11.1"
+  },
   "keywords": [
     "css",
     "sass",
@@ -21,11 +24,13 @@
   "contributors": [
     "David Miller (http://davidmiller.io/)"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/BlackrockDigital/startbootstrap-new-age.git"
+  "scripts": {
+    "build": "gulp",
+    "start": "node server.js"
   },
   "dependencies": {
+    "ejs": "2.5.6",
+    "express": "4.15.2",
     "bootstrap": "^4.0.0-beta",
     "font-awesome": "4.7.0",
     "jquery": "^3.2.1",
