@@ -2,6 +2,7 @@
   "noDataAvailable" : "No data available",
   "serverError" : "Something went wrong. We are working to fix the issue, please come back later.",
   "loading" : "Loading",
+  "noInternetConnection" : "You are offline",
 
   "statsBookie" : "Stats bookie",
   "leagueTitle" : "League",

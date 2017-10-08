@@ -2,6 +2,7 @@
   "noDataAvailable" : "Podaci nisu dostupni",
   "serverError" : "Dogodila se greška. Trenutno je popravljamo, molim vas navratite kasnije.",
   "loading" : "Učitava se",
+  "noInternetConnection" : "Nema internet konekcije",
 
   "statsBookie" : "Stats bookie",
   "leagueTitle" : "Liga",
