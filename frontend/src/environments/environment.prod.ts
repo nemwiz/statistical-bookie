@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://stats-bookie-backend.herokuapp.com'
+  apiUrl: 'https://stats-bookie-backend.herokuapp.com',
+  adMobId: 'dummyKey'
 };

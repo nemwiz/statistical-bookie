@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {environment} from "../environments/environment";
+
+declare var AdMob: any;
 
 @Component({
   selector: 'app-root',
@@ -21,8 +24,24 @@ export class AppComponent {
           console.log('Error loading system language');
         });
       }
+
+      this.connectToAdMob();
+
+
     }, false);
 
+  }
+
+  private connectToAdMob() {
+    let admobid = {banner: environment.adMobId};
+
+    if (AdMob) {
+      AdMob.createBanner({
+        adId: admobid.banner,
+        position: AdMob.AD_POSITION.BOTTOM_CENTER,
+        isTesting: !environment.production
+      });
+    }
   }
 
   private setLanguageForTranslations(language) {
