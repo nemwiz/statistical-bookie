@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import 'rxjs/add/operator/filter';
@@ -19,7 +19,8 @@ export class HeaderBarComponent implements OnInit {
 
   constructor(private router: Router,
               private location: Location,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private ngZone: NgZone) {
 
     this.router.events
       .filter((event) => event instanceof NavigationEnd)
@@ -38,7 +39,9 @@ export class HeaderBarComponent implements OnInit {
   }
 
   navigateBack(): void {
-    this.location.back();
+    this.ngZone.run(() => {
+      this.location.back();
+    });
   }
 
 }

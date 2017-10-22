@@ -1,14 +1,15 @@
-import {Component, OnInit} from "@angular/core";
+import {ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {MatchService} from "../../../services/match.service";
 import {MatchObject} from "../../../interfaces/match/match-object";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'match',
   templateUrl: './match.component.html',
   styleUrls: ['./match.component.scss']
 })
-export class MatchComponent implements OnInit {
+export class MatchComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
 
@@ -19,21 +20,34 @@ export class MatchComponent implements OnInit {
   shouldShowErrorMessage: boolean = false;
   errorMessage: string;
 
+  matchServiceSubscription: Subscription;
+  routeParamsSubscription: Subscription;
+
   constructor(private route: ActivatedRoute,
-              private matchService: MatchService) {
+              private matchService: MatchService,
+              private changeDetector: ChangeDetectorRef,
+              private ngZone: NgZone) {
 
-    route.params.subscribe(params => this.fixtureId = params['fixtureId']);
+    this.routeParamsSubscription = route.params.subscribe(params => {
+      this.ngZone.run(() => {
+        this.fixtureId = params['fixtureId'];
+      });
+    });
+  }
 
-    this.matchService.getMatchesByTeams()
+  ngOnInit() {
+    this.matchServiceSubscription = this.matchService.getMatchesByTeams()
       .subscribe((matches) => {
+
+      this.ngZone.run(() => {
         this.lastFiveMatches = matches[0];
         this.lastTenMatches = matches[1];
         if (matches.length === 0) {
-          this.isLoading = false;
           this.errorMessage = 'noDataAvailable';
-          return;
         }
         this.isLoading = false;
+      });
+
       }, error => {
         this.shouldShowErrorMessage = true;
         this.errorMessage = 'serverError';
@@ -41,7 +55,14 @@ export class MatchComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
+  ngOnDestroy(): void {
+    if (this.matchServiceSubscription) {
+      this.matchServiceSubscription.unsubscribe();
+    }
+
+    if (this.routeParamsSubscription) {
+      this.routeParamsSubscription.unsubscribe();
+    }
   }
 
 }

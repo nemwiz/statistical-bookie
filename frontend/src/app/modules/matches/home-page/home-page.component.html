@@ -4,7 +4,7 @@
   <error-message [isError]="shouldShowErrorMessage" [errorMessage]="errorMessage"></error-message>
 </div>
 
-<div class="league-row" *ngFor="let league of leagues" [routerLink]="['/leagues/', league.id]">
+<div *ngFor="let league of leagues" class="league-row" (click)="navigateToLeague(league.id)">
     <div class="icon-container">
       <img class="league-icon" src="assets/league-icons/{{league.leagueCode}}.png">
     </div>
