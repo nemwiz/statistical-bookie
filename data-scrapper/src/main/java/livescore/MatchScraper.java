@@ -128,7 +128,7 @@ public class MatchScraper extends LiveScoreScraper {
 
         List<DatabaseMatch> databaseMatches = new ArrayList<>();
 
-        individualMatchUrls.forEach(url -> {
+        individualMatchUrls.forEach((String url) -> {
 
             System.out.println("url = " + url);
 
@@ -140,7 +140,22 @@ public class MatchScraper extends LiveScoreScraper {
                 e.printStackTrace();
             }
 
-            String detailPageHtml = detailPage.getDocument().getBody().getInnerHTML();
+            String detailPageHtml;
+
+            try {
+                detailPageHtml = detailPage.getDocument().getBody().getInnerHTML();
+            } catch (NullPointerException exception) {
+                detailPage = getWebKit().navigate(url);
+
+                try {
+                    Thread.sleep(60000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                detailPageHtml = detailPage.getDocument().getBody().getInnerHTML();
+
+            }
 
             Document detailDocument = Jsoup.parse(detailPageHtml);
 
