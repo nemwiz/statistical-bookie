@@ -29,7 +29,7 @@ public class LeaguesResource {
         List<League> leagueList = this.leaguesController.getAllLeagues();
 
         CacheControl cc = new CacheControl();
-        cc.setMaxAge(15778463);
+        cc.setMaxAge(7778464);
 
         return Response.ok(leagueList)
                 .cacheControl(cc)
@@ -43,7 +43,7 @@ public class LeaguesResource {
         List<LeagueTable> leagueTable = this.leaguesController.getLeagueTable(leagueCode);
 
         CacheControl cc = new CacheControl();
-        cc.setMaxAge(604800);
+        cc.setMaxAge(404800);
 
         return Response.ok(leagueTable)
                 .cacheControl(cc)
