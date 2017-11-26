@@ -112,8 +112,13 @@ gulp.task('copy-node-files', function () {
         .pipe(gulp.dest('dist'))
 });
 
+gulp.task('copy-sitemap', function () {
+    gulp.src(['sitemap.xml'])
+        .pipe(gulp.dest('dist'));
+});
+
 // Default task
-gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy', 'copy-images', 'copy-index-file', 'copy-node-files']);
+gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy', 'copy-images', 'copy-index-file', 'copy-node-files', 'copy-sitemap']);
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
