@@ -117,8 +117,13 @@ gulp.task('copy-sitemap', function () {
         .pipe(gulp.dest('dist'));
 });
 
+gulp.task('copy-google-verification', function () {
+    gulp.src(['google60902b301fbc68c0.html'])
+        .pipe(gulp.dest('dist'));
+});
+
 // Default task
-gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy', 'copy-images', 'copy-index-file', 'copy-node-files', 'copy-sitemap']);
+gulp.task('default', ['sass', 'minify-css', 'minify-js', 'copy', 'copy-images', 'copy-index-file', 'copy-node-files', 'copy-sitemap', 'copy-google-verification']);
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
