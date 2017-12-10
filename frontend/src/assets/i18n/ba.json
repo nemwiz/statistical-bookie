@@ -1,0 +1,81 @@
+{
+  "noDataAvailable" : "Podaci nisu dostupni",
+  "serverError" : "Došlo je do pogreške. Trenutačno to popravljamo, molimo vas dođite kasnije.",
+  "loading" : "Učitava se",
+  "noInternetConnection" : "Nema internet konekcije",
+
+  "statsBookie" : "Stats bookie",
+  "leagueTitle" : "Liga",
+  "matchStats" : "Meč statistika",
+  "matchDetails" : "Meč detalji",
+
+  "teamName" : "Tim",
+  "teamWins" : "P",
+  "teamDraws" : "N",
+  "teamLosses" : "I",
+  "teamPointsWon" : "Poeni",
+
+  "fixtures" : "Mečevi",
+  "league" : "Liga",
+
+  "numberOfGoalsFulltime": "Ukupno golova - kraj",
+  "numberOfGoalsFirstHalf": "Ukupno golova - prvo poluvrijeme",
+  "numberOfGoalsSecondHalf": "Ukupno golova - drugo poluvrijeme",
+  "teamScored": "Tim golovi",
+  "halfTimesAndMatchOutcome": "Konačan ishod",
+  "numberOfGoalsAndWin": "Konačan ishod i golovi",
+  "halfTimeFullTime": "Poluvrijeme/kraj",
+  "halfTimeWithMoreGoals": "Poluvrijeme i golovi",
+  "exactResults": "Točan rezultat",
+  "drawOutcome" : "Neriješeno",
+  "drawOutcomeAndGoalsScored" : "Neriješeno i golovi",
+
+  "homeTeam": "Domaćin",
+  "awayTeam": "Gost",
+  "bothTeams": "Oba tima",
+
+  "onLastMatches": "Na posljednjih",
+  "lastFiveMatches": "5 mečeva",
+  "lastTenMatches": "10 mečeva",
+  "noGoals": "bez golova",
+  "oneGoal": "1 gol",
+  "twoGoals": "2 gola",
+  "threeGoals": "3 gola",
+  "fourOrMoreGoals": "4 ili više golova",
+
+  "scoredInTheWholeGame" : "Postigao gol na meču",
+  "scoredInFirstHalftime" : "Postigao gol u prvom poluvrijemenu",
+  "scoredInSecondHalftime" : "Postigao gol u drugom poluvrijemenu",
+
+  "winFulltime" : "Pobjedio na meču",
+  "winFirstHalftime" : "Pobjeda prvo poluvrijeme",
+  "winSecondHalftime" : "Pobjeda drugo poluvrijeme",
+
+  "drawFulltime" : "Neriješeno na meču",
+  "drawFirstHalftime" : "Neriješeno prvo poluvrijeme",
+  "drawSecondHalftime" : "Neriješeno drugo poluvrijeme",
+
+  "winAndOneGoalScored" : "Pobjeda i 1 gol",
+  "winAndTwoGoalsScored" : "Pobjeda i 2 gola",
+  "winAndThreeGoalsScored" : "Pobjeda i 3 gola",
+  "winAndFourOrMoreGoalsScored" : "Pobjeda i 4 ili više golova",
+
+  "drawAndOneGoalScored" : "Neriješeno i 1 gol",
+  "drawAndTwoGoalsScored" : "Neriješeno i 2 gola",
+  "drawAndThreeGoalsScored" : "Neriješeno i 3 gola",
+  "drawAndFourOrMoreGoalsScored" : "Neriješeno i 4 ili više golova",
+
+  "homeTeamWonOnHalfTimeAndWonInTheEnd" : "Iz 1 u 1",
+  "homeTeamWonOnHalfTimeAndDrewInTheEnd" : "Iz 1 u X",
+  "homeTeamWonOnHalfTimeAndLostInTheEnd" : "Iz 1 u 2",
+  "halfTimeWasDrawAndHomeTeamWonInTheEnd" : "Iz X u 1",
+  "halfTimeWasDrawAndWasDrawInTheEnd" : "Iz X u X",
+  "halfTimeWasDrawAndAwayTeamWonInTheEnd" : "Iz X u 2",
+  "awayTeamWonOnHalfTimeAndWonInTheEnd" : "Iz 2 u 2",
+  "awayTeamWonOnHalfTimeAndDrewInTheEnd" : "Iz X u 2",
+  "awayTeamWonOnHalfTimeAndLostInTheEnd" : "Iz 2 u 1",
+
+  "moreGoalsWillBeScoredInFirstHalfTime" : "Više golova prvo poluvrijeme",
+  "moreGoalsWillBeScoredInSecondtHalfTime" : "Više golova drugo poluvrijeme",
+  "evenNumberOfGoalsWillBeScoredInBothHalfTimes" : "Jednak broj golova na oba poluvrijemena"
+}

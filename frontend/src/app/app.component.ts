@@ -27,10 +27,11 @@ export class AppComponent {
   }
 
   private setLanguageForTranslations(language) {
-    let languageCode = language.value.substr(0, 2);
-    this.translationService.setDefaultLang(languageCode);
+    let languageCodeLen = language.value.length;
+    let languageCode = language.value.substr(languageCodeLen - 2, languageCodeLen).toLowerCase();
+    this.translationService.setDefaultLang('en');
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-    this.translationService.use('en');
+    this.translationService.use(languageCode);
   }
 
 }
