@@ -27,7 +27,7 @@ public class FixturesResource {
        List<Fixture> upcomingFixtures = this.fixturesController.getUpcomingFixtures();
 
         CacheControl cc = new CacheControl();
-        cc.setMaxAge(172800);
+        cc.setMaxAge(10800);
 
         return Response.ok(upcomingFixtures)
                 .cacheControl(cc)
@@ -42,7 +42,7 @@ public class FixturesResource {
         List<Fixture> upcomingLeagueFixtures = this.fixturesController.getUpcomingFixturesForLeague(leagueId);
 
         CacheControl cc = new CacheControl();
-        cc.setMaxAge(172800);
+        cc.setMaxAge(10800);
 
         return Response.ok(upcomingLeagueFixtures)
                 .cacheControl(cc)
