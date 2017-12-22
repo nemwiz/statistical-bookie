@@ -1,5 +1,5 @@
 export interface League {
-  id: number;
+  _id: number;
   leagueName: string;
   leagueNameShort: string;
   leagueCode: string;

@@ -39,9 +39,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   navigateBack(): void {
-    this.ngZone.run(() => {
       this.location.back();
-    });
   }
 
 }

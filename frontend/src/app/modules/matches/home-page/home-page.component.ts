@@ -46,7 +46,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.leagueServiceSubscription = this.leaguesService.getAllLeagues()
       .subscribe((leagues) => {
         this.leagues = leagues.sort((a, b) => {
-          return a.id - b.id
+          return a._id - b._id
         });
         if (leagues && leagues.length === 0) {
           this.errorMessage = 'noDataAvailable'

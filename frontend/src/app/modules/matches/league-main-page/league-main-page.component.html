@@ -21,7 +21,7 @@
 
     <div class="fixture-row"
          *ngFor="let fixture of leagueFixtures"
-         (click)="navigateToFixture(fixture.homeTeam, fixture.awayTeam, fixture.fixtureId.counter)">
+         (click)="navigateToFixture(fixture.homeTeam, fixture.awayTeam, fixture._id)">
       <div class="team-names">{{fixture.homeTeam}} - {{fixture.awayTeam}}</div>
       <div class="fixture-date">{{fixture.date}} {{fixture.time}}</div>
     </div>

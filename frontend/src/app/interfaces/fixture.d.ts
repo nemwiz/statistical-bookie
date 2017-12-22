@@ -1,5 +1,5 @@
 export interface Fixture {
-  fixtureId:number;
+  _id: string;
   leagueId: number;
   leagueCode: string;
   leagueName: string;
