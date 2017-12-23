@@ -3,6 +3,7 @@ import {LeaguesService} from "../../../services/leagues.service";
 import {League} from "../../../interfaces/league";
 import {Subscription} from "rxjs/Subscription";
 import {Router} from "@angular/router";
+import {UserMessageService} from "../../../services/user.message.service";
 
 @Component({
   selector: 'home-page',
@@ -11,12 +12,7 @@ import {Router} from "@angular/router";
 })
 export class HomePageComponent implements OnInit, OnDestroy {
 
-  isLoading: boolean = true;
   leagues: League[] = [];
-
-  shouldShowErrorMessage: boolean = false;
-  errorMessage: string;
-
   leagueServiceSubscription: Subscription;
 
   onOnline = () => {
@@ -24,6 +20,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   };
 
   constructor(private leaguesService: LeaguesService,
+              private userMessageService: UserMessageService,
               private changeDetector: ChangeDetectorRef,
               private router: Router,
               private ngZone: NgZone) {
@@ -31,12 +28,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    this.userMessageService.showLoadingSpinner();
+
     document.addEventListener('online', this.onOnline);
 
     if (navigator['connection'] && navigator['connection'].type === 'none') {
-      this.errorMessage = 'noInternetConnection';
-      this.shouldShowErrorMessage = false;
-      this.isLoading = false;
+      this.userMessageService.showErrorMessage('noInternetConnection');
     } else {
       this.fetchData();
     }
@@ -49,14 +46,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
           return a._id - b._id
         });
         if (leagues && leagues.length === 0) {
-          this.errorMessage = 'noDataAvailable'
+          this.userMessageService.showErrorMessage('noDataAvailable');
         }
-        this.isLoading = false;
+        this.userMessageService.hideLoadingSpinner();
         this.changeDetector.detectChanges();
       }, error => {
-        this.shouldShowErrorMessage = true;
-        this.errorMessage = 'serverError';
-        this.isLoading = false;
+        this.userMessageService.showErrorMessage('serverError');
         this.changeDetector.detectChanges();
       });
   }

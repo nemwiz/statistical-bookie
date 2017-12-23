@@ -1,13 +1,15 @@
 @import '../../../assets/variables';
 
-.error-message-container {
+.message-container {
+  display: flex;
+  justify-content: center;
   position: absolute;
   width: 100%;
-  top: 40%;
-  text-align: center;
+  top: calc(90% / 2);
 
   .error-image {
     opacity: 0.2;
+    text-align: center;
   }
 
   .error-text {
@@ -17,4 +19,3 @@
   }
 
 }
-

@@ -12,12 +12,11 @@ import {MatchRoutingModule} from "./match-routing.module";
 import {MatchService} from "../../services/match.service";
 import {FixturesService} from "../../services/fixtures.service";
 import {BarChartComponent} from "../../components/charts/bar-chart/bar-chart.component";
-import {LoaderComponent} from "../../components/loader/loader.component";
 import {TranslateModule} from '@ngx-translate/core';
 import {LeaguesService} from "../../services/leagues.service";
-import { LeagueMainPageComponent } from './league-main-page/league-main-page.component';
+import {LeagueMainPageComponent} from './league-main-page/league-main-page.component';
 import {AggregationSectionComponent} from "../../components/aggregation-section/aggregation-section.component";
-import {ErrorMessageComponent} from "../../components/error-message/error-message.component";
+import {UserMessageService} from "../../services/user.message.service";
 
 @NgModule({
   imports: [
@@ -35,11 +34,9 @@ import {ErrorMessageComponent} from "../../components/error-message/error-messag
     PieChartComponent,
     BarChartComponent,
     MatchDetailComponent,
-    LoaderComponent,
     LeagueMainPageComponent,
-    AggregationSectionComponent,
-    ErrorMessageComponent
+    AggregationSectionComponent
   ],
-  providers: [MatchService, FixturesService, LeaguesService],
+  providers: [MatchService, FixturesService, LeaguesService, UserMessageService],
 })
 export class MatchModule { }

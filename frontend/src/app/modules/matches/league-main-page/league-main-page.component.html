@@ -9,15 +9,9 @@
   </ul>
 </div>
 
-<loader [isLoading]="isLoading"></loader>
-
 <div>
 
   <div *ngIf="activeTab === 1">
-
-    <div *ngIf="leagueFixtures.length === 0">
-      <error-message [isError]="shouldShowErrorMessage" [errorMessage]="errorMessage"></error-message>
-    </div>
 
     <div class="fixture-row"
          *ngFor="let fixture of leagueFixtures"
@@ -28,10 +22,6 @@
   </div>
 
   <div *ngIf="activeTab === 2">
-
-    <div *ngIf="leagueTable.length === 0">
-      <error-message [isError]="shouldShowErrorMessage" [errorMessage]="errorMessage"></error-message>
-    </div>
 
     <div *ngIf="leagueTable.length !== 0" class="league-table-container">
       <table class="ui five column unstackable small table">

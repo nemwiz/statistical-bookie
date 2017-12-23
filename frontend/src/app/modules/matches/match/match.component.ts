@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {MatchService} from "../../../services/match.service";
 import {MatchObject} from "../../../interfaces/match/match-object";
 import {Subscription} from "rxjs/Subscription";
+import {UserMessageService} from "../../../services/user.message.service";
 
 @Component({
   selector: 'match',
@@ -11,20 +12,18 @@ import {Subscription} from "rxjs/Subscription";
 })
 export class MatchComponent implements OnInit, OnDestroy {
 
-  isLoading: boolean = true;
-
   fixtureId: number = 0;
   lastFiveMatches: MatchObject[] = [];
   lastTenMatches: MatchObject[] = [];
 
-  shouldShowErrorMessage: boolean = false;
-  errorMessage: string;
-
   matchServiceSubscription: Subscription;
   routeParamsSubscription: Subscription;
 
+  matchesAggregation: any;
+
   constructor(private route: ActivatedRoute,
               private matchService: MatchService,
+              private userMessageService: UserMessageService,
               private changeDetector: ChangeDetectorRef,
               private ngZone: NgZone) {
 
@@ -33,25 +32,35 @@ export class MatchComponent implements OnInit, OnDestroy {
         this.fixtureId = params['fixtureId'];
       });
     });
+
   }
 
+
   ngOnInit() {
+
+    this.userMessageService.showLoadingSpinner();
+
     this.matchServiceSubscription = this.matchService.getMatchesByTeams()
       .subscribe((matches) => {
 
-      this.ngZone.run(() => {
-        this.lastFiveMatches = matches[0];
-        this.lastTenMatches = matches[1];
-        if (matches.length === 0) {
-          this.errorMessage = 'noDataAvailable';
-        }
-        this.isLoading = false;
-      });
+        this.userMessageService.hideLoadingSpinner();
+        // if (Object.keys(matches).length === 0) {
+        //   this.userMessageService.showErrorMessage('noDataAvailable')
+        // }
+        // this.matchesAggregation = matches;
+
+
+        // this.ngZone.run(() => {
+        //   this.lastFiveMatches = matches[0];
+        //   this.lastTenMatches = matches[1];
+        //   if (matches.length === 0) {
+        //     this.errorMessage = 'noDataAvailable';
+        //   }
+        //   this.showLoadingSpinner = false;
+        // });
 
       }, error => {
-        this.shouldShowErrorMessage = true;
-        this.errorMessage = 'serverError';
-        this.isLoading = false;
+        this.userMessageService.showErrorMessage('serverError');
       });
   }
 

@@ -8,6 +8,7 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {Http} from "@angular/http";
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HeaderBarComponent } from './components/header-bar/header-bar.component';
+import {UserMessageComponent} from "./components/user-message/user-message.component";
 
 export function createTranslateLoader(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -16,7 +17,8 @@ export function createTranslateLoader(http: Http) {
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderBarComponent
+    HeaderBarComponent,
+    UserMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ export function createTranslateLoader(http: Http) {
           deps: [Http]
         }
       }
-    )
+    ),
+    TranslateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
