@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserMessageService} from "../../services/user.message.service";
 import {UserMessages} from "../../common/user-messages";
+import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'user-message',
@@ -14,7 +15,8 @@ export class UserMessageComponent implements OnInit {
   errorMessage: string;
   loadingTranslationKey: string = 'loading';
 
-  constructor(private userMessageService: UserMessageService) {
+  constructor(private userMessageService: UserMessageService,
+              private router: Router) {
     this.userMessageService.loadingSpinnerObservable
       .subscribe(message => this.showLoadingSpinner = message === UserMessages.SHOW_LOADING)
 
@@ -29,7 +31,15 @@ export class UserMessageComponent implements OnInit {
         this.showLoadingSpinner = false;
       }
 
-    })
+    });
+
+    this.router.events
+      .filter((event) => event instanceof NavigationEnd)
+      .subscribe(() => {
+      if (this.showErrorMessage) {
+        this.showErrorMessage = false;
+      }
+      });
   }
 
   ngOnInit() {

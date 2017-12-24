@@ -68,6 +68,7 @@ export class LeagueMainPageComponent implements OnInit, OnDestroy {
 
   setActiveTab(tabNumber: number) {
     this.activeTab = tabNumber;
+    this.userMessageService.hideErrorMessage();
 
     if (this.activeTab === 2) {
       this.loadLeagueTable();
