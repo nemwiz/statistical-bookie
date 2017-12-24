@@ -1,18 +1,16 @@
-<!--<div *ngFor="let aggregation of lastFiveMatches; let i = index">-->
-<!--<aggregation-section [aggregationFiveMatches]="aggregation"-->
-<!--[aggregationTenMatches]="lastTenMatches[i]"-->
-<!--[fixtureId]="fixtureId"></aggregation-section>-->
-<!--</div>-->
+<div *ngFor="let aggregation of matchesAggregation | keys; let i = index">
 
+  <div *ngIf="aggregation.key !== 'matchCount'">
+    <div class="accordion"
+         (click)="openAccordion(i)"
+         [ngClass]="{active: isActiveAccordion(i)}">{{aggregation.key}}
+    </div>
 
-<div *ngIf="matchesAggregation">
-  <div>{{matchesAggregation['matchOutcome']['2nd-1']}}</div>
-  <div>{{matchesAggregation['mixedGames']['handicap-win-t1']}}</div>
-  <div>{{matchesAggregation['teamGoals']['gg3+']}}</div>
-  <div>{{matchesAggregation['teamGoals']['t1-2nd-0-1']}}</div>
-  <div>{{matchesAggregation['totalGoals']['ft-0-1']}}</div>
-  <div>{{matchesAggregation['totalGoals']['ft-4-6']}}</div>
-  <div>Bla bla </div>
-  <div>Hanneasdas</div>
+    <div id="panel-{{i}}" class="panel">
+      <aggregation-table [aggregation]="aggregation.value" [matchCount]="matchCount"></aggregation-table>
+    </div>
+  </div>
+
 </div>
+
 

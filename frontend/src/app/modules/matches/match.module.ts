@@ -17,6 +17,7 @@ import {LeaguesService} from "../../services/leagues.service";
 import {LeagueMainPageComponent} from './league-main-page/league-main-page.component';
 import {AggregationSectionComponent} from "../../components/aggregation-section/aggregation-section.component";
 import {UserMessageService} from "../../services/user.message.service";
+import {AggregationTableComponent} from "../../components/aggregation-table/aggregation-table.component";
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import {UserMessageService} from "../../services/user.message.service";
     BarChartComponent,
     MatchDetailComponent,
     LeagueMainPageComponent,
-    AggregationSectionComponent
+    AggregationSectionComponent,
+    AggregationTableComponent
   ],
   providers: [MatchService, FixturesService, LeaguesService, UserMessageService],
 })

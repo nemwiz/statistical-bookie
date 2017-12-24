@@ -1,0 +1,14 @@
+<div class="table-container">
+  <div class="table-header">
+    <div>Game</div>
+    <div>On last</div>
+    <div>Percentage</div>
+  </div>
+
+  <div *ngFor="let agg of aggregation | keys"
+       class="aggregation-row {{colorRowBasedOnPercentage(agg.value)}}">
+    <div class="game">{{agg.key}}</div>
+    <div class="match-count">{{agg.value}}</div>
+    <div class="percentage">{{calculatePercentage(agg.value) | number : '1.1'}}%</div>
+  </div>
+</div>
