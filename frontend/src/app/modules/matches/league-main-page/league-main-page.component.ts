@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FixturesService} from "../../../services/fixtures.service";
 import {Fixture} from "../../../interfaces/fixture";
@@ -8,6 +8,7 @@ import {LeaguesService} from "../../../services/leagues.service";
 import {LeagueTable} from "../../../interfaces/league-table";
 import {Subscription} from "rxjs/Subscription";
 import {UserMessageService} from "../../../services/user.message.service";
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'league-main-page',
@@ -22,8 +23,6 @@ export class LeagueMainPageComponent implements OnInit, OnDestroy {
   activeTab: number = 1;
   leagueTable: LeagueTable[] = [];
 
-  fixtureServiceSubscription: Subscription;
-  matchServiceSubscription: Subscription;
   routeParamsSubscription: Subscription;
 
   constructor(private route: ActivatedRoute,
@@ -31,9 +30,7 @@ export class LeagueMainPageComponent implements OnInit, OnDestroy {
               private fixtureService: FixturesService,
               private matchService: MatchService,
               private leagueService: LeaguesService,
-              private userMessageService: UserMessageService,
-              private changeDetector: ChangeDetectorRef,
-              private ngZone: NgZone) {
+              private userMessageService: UserMessageService) {
   }
 
   ngOnInit() {
@@ -42,28 +39,27 @@ export class LeagueMainPageComponent implements OnInit, OnDestroy {
 
       let leagueId = routeParams['leagueId'];
 
-      this.fixtureServiceSubscription = this.fixtureService.getUpcomingLeagueFixtures(leagueId)
-        .subscribe(leagueFixtures => {
-          this.ngZone.run(() => {
-            this.userMessageService.hideLoadingSpinner();
-            this.leagueFixtures = sortBy(leagueFixtures, ['homeTeam']);
-            if (leagueFixtures && leagueFixtures.length === 0) {
-              this.userMessageService.showErrorMessage('noDataAvailable');
-            }
-            this.leagueCode = this.leagueFixtures[0].leagueCode;
-          });
+      this.fixtureService.getUpcomingLeagueFixtures(leagueId)
+        .toPromise()
+        .then(leagueFixtures => {
+          this.userMessageService.hideLoadingSpinner();
+          this.leagueFixtures = sortBy(leagueFixtures, ['homeTeam']);
+          if (leagueFixtures && leagueFixtures.length === 0) {
+            this.userMessageService.showErrorMessage('noDataAvailable');
+            return;
+          }
+          this.leagueCode = this.leagueFixtures[0].leagueCode;
 
-        }, error => {
+        }).catch(error => {
           this.userMessageService.showErrorMessage('serverError');
-        });
+        }
+      );
     });
   }
 
   navigateToFixture(homeTeamName: string, awayTeamName: string, fixtureId: number) {
-    this.ngZone.run(() => {
-      this.matchService.setCurrentTeams(homeTeamName, awayTeamName);
-      this.router.navigate(['fixtures', fixtureId]);
-    });
+    this.matchService.setCurrentTeams(homeTeamName, awayTeamName);
+    this.router.navigate(['fixtures', fixtureId]);
   }
 
   setActiveTab(tabNumber: number) {
@@ -74,37 +70,27 @@ export class LeagueMainPageComponent implements OnInit, OnDestroy {
       this.loadLeagueTable();
     }
 
-    this.changeDetector.detectChanges();
   }
 
   private loadLeagueTable() {
     this.userMessageService.showLoadingSpinner();
-    this.matchServiceSubscription = this.leagueService.getLeagueTable(this.leagueCode)
-      .subscribe(leagueTable => {
+    this.leagueService.getLeagueTable(this.leagueCode)
+      .toPromise()
+      .then(leagueTable => {
 
-        this.ngZone.run(() => {
-          this.userMessageService.hideLoadingSpinner();
-          this.leagueTable = sortBy(leagueTable, ['pointsWon', 'wins', 'losses']).reverse();
-          if (leagueTable && leagueTable.length === 0) {
-            this.userMessageService.showErrorMessage('noDataAvailable');
-            return;
-          }
-        });
+        this.userMessageService.hideLoadingSpinner();
+        this.leagueTable = sortBy(leagueTable, ['pointsWon', 'wins', 'losses']).reverse();
+        if (leagueTable && leagueTable.length === 0) {
+          this.userMessageService.showErrorMessage('noDataAvailable');
+          return;
+        }
 
-      }, error => {
-        this.userMessageService.showErrorMessage('serverError');
-      });
+      }).catch(error => {
+      this.userMessageService.showErrorMessage('serverError');
+    });
   }
 
   ngOnDestroy(): void {
-    if (this.fixtureServiceSubscription) {
-      this.fixtureServiceSubscription.unsubscribe();
-    }
-
-    if (this.matchServiceSubscription) {
-      this.matchServiceSubscription.unsubscribe();
-    }
-
     if (this.routeParamsSubscription) {
       this.routeParamsSubscription.unsubscribe();
     }

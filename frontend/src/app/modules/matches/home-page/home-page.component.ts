@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit} from "@angular/core";
+import {Component, NgZone, OnDestroy, OnInit} from "@angular/core";
 import {LeaguesService} from "../../../services/leagues.service";
 import {League} from "../../../interfaces/league";
-import {Subscription} from "rxjs/Subscription";
 import {Router} from "@angular/router";
 import {UserMessageService} from "../../../services/user.message.service";
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'home-page',
@@ -13,7 +13,6 @@ import {UserMessageService} from "../../../services/user.message.service";
 export class HomePageComponent implements OnInit, OnDestroy {
 
   leagues: League[] = [];
-  leagueServiceSubscription: Subscription;
 
   onOnline = () => {
     this.fetchData();
@@ -21,7 +20,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(private leaguesService: LeaguesService,
               private userMessageService: UserMessageService,
-              private changeDetector: ChangeDetectorRef,
               private router: Router,
               private ngZone: NgZone) {
   }
@@ -40,20 +38,20 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   private fetchData() {
-    this.leagueServiceSubscription = this.leaguesService.getAllLeagues()
-      .subscribe((leagues) => {
+    this.leaguesService.getAllLeagues()
+      .toPromise()
+      .then((leagues) => {
         this.leagues = leagues.sort((a, b) => {
           return a._id - b._id
         });
         if (leagues && leagues.length === 0) {
           this.userMessageService.showErrorMessage('noDataAvailable');
+          return;
         }
         this.userMessageService.hideLoadingSpinner();
-        this.changeDetector.detectChanges();
-      }, error => {
-        this.userMessageService.showErrorMessage('serverError');
-        this.changeDetector.detectChanges();
-      });
+      }).catch(error => {
+      this.userMessageService.showErrorMessage('serverError');
+    });
   }
 
   navigateToLeague(leagueId: number) {
@@ -64,10 +62,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     document.removeEventListener('online', this.onOnline);
-
-    if (this.leagueServiceSubscription) {
-      this.leagueServiceSubscription.unsubscribe();
-    }
   }
 
 }
