@@ -11,14 +11,15 @@ const SIDE_MARGINS = 50;
   selector: 'bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss'],
-  inputs: ['chartData']
+  inputs: ['chartData', 'title']
 })
 export class BarChartComponent implements OnInit, OnChanges {
   chartData: ChartData[];
 
   private section;
-  private chartWidth;
-  private chartHeight;
+  private chartWidth: number;
+  private chartHeight: number;
+  private title: string;
 
   constructor() {
   }
@@ -103,9 +104,11 @@ export class BarChartComponent implements OnInit, OnChanges {
         return (this.chartHeight + MARGIN_TOP) - yScale(d.value) + 10
       })
       .attr('y', (d, i) => {
-        return -(i * (barWidth + barOffset) + 6)
+        return -(i * (barWidth + barOffset) + Math.floor(barWidth / 3))
       })
       .attr("transform", "rotate(90)")
+      .attr("font-weight", "bold")
+      .attr("fill", "white")
   }
 
   setupChartContainer(): void {

@@ -77,5 +77,7 @@
 
   "moreGoalsWillBeScoredInFirstHalfTime" : "Više golova prvo poluvrijeme",
   "moreGoalsWillBeScoredInSecondtHalfTime" : "Više golova drugo poluvrijeme",
-  "evenNumberOfGoalsWillBeScoredInBothHalfTimes" : "Jednak broj golova na oba poluvrijemena"
+  "evenNumberOfGoalsWillBeScoredInBothHalfTimes" : "Jednak broj golova na oba poluvrijemena".
+
+  "matchChartTitle" : "Izdvajamo"
 }
