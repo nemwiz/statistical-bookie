@@ -1,7 +1,7 @@
 import {Component, OnChanges, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
 import {chartColors} from "../../common/chart-colors";
 import * as d3 from 'd3';
-import {random, orderBy} from 'lodash';
+import {orderBy} from 'lodash';
 import {ChartData} from "../../interfaces/chart-data";
 
 const MARGIN_TOP = 25;
@@ -24,6 +24,17 @@ export class BarChartComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+
+    window.addEventListener('resize', () => {
+
+      if (!this.chartData) {
+        return;
+      }
+
+      this.setupChartContainer();
+      this.createChart();
+    });
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -38,12 +49,19 @@ export class BarChartComponent implements OnInit, OnChanges {
       this.setupChartContainer();
     }
 
+    this.createChart();
+
+  }
+
+  private createChart() {
     let barOffset = 10;
     let barWidth = Math.round((this.chartWidth - this.chartData.length * barOffset) / this.chartData.length);
 
     this.chartData = orderBy(this.chartData, ['value'], ['desc']);
 
-    let maxValue = d3.max(this.chartData.map(data => {return data.value}));
+    let maxValue = d3.max(this.chartData.map(data => {
+      return data.value
+    }));
 
     let yScale = d3.scaleLinear()
       .domain([0, maxValue])
@@ -55,13 +73,19 @@ export class BarChartComponent implements OnInit, OnChanges {
       .data(this.chartData)
       .enter()
       .append('rect')
-      .attr('fill', () => {
-            return chartColors[random(0, chartColors.length - 1)]
-          })
+      .attr('fill', (d, i) => {
+        return chartColors[i]
+      })
       .attr('width', barWidth)
-      .attr('height', (d) => {return yScale(d.value)})
-      .attr('x', (d, i) => { return i * (barWidth + barOffset)})
-      .attr('y', (d) => { return (this.chartHeight + MARGIN_TOP) - yScale(d.value)});
+      .attr('height', (d) => {
+        return yScale(d.value)
+      })
+      .attr('x', (d, i) => {
+        return i * (barWidth + barOffset)
+      })
+      .attr('y', (d) => {
+        return (this.chartHeight + MARGIN_TOP) - yScale(d.value)
+      });
 
     let labels = this.chartData.map(data => data.label);
 
@@ -70,20 +94,31 @@ export class BarChartComponent implements OnInit, OnChanges {
       .data(this.chartData)
       .enter()
       .append('text')
-      .text((d, i) => {return labels[i]})
+      .text((d, i) => {
+        return labels[i]
+      })
       .attr('width', barWidth)
       .attr('height', barWidth)
-      .attr('x', (d, i) => {return (this.chartHeight + MARGIN_TOP) - yScale(d.value) + 10})
-      .attr('y', (d, i) => {return -(i * (barWidth + barOffset) + 6)})
+      .attr('x', (d) => {
+        return (this.chartHeight + MARGIN_TOP) - yScale(d.value) + 10
+      })
+      .attr('y', (d, i) => {
+        return -(i * (barWidth + barOffset) + 6)
+      })
       .attr("transform", "rotate(90)")
-
   }
 
   setupChartContainer(): void {
-    this.chartHeight = window.innerHeight / 3;
-    this.chartWidth = window.innerWidth - SIDE_MARGINS;
 
-    this.section = d3.select('.bar-chart')
+    this.chartHeight = window.screen.availHeight / 3;
+    this.chartWidth = window.screen.availWidth - SIDE_MARGINS;
+
+    if (this.section) {
+      d3.select('svg').remove();
+    }
+
+    this.section = d3.select('.bar-chart-container')
+      .append('svg')
       .attr('width', this.chartWidth)
       .attr('height', this.chartHeight + MARGIN_TOP);
   }
