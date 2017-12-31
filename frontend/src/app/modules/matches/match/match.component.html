@@ -1,3 +1,5 @@
+<bar-chart [chartData]="data"></bar-chart>
+
 <div *ngFor="let aggregation of matchesAggregation | keys; let i = index">
 
   <div *ngIf="aggregation.key !== 'matchCount'">

@@ -1,10 +1,12 @@
-import {Component, NgZone, OnDestroy, OnInit} from "@angular/core";
+import {Component, NgZone, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {MatchService} from "../../../services/match.service";
 import {MatchObject} from "../../../interfaces/match/match-object";
 import {Subscription} from "rxjs/Subscription";
 import {UserMessageService} from "../../../services/user.message.service";
 import 'rxjs/add/operator/toPromise';
+import {sampleSize, shuffle} from 'lodash';
+import {ChartData} from "../../../interfaces/chart-data";
 
 @Component({
   selector: 'match',
@@ -13,6 +15,7 @@ import 'rxjs/add/operator/toPromise';
 })
 export class MatchComponent implements OnInit, OnDestroy {
 
+  @ViewChild('barchart') barChartContainer;
   fixtureId: number = 0;
   lastFiveMatches: MatchObject[] = [];
   lastTenMatches: MatchObject[] = [];
@@ -22,6 +25,8 @@ export class MatchComponent implements OnInit, OnDestroy {
   matchCount: number = 0;
 
   matchesAggregation: any;
+
+  data: ChartData[];
 
   constructor(private route: ActivatedRoute,
               private matchService: MatchService,
@@ -45,12 +50,44 @@ export class MatchComponent implements OnInit, OnDestroy {
       .then((matches) => {
         this.userMessageService.hideLoadingSpinner();
 
-        if (Object.keys(matches).length === 0) {
+        let aggregationKeys = Object.keys(matches);
+
+        if (aggregationKeys.length === 0) {
           this.userMessageService.showErrorMessage('noDataAvailable');
           return;
         }
         this.matchesAggregation = matches;
         this.matchCount = this.matchesAggregation['matchCount'];
+
+        let high = [];
+        let middle = [];
+
+        aggregationKeys.forEach(key => {
+          Object.keys(this.matchesAggregation[key]).forEach(subkey => {
+            let value = this.matchesAggregation[key][subkey] / this.matchCount * 100;
+
+            if (value >= 80) {
+              high.push({label: subkey, value: value})
+            } else if (value >= 45) {
+              middle.push({label: subkey, value: value})
+            }
+
+          })
+        });
+
+        let finalArray = [];
+        let highSize = high.length;
+        let middleSize = middle.length;
+
+        if (highSize >= 5 && middleSize >= 5) {
+          finalArray = sampleSize(high, 5).concat(sampleSize(middle, 5));
+        } else if (highSize < 5 && highSize !== 0) {
+          finalArray = sampleSize(high, highSize).concat(sampleSize(middle, 10 - highSize));
+        } else {
+          finalArray = sampleSize(middle, 10);
+        }
+
+        this.data = shuffle(finalArray);
       });
   }
 
