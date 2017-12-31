@@ -42,53 +42,53 @@ export class MatchComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnInit() {
+  async ngOnInit() {
 
     this.userMessageService.showLoadingSpinner();
 
-    this.matchService.getMatchesByTeams().toPromise()
-      .then((matches) => {
-        this.userMessageService.hideLoadingSpinner();
+    this.matchesAggregation = await this.matchService.getMatchesByTeams().toPromise();
 
-        let aggregationKeys = Object.keys(matches);
+    this.userMessageService.hideLoadingSpinner();
 
-        if (aggregationKeys.length === 0) {
-          this.userMessageService.showErrorMessage('noDataAvailable');
-          return;
-        }
-        this.matchesAggregation = matches;
-        this.matchCount = this.matchesAggregation['matchCount'];
+    let aggregationKeys = Object.keys(this.matchesAggregation);
 
-        let high = [];
-        let middle = [];
+    if (aggregationKeys.length === 0) {
+      this.userMessageService.showErrorMessage('noDataAvailable');
+      return;
+    }
+    this.matchCount = this.matchesAggregation['matchCount'];
+    this.data = shuffle(this.extractMostFrequentGamesForBarChart(aggregationKeys));
+  }
 
-        aggregationKeys.forEach(key => {
-          Object.keys(this.matchesAggregation[key]).forEach(subkey => {
-            let value = this.matchesAggregation[key][subkey] / this.matchCount * 100;
+  private extractMostFrequentGamesForBarChart(aggregationKeys: string[]) {
+    let high = [];
+    let middle = [];
 
-            if (value >= 80) {
-              high.push({label: subkey, value: value})
-            } else if (value >= 45) {
-              middle.push({label: subkey, value: value})
-            }
+    aggregationKeys.forEach(key => {
+      Object.keys(this.matchesAggregation[key]).forEach(subkey => {
+        let value = this.matchesAggregation[key][subkey] / this.matchCount * 100;
 
-          })
-        });
-
-        let finalArray = [];
-        let highSize = high.length;
-        let middleSize = middle.length;
-
-        if (highSize >= 5 && middleSize >= 5) {
-          finalArray = sampleSize(high, 5).concat(sampleSize(middle, 5));
-        } else if (highSize < 5 && highSize !== 0) {
-          finalArray = sampleSize(high, highSize).concat(sampleSize(middle, 10 - highSize));
-        } else {
-          finalArray = sampleSize(middle, 10);
+        if (value >= 80) {
+          high.push({label: subkey, value: value})
+        } else if (value >= 45) {
+          middle.push({label: subkey, value: value})
         }
 
-        this.data = shuffle(finalArray);
-      });
+      })
+    });
+
+    let finalArray = [];
+    let highSize = high.length;
+    let middleSize = middle.length;
+
+    if (highSize >= 5 && middleSize >= 5) {
+      finalArray = sampleSize(high, 5).concat(sampleSize(middle, 5));
+    } else if (highSize < 5 && highSize !== 0) {
+      finalArray = sampleSize(high, highSize).concat(sampleSize(middle, 10 - highSize));
+    } else {
+      finalArray = sampleSize(middle, 10);
+    }
+    return finalArray;
   }
 
   openAccordion(accordionIndex: number): void {
@@ -96,7 +96,7 @@ export class MatchComponent implements OnInit, OnDestroy {
     let panelElement = document.getElementById('panel-' + accordionIndex);
 
     panelElement.style.display === 'block' ? panelElement.style.display = 'none' : panelElement.style.display = 'block';
-    panelElement.style.maxHeight ? panelElement.style.maxHeight = null : panelElement.style.maxHeight =  `${panelElement.scrollHeight}px`
+    panelElement.style.maxHeight ? panelElement.style.maxHeight = null : panelElement.style.maxHeight = `${panelElement.scrollHeight}px`
   }
 
   isActiveAccordion(accordionIndex: number): boolean {

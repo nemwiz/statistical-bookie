@@ -35,25 +35,25 @@ export class LeagueMainPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userMessageService.showLoadingSpinner();
-    this.routeParamsSubscription = this.route.params.subscribe((routeParams) => {
+    this.routeParamsSubscription = this.route.params.subscribe(async (routeParams) => {
 
       let leagueId = routeParams['leagueId'];
+      let leagueFixtures: Fixture[];
 
-      this.fixtureService.getUpcomingLeagueFixtures(leagueId)
-        .toPromise()
-        .then(leagueFixtures => {
-          this.userMessageService.hideLoadingSpinner();
-          this.leagueFixtures = sortBy(leagueFixtures, ['homeTeam']);
-          if (leagueFixtures && leagueFixtures.length === 0) {
-            this.userMessageService.showErrorMessage('noDataAvailable');
-            return;
-          }
-          this.leagueCode = this.leagueFixtures[0].leagueCode;
+      try {
+        leagueFixtures = await this.fixtureService.getUpcomingLeagueFixtures(leagueId).toPromise();
+        this.userMessageService.hideLoadingSpinner();
+      } catch (error) {
+        this.userMessageService.showErrorMessage('serverError');
+      }
 
-        }).catch(error => {
-          this.userMessageService.showErrorMessage('serverError');
-        }
-      );
+      if (leagueFixtures && leagueFixtures.length === 0) {
+        this.userMessageService.showErrorMessage('noDataAvailable');
+        return;
+      }
+
+      this.leagueFixtures = sortBy(leagueFixtures, ['homeTeam']);
+      this.leagueCode = this.leagueFixtures[0].leagueCode;
     });
   }
 
@@ -72,22 +72,24 @@ export class LeagueMainPageComponent implements OnInit, OnDestroy {
 
   }
 
-  private loadLeagueTable() {
+  private async loadLeagueTable() {
     this.userMessageService.showLoadingSpinner();
-    this.leagueService.getLeagueTable(this.leagueCode)
-      .toPromise()
-      .then(leagueTable => {
 
-        this.userMessageService.hideLoadingSpinner();
-        this.leagueTable = sortBy(leagueTable, ['pointsWon', 'wins', 'losses']).reverse();
-        if (leagueTable && leagueTable.length === 0) {
-          this.userMessageService.showErrorMessage('noDataAvailable');
-          return;
-        }
+    let leagueTable: LeagueTable[];
 
-      }).catch(error => {
+    try {
+      leagueTable = await this.leagueService.getLeagueTable(this.leagueCode).toPromise();
+      this.userMessageService.hideLoadingSpinner();
+    } catch (error) {
       this.userMessageService.showErrorMessage('serverError');
-    });
+    }
+
+    if (leagueTable && leagueTable.length === 0) {
+      this.userMessageService.showErrorMessage('noDataAvailable');
+      return;
+    }
+
+    this.leagueTable = sortBy(leagueTable, ['pointsWon', 'wins', 'losses']).reverse();
   }
 
   ngOnDestroy(): void {
