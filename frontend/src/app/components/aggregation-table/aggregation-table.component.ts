@@ -18,7 +18,7 @@ export class AggregationTableComponent implements OnInit {
 
   colorRowBasedOnPercentage(aggregationValue: number): string {
     let percentage = this.calculatePercentage(aggregationValue);
-    return percentage >= 80 ? 'green' : percentage >= 60 ? 'orange' : '';
+    return percentage >= 80 ? 'green-row' : percentage >= 60 ? 'yellow-row' : '';
   }
 
   calculatePercentage(aggregationValue: number) : number {

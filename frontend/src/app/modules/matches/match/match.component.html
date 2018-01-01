@@ -1,16 +1,17 @@
+<div class="teams-container">{{homeTeam}} vs. {{awayTeam}}</div>
+
 <bar-chart [chartData]="data" [title]="'matchChartTitle'"></bar-chart>
 
-<div *ngFor="let aggregation of matchesAggregation | keys; let i = index">
+<div *ngFor="let aggregation of matchesAggregation | keys; let i = index" (click)="openAccordion(i)">
 
-  <div *ngIf="aggregation.key !== 'matchCount'">
-    <div class="accordion"
-         (click)="openAccordion(i)"
-         [ngClass]="{active: isActiveAccordion(i)}">{{aggregation.key}}
-    </div>
+  <div *ngIf="aggregation.key !== 'matchCount'"
+       class="accordion"
+       [ngClass]="{active: isActiveAccordion(i)}"
+       >{{aggregation.key | translate}}
+  </div>
 
-    <div id="panel-{{i}}" class="panel">
-      <aggregation-table [aggregation]="aggregation.value" [matchCount]="matchCount"></aggregation-table>
-    </div>
+  <div id="panel-{{i}}" class="panel">
+    <aggregation-table [aggregation]="aggregation.value" [matchCount]="matchCount"></aggregation-table>
   </div>
 
 </div>

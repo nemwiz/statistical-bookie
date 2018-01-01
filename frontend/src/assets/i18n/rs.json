@@ -79,5 +79,10 @@
   "moreGoalsWillBeScoredInSecondtHalfTime" : "Više golova drugo poluvreme",
   "evenNumberOfGoalsWillBeScoredInBothHalfTimes" : "Jednak broj golova na oba poluvremena",
 
-  "matchChartTitle" : "Preporučene igre"
+  "matchChartTitle" : "Preporučene igre",
+
+  "matchOutcome" : "Konačan ishod",
+  "mixedGames" : "Razno",
+  "teamGoals" : "Timski golovi",
+  "totalGoals" : "Ukupno golova"
 }

@@ -28,6 +28,9 @@ export class MatchComponent implements OnInit, OnDestroy {
 
   data: ChartData[];
 
+  homeTeam: string;
+  awayTeam: string;
+
   constructor(private route: ActivatedRoute,
               private matchService: MatchService,
               private userMessageService: UserMessageService,
@@ -36,6 +39,8 @@ export class MatchComponent implements OnInit, OnDestroy {
     this.routeParamsSubscription = route.params.subscribe(params => {
       this.ngZone.run(() => {
         this.fixtureId = params['fixtureId'];
+        this.homeTeam = this.matchService.getHomeTeam();
+        this.awayTeam = this.matchService.getAwayTeam();
       });
     });
 
@@ -92,7 +97,8 @@ export class MatchComponent implements OnInit, OnDestroy {
   }
 
   openAccordion(accordionIndex: number): void {
-    this.selectedAccordionIndex = accordionIndex;
+    this.selectedAccordionIndex = this.isActiveAccordion(accordionIndex) ? null : accordionIndex;
+
     let panelElement = document.getElementById('panel-' + accordionIndex);
 
     panelElement.style.display === 'block' ? panelElement.style.display = 'none' : panelElement.style.display = 'block';

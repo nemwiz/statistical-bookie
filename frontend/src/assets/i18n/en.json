@@ -80,6 +80,12 @@
   "moreGoalsWillBeScoredInSecondtHalfTime" : "More goals in second half",
   "evenNumberOfGoalsWillBeScoredInBothHalfTimes" : "Even number of goals in both halves",
 
-  "matchChartTitle" : "Featured markets"
+  "matchChartTitle" : "Featured markets",
+
+  "matchOutcome" : "Match outcome",
+  "mixedGames" : "Mixed markets",
+  "teamGoals" : "Team goals",
+  "totalGoals" : "Total goals"
+
 
 }
