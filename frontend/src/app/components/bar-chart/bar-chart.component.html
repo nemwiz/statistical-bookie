@@ -1,2 +1,3 @@
 <div class="bar-chart-container"></div>
-<div class="chart-title">{{title | translate}}</div>
+<div class="chart-title"
+     *ngIf="chartData && chartData.length !== 0">{{title | translate}}</div>

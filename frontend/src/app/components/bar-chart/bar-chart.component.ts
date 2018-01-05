@@ -19,7 +19,7 @@ export class BarChartComponent implements OnInit, OnChanges {
   private section;
   private chartWidth: number;
   private chartHeight: number;
-  private title: string;
+  title: string;
 
   constructor() {
   }

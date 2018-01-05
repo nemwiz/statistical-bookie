@@ -8,6 +8,9 @@ import 'rxjs/add/operator/toPromise';
 import {sampleSize, shuffle} from 'lodash';
 import {ChartData} from "../../../interfaces/chart-data";
 
+const ACCORDION_INDEX_PREFIX = 'accordion';
+const ACTIVE_CLASS = 'active';
+
 @Component({
   selector: 'match',
   templateUrl: './match.component.html',
@@ -21,7 +24,6 @@ export class MatchComponent implements OnInit, OnDestroy {
   lastTenMatches: MatchObject[] = [];
 
   routeParamsSubscription: Subscription;
-  selectedAccordionIndex: number;
   matchCount: number = 0;
 
   matchesAggregation: any;
@@ -97,7 +99,8 @@ export class MatchComponent implements OnInit, OnDestroy {
   }
 
   openAccordion(accordionIndex: number): void {
-    this.selectedAccordionIndex = this.isActiveAccordion(accordionIndex) ? null : accordionIndex;
+    this.toogleActiveClassOnAccordion(accordionIndex);
+
 
     let panelElement = document.getElementById('panel-' + accordionIndex);
 
@@ -105,8 +108,11 @@ export class MatchComponent implements OnInit, OnDestroy {
     panelElement.style.maxHeight ? panelElement.style.maxHeight = null : panelElement.style.maxHeight = `${panelElement.scrollHeight}px`
   }
 
-  isActiveAccordion(accordionIndex: number): boolean {
-    return this.selectedAccordionIndex === accordionIndex;
+  toogleActiveClassOnAccordion(accordionIndex: number) {
+    let accordionElement = document.getElementById(`${ACCORDION_INDEX_PREFIX}-${accordionIndex}`);
+
+    accordionElement.classList.contains(ACTIVE_CLASS) ?
+      accordionElement.classList.remove(ACTIVE_CLASS) : accordionElement.classList.add(ACTIVE_CLASS);
   }
 
   ngOnDestroy(): void {

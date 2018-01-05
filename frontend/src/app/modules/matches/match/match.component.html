@@ -6,7 +6,7 @@
 
   <div *ngIf="aggregation.key !== 'matchCount'"
        class="accordion"
-       [ngClass]="{active: isActiveAccordion(i)}"
+       id="accordion-{{i}}"
        >{{aggregation.key | translate}}
   </div>
 
