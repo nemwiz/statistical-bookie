@@ -6,9 +6,13 @@
   font-size: $large-font;
 }
 
+.accordion-row {
+  margin-top: 10px;
+}
+
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
-  background-color: $primary-color;
+  background-color: $dark-primary-color;
   color: $primary-white;
   cursor: pointer;
   padding: 18px;

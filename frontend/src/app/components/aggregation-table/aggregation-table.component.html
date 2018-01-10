@@ -1,14 +1,20 @@
 <div class="table-container">
   <div class="table-header">
-    <div>Game</div>
-    <div>On last</div>
-    <div>Percentage</div>
+    <div>{{'game' | translate}}</div>
+    <div>{{'onLast' | translate}}</div>
+    <div>{{'percentage' | translate}}</div>
   </div>
 
-  <div *ngFor="let agg of aggregation | keys"
-       class="aggregation-row {{colorRowBasedOnPercentage(agg.value)}}">
-    <div class="game">{{agg.key}}</div>
-    <div class="match-count">{{agg.value}}</div>
-    <div class="percentage">{{calculatePercentage(agg.value) | number : '1.1'}}%</div>
+  <div *ngFor="let game of aggregation | keys"
+       class="aggregation-row {{colorRowBasedOnPercentage(game.value)}}">
+
+
+    <div class="game" *ngIf="!isSpecificTranslationKeyNeeded(game.key)">{{game.key | translate}}</div>
+    <div class="game" *ngIf="isSpecificTranslationKeyNeeded(game.key)">
+      {{getTranslationKey(game.key) | translate}} {{getTranslationValue(game.key)}}
+    </div>
+
+    <div class="match-count">{{game.value}}</div>
+    <div class="percentage">{{calculatePercentage(game.value) | number : '1.1'}}%</div>
   </div>
 </div>

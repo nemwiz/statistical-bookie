@@ -7,7 +7,6 @@
   "statsBookie" : "Stats bookie",
   "leagueTitle" : "League",
   "matchStats" : "Match stats",
-  "matchDetails" : "Match details",
 
   "teamName" : "Team",
   "teamWins" : "W",
@@ -18,74 +17,35 @@
   "fixtures" : "Fixtures",
   "league" : "League",
 
-  "numberOfGoalsFulltime": "Total goals - full time",
-  "numberOfGoalsFirstHalf": "Total goals - first half",
-  "numberOfGoalsSecondHalf": "Total goals - second half",
-  "teamScored": "Team goals",
-  "halfTimesAndMatchOutcome": "Match outcome",
-  "numberOfGoalsAndWin": "Total goals and wins",
-  "halfTimeFullTime": "Half time / full time",
-  "halfTimeWithMoreGoals": "Half time with more goals",
-  "exactResults": "Correct score",
-  "drawOutcome" : "Draw",
-  "drawOutcomeAndGoalsScored" : "Draw and goals scored",
-
-  "homeTeam": "Home team",
-  "awayTeam": "Away team",
-  "bothTeams": "Both teams",
-
-  "onLastMatches": "On last",
-  "lastFiveMatches": "5 matches",
-  "lastTenMatches": "10 matches",
-  "noGoals": "no goals",
-  "oneGoal": "1 goal",
-  "twoGoals": "2 goals",
-  "threeGoals": "3 goals",
-  "fourOrMoreGoals": "4 or more goals",
-
-  "scoredInTheWholeGame" : "Scored full time",
-  "scoredInFirstHalftime" : "Scored in first half",
-  "scoredInSecondHalftime" : "Scored in second half",
-
-  "winFulltime" : "Win - full time",
-  "winFirstHalftime" : "Win - first half",
-  "winSecondHalftime" : "Win - second half",
-
-  "drawFulltime" : "Draw - full time",
-  "drawFirstHalftime" : "Draw - first half",
-  "drawSecondHalftime" : "Draw - second half",
-
-  "winAndOneGoalScored" : "Win and 1 goal",
-  "winAndTwoGoalsScored" : "Win and 2 goals",
-  "winAndThreeGoalsScored" : "Win and 3 goals",
-  "winAndFourOrMoreGoalsScored" : "Win and 4 or more goals",
-
-  "drawAndOneGoalScored" : "Draw and 1 goal",
-  "drawAndTwoGoalsScored" : "Draw and 2 goals",
-  "drawAndThreeGoalsScored" : "Draw and 3 goals",
-  "drawAndFourOrMoreGoalsScored" : "Draw and 4 or more goals",
-
-  "homeTeamWonOnHalfTimeAndWonInTheEnd" : "1/1",
-  "homeTeamWonOnHalfTimeAndDrewInTheEnd" : "1/X",
-  "homeTeamWonOnHalfTimeAndLostInTheEnd" : "1/2",
-  "halfTimeWasDrawAndHomeTeamWonInTheEnd" : "X/1",
-  "halfTimeWasDrawAndWasDrawInTheEnd" : "X/X",
-  "halfTimeWasDrawAndAwayTeamWonInTheEnd" : "X/2",
-  "awayTeamWonOnHalfTimeAndWonInTheEnd" : "2/2",
-  "awayTeamWonOnHalfTimeAndDrewInTheEnd" : "2/X",
-  "awayTeamWonOnHalfTimeAndLostInTheEnd" : "2/1",
-
-
-  "moreGoalsWillBeScoredInFirstHalfTime" : "More goals in first half",
-  "moreGoalsWillBeScoredInSecondtHalfTime" : "More goals in second half",
-  "evenNumberOfGoalsWillBeScoredInBothHalfTimes" : "Even number of goals in both halves",
-
   "matchChartTitle" : "Featured markets",
 
-  "matchOutcome" : "Match outcome",
-  "mixedGames" : "Mixed markets",
-  "teamGoals" : "Team goals",
-  "totalGoals" : "Total goals"
+  "game": "Game",
+  "onLast": "On last",
+  "percentage": "Likelihood",
 
+  "1stHalfOutcomes" : "Outcome - 1st half",
+  "2ndHalfOutcomes" : "Outcome - 2nd half",
+  "1stHalfTo2ndHalf" : "Half-Time / Full-Time",
+  "doubleChanceBothHalves" : "Half-Time double chance",
+  "doubleChanceFullTime" : "Double chance",
+  "exactResult" : "Correct score",
+  "halfTimeMoreGoals" : "More goals which half",
+  "matchOutcomeFullTime" : "Match outcome",
+  "mixedGames" : "Mixed",
+  "teamGoalsAwayTeam" : "Team goals - away team",
+  "teamGoalsBothTeams" : "Team goals",
+  "teamGoalsHomeTeam" : "Team goals - home team",
+  "totalGoals1stHalf" : "Total goals - 1st half",
+  "totalGoals2ndHalf" : "Total goals - 2nd half",
+  "totalGoalsFulltime" : "Total goals",
 
+  "1stHalfKey" : "1st half",
+  "2ndHalfKey" : "2nd half",
+
+  "double-win-t1": "Double win home team",
+  "double-win-t2": "Double win away team",
+  "handicap-win-t1":"Handicap win home team",
+  "handicap-win-t2": "Handicap win away team",
+  "safe-victory-t1": "Safe win home team",
+  "safe-victory-t2": "Safe win away team"
 }

@@ -7,7 +7,6 @@
   "statsBookie" : "Stats bookie",
   "leagueTitle" : "Liga",
   "matchStats" : "Meč statistika",
-  "matchDetails" : "Meč detalji",
 
   "teamName" : "Tim",
   "teamWins" : "P",
@@ -18,71 +17,35 @@
   "fixtures" : "Mečevi",
   "league" : "Liga",
 
-  "numberOfGoalsFulltime": "Ukupno golova - kraj",
-  "numberOfGoalsFirstHalf": "Ukupno golova - prvo poluvreme",
-  "numberOfGoalsSecondHalf": "Ukupno golova - drugo poluvreme",
-  "teamScored": "Tim golovi",
-  "halfTimesAndMatchOutcome": "Konačan ishod",
-  "numberOfGoalsAndWin": "Konačan ishod i golovi",
-  "halfTimeFullTime": "Prelazi",
-  "halfTimeWithMoreGoals": "Poluvreme sa više golova",
-  "exactResults": "Tačan rezultat",
-  "drawOutcome" : "Nerešeno",
-  "drawOutcomeAndGoalsScored" : "Nerešeno i golovi",
-
-  "homeTeam": "Domaćin",
-  "awayTeam": "Gost",
-  "bothTeams": "Oba tima",
-
-  "onLastMatches": "Na poslednjih",
-  "lastFiveMatches": "5 mečeva",
-  "lastTenMatches": "10 mečeva",
-  "noGoals": "bez golova",
-  "oneGoal": "1 gol",
-  "twoGoals": "2 gola",
-  "threeGoals": "3 gola",
-  "fourOrMoreGoals": "4 ili više golova",
-
-  "scoredInTheWholeGame" : "Postigao gol na meču",
-  "scoredInFirstHalftime" : "Postigao gol u prvom poluvremenu",
-  "scoredInSecondHalftime" : "Postigao gol u drugom poluvremenu",
-
-  "winFulltime" : "Pobedio na meču",
-  "winFirstHalftime" : "Pobeda prvo poluvreme",
-  "winSecondHalftime" : "Pobeda drugo poluvreme",
-
-  "drawFulltime" : "Nerešeno na meču",
-  "drawFirstHalftime" : "Nerešeno prvo poluvreme",
-  "drawSecondHalftime" : "Nerešeno drugo poluvreme",
-
-  "winAndOneGoalScored" : "Pobeda i 1 gol",
-  "winAndTwoGoalsScored" : "Pobeda i 2 gola",
-  "winAndThreeGoalsScored" : "Pobeda i 3 gola",
-  "winAndFourOrMoreGoalsScored" : "Pobeda i 4 ili više golova",
-
-  "drawAndOneGoalScored" : "Nerešeno i 1 gol",
-  "drawAndTwoGoalsScored" : "Nerešeno i 2 gola",
-  "drawAndThreeGoalsScored" : "Nerešeno i 3 gola",
-  "drawAndFourOrMoreGoalsScored" : "Nerešeno i 4 ili više golova",
-
-  "homeTeamWonOnHalfTimeAndWonInTheEnd" : "Iz 1 u 1",
-  "homeTeamWonOnHalfTimeAndDrewInTheEnd" : "Iz 1 u X",
-  "homeTeamWonOnHalfTimeAndLostInTheEnd" : "Iz 1 u 2",
-  "halfTimeWasDrawAndHomeTeamWonInTheEnd" : "Iz X u 1",
-  "halfTimeWasDrawAndWasDrawInTheEnd" : "Iz X u X",
-  "halfTimeWasDrawAndAwayTeamWonInTheEnd" : "Iz X u 2",
-  "awayTeamWonOnHalfTimeAndWonInTheEnd" : "Iz 2 u 2",
-  "awayTeamWonOnHalfTimeAndDrewInTheEnd" : "Iz X u 2",
-  "awayTeamWonOnHalfTimeAndLostInTheEnd" : "Iz 2 u 1",
-
-  "moreGoalsWillBeScoredInFirstHalfTime" : "Više golova prvo poluvreme",
-  "moreGoalsWillBeScoredInSecondtHalfTime" : "Više golova drugo poluvreme",
-  "evenNumberOfGoalsWillBeScoredInBothHalfTimes" : "Jednak broj golova na oba poluvremena",
-
   "matchChartTitle" : "Preporučene igre",
 
-  "matchOutcome" : "Konačan ishod",
+  "game": "Igra",
+  "onLast": "Na poslednjih",
+  "percentage": "Verovatnoća",
+
+  "1stHalfOutcomes" : "Konačan ishod - prvo poluvreme",
+  "2ndHalfOutcomes" : "Konačan ishod - drugo poluvreme",
+  "1stHalfTo2ndHalf" : "Prelazi",
+  "doubleChanceBothHalves" : "Dupla šansa - oba poluvremena",
+  "doubleChanceFullTime" : "Dupla šansa - konačan ishod",
+  "exactResult" : "Tačan rezultat",
+  "halfTimeMoreGoals" : "Poluvreme sa više golova",
+  "matchOutcomeFullTime" : "Konačan ishod",
   "mixedGames" : "Razno",
-  "teamGoals" : "Timski golovi",
-  "totalGoals" : "Ukupno golova"
+  "teamGoalsAwayTeam" : "Timski golovi - gost",
+  "teamGoalsBothTeams" : "Timski golovi - oba tima",
+  "teamGoalsHomeTeam" : "Timski golovi - domaćin",
+  "totalGoals1stHalf" : "Ukupno golova - prvo poluvreme",
+  "totalGoals2ndHalf" : "Ukupno golova - drugo poluvreme",
+  "totalGoalsFulltime" : "Ukupno golova",
+
+  "1stHalfKey" : "Prvo poluvreme",
+  "2ndHalfKey" : "Drugo poluvreme",
+
+  "double-win-t1": "Dupla pobeda domaćin",
+  "double-win-t2": "Dupla pobeda gost",
+  "handicap-win-t1":"Hendikep pobeda domaćin",
+  "handicap-win-t2": "Hendikep pobeda gost",
+  "safe-victory-t1": "Sigurna pobeda domaćin",
+  "safe-victory-t2": "Sigurna pobeda gost"
 }

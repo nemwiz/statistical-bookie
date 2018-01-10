@@ -7,7 +7,6 @@
   "statsBookie" : "Stats bookie",
   "leagueTitle" : "Liga",
   "matchStats" : "Meč statistika",
-  "matchDetails" : "Meč detalji",
 
   "teamName" : "Tim",
   "teamWins" : "P",
@@ -18,71 +17,35 @@
   "fixtures" : "Mečevi",
   "league" : "Liga",
 
-  "numberOfGoalsFulltime": "Ukupno golova - kraj",
-  "numberOfGoalsFirstHalf": "Ukupno golova - prvo poluvrijeme",
-  "numberOfGoalsSecondHalf": "Ukupno golova - drugo poluvrijeme",
-  "teamScored": "Tim golovi",
-  "halfTimesAndMatchOutcome": "Konačan ishod",
-  "numberOfGoalsAndWin": "Konačan ishod i golovi",
-  "halfTimeFullTime": "Poluvrijeme/kraj",
-  "halfTimeWithMoreGoals": "Poluvrijeme i golovi",
-  "exactResults": "Točan rezultat",
-  "drawOutcome" : "Neriješeno",
-  "drawOutcomeAndGoalsScored" : "Neriješeno i golovi",
-
-  "homeTeam": "Domaćin",
-  "awayTeam": "Gost",
-  "bothTeams": "Oba tima",
-
-  "onLastMatches": "Na posljednjih",
-  "lastFiveMatches": "5 mečeva",
-  "lastTenMatches": "10 mečeva",
-  "noGoals": "bez golova",
-  "oneGoal": "1 gol",
-  "twoGoals": "2 gola",
-  "threeGoals": "3 gola",
-  "fourOrMoreGoals": "4 ili više golova",
-
-  "scoredInTheWholeGame" : "Postigao gol na meču",
-  "scoredInFirstHalftime" : "Postigao gol u prvom poluvrijemenu",
-  "scoredInSecondHalftime" : "Postigao gol u drugom poluvrijemenu",
-
-  "winFulltime" : "Pobjedio na meču",
-  "winFirstHalftime" : "Pobjeda prvo poluvrijeme",
-  "winSecondHalftime" : "Pobjeda drugo poluvrijeme",
-
-  "drawFulltime" : "Neriješeno na meču",
-  "drawFirstHalftime" : "Neriješeno prvo poluvrijeme",
-  "drawSecondHalftime" : "Neriješeno drugo poluvrijeme",
-
-  "winAndOneGoalScored" : "Pobjeda i 1 gol",
-  "winAndTwoGoalsScored" : "Pobjeda i 2 gola",
-  "winAndThreeGoalsScored" : "Pobjeda i 3 gola",
-  "winAndFourOrMoreGoalsScored" : "Pobjeda i 4 ili više golova",
-
-  "drawAndOneGoalScored" : "Neriješeno i 1 gol",
-  "drawAndTwoGoalsScored" : "Neriješeno i 2 gola",
-  "drawAndThreeGoalsScored" : "Neriješeno i 3 gola",
-  "drawAndFourOrMoreGoalsScored" : "Neriješeno i 4 ili više golova",
-
-  "homeTeamWonOnHalfTimeAndWonInTheEnd" : "Iz 1 u 1",
-  "homeTeamWonOnHalfTimeAndDrewInTheEnd" : "Iz 1 u X",
-  "homeTeamWonOnHalfTimeAndLostInTheEnd" : "Iz 1 u 2",
-  "halfTimeWasDrawAndHomeTeamWonInTheEnd" : "Iz X u 1",
-  "halfTimeWasDrawAndWasDrawInTheEnd" : "Iz X u X",
-  "halfTimeWasDrawAndAwayTeamWonInTheEnd" : "Iz X u 2",
-  "awayTeamWonOnHalfTimeAndWonInTheEnd" : "Iz 2 u 2",
-  "awayTeamWonOnHalfTimeAndDrewInTheEnd" : "Iz X u 2",
-  "awayTeamWonOnHalfTimeAndLostInTheEnd" : "Iz 2 u 1",
-
-  "moreGoalsWillBeScoredInFirstHalfTime" : "Više golova prvo poluvrijeme",
-  "moreGoalsWillBeScoredInSecondtHalfTime" : "Više golova drugo poluvrijeme",
-  "evenNumberOfGoalsWillBeScoredInBothHalfTimes" : "Jednak broj golova na oba poluvrijemena".
-
   "matchChartTitle" : "Izdvajamo",
 
-  "matchOutcome" : "Konačan ishod",
+  "game": "Igra",
+  "onLast": "Na posljednjih",
+  "percentage": "Vjerojatnost",
+
+  "1stHalfOutcomes" : "Konačan ishod - prvo poluvrijeme",
+  "2ndHalfOutcomes" : "Konačan ishod - drugo poluvrijeme",
+  "1stHalfTo2ndHalf" : "Prelazi",
+  "doubleChanceBothHalves" : "Dupla šansa - oba poluvrijeme",
+  "doubleChanceFullTime" : "Dupla šansa - konačan ishod",
+  "exactResult" : "Točan rezultat",
+  "halfTimeMoreGoals" : "Poluvrijeme sa više golova",
+  "matchOutcomeFullTime" : "Konačan ishod",
   "mixedGames" : "Razno",
-  "teamGoals" : "Timski golovi",
-  "totalGoals" : "Ukupno golova"
+  "teamGoalsAwayTeam" : "Timski golovi - gost",
+  "teamGoalsBothTeams" : "Timski golovi - oba tima",
+  "teamGoalsHomeTeam" : "Timski golovi - domaćin",
+  "totalGoals1stHalf" : "Ukupno golova - prvo poluvrijeme",
+  "totalGoals2ndHalf" : "Ukupno golova - drugo poluvrijeme",
+  "totalGoalsFulltime" : "Ukupno golova",
+
+  "1stHalfKey" : "Prvo poluvrijeme",
+  "2ndHalfKey" : "Drugo poluvrijeme",
+
+  "double-win-t1": "Dupla pobjeda domaćin",
+  "double-win-t2": "Dupla pobjeda gost",
+  "handicap-win-t1":"Hendikep pobjeda domaćin",
+  "handicap-win-t2": "Hendikep pobjeda gost",
+  "safe-victory-t1": "Sigurna pobjeda domaćin",
+  "safe-victory-t2": "Sigurna pobjeda gost"
 }

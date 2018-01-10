@@ -2,7 +2,9 @@
 
 <bar-chart [chartData]="data" [title]="'matchChartTitle'"></bar-chart>
 
-<div *ngFor="let aggregation of matchesAggregation | keys; let i = index" (click)="openAccordion(i)">
+<div *ngFor="let aggregation of matchesAggregation | keys; let i = index"
+     class="accordion-row"
+     (click)="openAccordion(i)">
 
   <div *ngIf="aggregation.key !== 'matchCount'"
        class="accordion"

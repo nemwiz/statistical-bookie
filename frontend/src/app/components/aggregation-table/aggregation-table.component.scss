@@ -17,6 +17,7 @@
   .aggregation-row {
     $first-column-width: 50%;
     display: flex;
+    align-items: center;
     padding: 5px;
     border-left: $border;
     border-right: $border;
@@ -33,7 +34,6 @@
 
     .game {
       width: $first-column-width;
-      text-align: center;
     }
 
     .match-count {
