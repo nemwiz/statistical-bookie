@@ -1,0 +1,17 @@
+[
+  {
+    "_id": {
+      "$oid": "55d2db06f4811f83a1f27be8"
+    },
+    "awayTeam": "Leicester City",
+    "homeTeam": "West Ham United",
+    "leagueCode": "E0",
+    "round": 13,
+    "seasonYear": "2017/2018",
+    "leagueName": "Premier league",
+    "date": "24/11/17",
+    "leagueId": 1,
+    "countryName": "England",
+    "time": "21:00"
+  }
+]
