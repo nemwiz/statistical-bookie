@@ -113,6 +113,4 @@ def get_match_aggregation(home_team: str, away_team: str) -> dict:
     final_aggregation.update(halftime_more_goals_final)
     final_aggregation.update(mixed_final)
 
-    print(final_aggregation)
-
     return final_aggregation
