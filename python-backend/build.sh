@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-docker rmi sb-trivia
+docker rmi sb-python-backend
 docker rmi registry.heroku.com/stats-bookie-integration/web
 
-docker build -t sb-trivia .
+docker build -t sb-python-backend .
 
-docker tag sb-trivia registry.heroku.com/stats-bookie-integration/web
+docker tag sb-python-backend registry.heroku.com/stats-bookie-integration/web
 docker push registry.heroku.com/stats-bookie-integration/web
