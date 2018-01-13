@@ -10,14 +10,14 @@ UNSIGNED_ALIGNED_DESKTOP="$DESKTOP_PATH/$UNSIGNED_ALIGNED_APK"
 
 rm -rf cordova/platforms/android/build/outputs/apk/*
 
-npm run build
+npm run build-production
 cd cordova
 cordova build --release android
 
-cd platforms/android/build/outputs/apk
+cd platforms/android/build/outputs/apk/release
 zipalign -v -p 4 $UNSINGED_APK $UNSIGNED_ALIGNED_APK
 mv $UNSIGNED_ALIGNED_APK $DESKTOP_PATH
 
-cd ~/Android/Sdk/build-tools/27.0.1/
+cd $ANDROID_SDK_TOOLS
 
 ./apksigner sign --ks $KEYSTORE_PATH --out $RELEASE_APK_PATH $UNSIGNED_ALIGNED_DESKTOP
