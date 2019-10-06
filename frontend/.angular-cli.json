@@ -22,18 +22,19 @@
         "./semantic-ui-css-master/semantic.min.css",
         "../node_modules/chartist/dist/chartist.css",
         "../node_modules/materialize-css/dist/css/materialize.min.css",
-        "../node_modules/flag-icon-css/css/flag-icon.min.css",
         "./assets/variables.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
         "./semantic-ui-css-master/semantic.min.js",
-        "../node_modules/materialize-css/dist/js/materialize.min.js"
+        "../node_modules/materialize-css/dist/js/materialize.min.js",
+        "./admob-simple.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
+        "prod": "environments/environment.prod.ts",
+        "integration": "environments/environment.integration.ts"
       }
     }
   ],

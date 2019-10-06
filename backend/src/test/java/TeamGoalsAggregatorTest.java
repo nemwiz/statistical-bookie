@@ -2,7 +2,7 @@ import aggregator.TeamGoalsAggregator;
 import model.Match;
 import org.junit.Before;
 import org.junit.Test;
-import viewmodel.TeamGoalsModel;
+import viewmodel.TeamScoredModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class TeamGoalsAggregatorTest {
     private static int ONLY_AWAY_TEAM_SCORED = 2;
 
     private TeamGoalsAggregator teamGoalsAggregator;
-    private TeamGoalsModel teamGoalsView;
+    private TeamScoredModel teamGoalsView;
     private List<Match> matches;
     private int expectedCount;
 

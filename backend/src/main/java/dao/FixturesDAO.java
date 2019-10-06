@@ -8,27 +8,25 @@ import java.util.List;
 public class FixturesDAO {
 
     private MorphiaDatastore datastore;
-    private static final String LEAGUE_ID = "leagueId";
-    private static final String SEASON_YEAR = "seasonYear";
-    private static final String WEEK = "week";
 
     @Inject
     public FixturesDAO(MorphiaDatastore datastore) {
         this.datastore = datastore;
     }
 
-    public void insertFixtures(List<Fixture> fixtures) {
-
-        this.datastore.getDatastore().save(fixtures);
-    }
-
-    public List<Fixture> getUpcomingFixtures(int leagueId) {
-
+    public List<Fixture> getUpcomingFixtures(List<String> daysOfCurrentWeek) {
 
         return this.datastore.getDatastore()
                 .createQuery(Fixture.class)
-                .field(LEAGUE_ID).equal(leagueId)
-                .order("date")
+                .filter("date in", daysOfCurrentWeek)
+                .asList();
+    }
+
+    public List<Fixture> getUpcomingFixturesForLeague(int leagueId, List<String> daysOfCurrentWeek) {
+        return this.datastore.getDatastore()
+                .createQuery(Fixture.class)
+                .field("leagueId").equal(leagueId)
+                .filter("date in", daysOfCurrentWeek)
                 .asList();
     }
 }

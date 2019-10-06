@@ -2,7 +2,14 @@ package helper;
 
 import org.joda.time.DateTime;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 public class SeasonsAndDates {
 
@@ -37,5 +44,19 @@ public class SeasonsAndDates {
 
     private static String addForwardSlash(String season1, String season2) {
         return season1 + "/" + season2;
+    }
+
+    public static List<String> getEachDayOfTheCurrentWeek() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        List<String> days = new ArrayList<>();
+
+        LocalDate now = LocalDate.now();
+        LocalDate first = now.with(previousOrSame(DayOfWeek.MONDAY));
+
+        for (DayOfWeek day: DayOfWeek.values()) {
+            days.add(first.with(nextOrSame(day)).format(formatter));
+        }
+
+        return days;
     }
 }

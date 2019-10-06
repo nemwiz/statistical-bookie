@@ -1,0 +1,51 @@
+{
+  "noDataAvailable" : "Podaci nisu dostupni",
+  "serverError" : "Došlo je do pogreške. Trenutačno to popravljamo, molimo vas dođite kasnije.",
+  "loading" : "Učitava se",
+  "noInternetConnection" : "Nema internet konekcije",
+
+  "statsBookie" : "Stats bookie",
+  "leagueTitle" : "Liga",
+  "matchStats" : "Meč statistika",
+
+  "teamName" : "Tim",
+  "teamWins" : "P",
+  "teamDraws" : "N",
+  "teamLosses" : "I",
+  "teamPointsWon" : "Poeni",
+
+  "fixtures" : "Mečevi",
+  "league" : "Liga",
+
+  "matchChartTitle" : "Izdvajamo",
+
+  "game": "Igra",
+  "onLast": "Na posljednjih",
+  "percentage": "Vjerojatnost",
+
+  "1stHalfOutcomes" : "Konačan ishod - prvo poluvrijeme",
+  "2ndHalfOutcomes" : "Konačan ishod - drugo poluvrijeme",
+  "1stHalfTo2ndHalf" : "Prelazi",
+  "doubleChanceBothHalves" : "Dupla šansa - oba poluvrijeme",
+  "doubleChanceFullTime" : "Dupla šansa - konačan ishod",
+  "exactResult" : "Točan rezultat",
+  "halfTimeMoreGoals" : "Poluvrijeme sa više golova",
+  "matchOutcomeFullTime" : "Konačan ishod",
+  "mixedGames" : "Razno",
+  "teamGoalsAwayTeam" : "Timski golovi - gost",
+  "teamGoalsBothTeams" : "Timski golovi - oba tima",
+  "teamGoalsHomeTeam" : "Timski golovi - domaćin",
+  "totalGoals1stHalf" : "Ukupno golova - prvo poluvrijeme",
+  "totalGoals2ndHalf" : "Ukupno golova - drugo poluvrijeme",
+  "totalGoalsFulltime" : "Ukupno golova",
+
+  "1stHalfKey" : "Prvo poluvrijeme",
+  "2ndHalfKey" : "Drugo poluvrijeme",
+
+  "double-win-t1": "Dupla pobjeda domaćin",
+  "double-win-t2": "Dupla pobjeda gost",
+  "handicap-win-t1":"Hendikep pobjeda domaćin",
+  "handicap-win-t2": "Hendikep pobjeda gost",
+  "safe-victory-t1": "Sigurna pobjeda domaćin",
+  "safe-victory-t2": "Sigurna pobjeda gost"
+}

@@ -1,0 +1,6 @@
+pymongo
+Flask-PyMongo
+flask-cors
+flask-compress
+flask-headers
+gunicorn

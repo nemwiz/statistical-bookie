@@ -4,9 +4,17 @@
 /dist
 /tmp
 /out-tsc
+/cordova/www
+/cordova/platforms
+/cordova/plugins
+/cordova/package.json
+/cordova/package-lock.json
+/cordova/.npmignore
+/cordova/res/README.md
 
 # dependencies
 /node_modules
+/cordova/node_modules
 
 # IDEs and editors
 /.idea

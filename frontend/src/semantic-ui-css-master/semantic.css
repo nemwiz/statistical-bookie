@@ -5082,18 +5082,6 @@ i.flag:not(.icon) {
   backface-visibility: hidden;
 }
 
-/* Sprite */
-
-i.flag:not(.icon):before {
-  display: inline-block;
-  content: '';
-  background: url("./themes/default/assets/images/flags.png") no-repeat -108px -1976px;
-  width: 16px;
-  height: 11px;
-}
-
-/* Flag Sprite Based On http://www.famfamfam.com/lab/icons/flags/ */
-
 /*******************************
          Theme Overrides
 *******************************/
@@ -13885,7 +13873,6 @@ ol.ui.list ol li,
 .ui.list > .item .header {
   display: block;
   margin: 0em;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.87);
 }
@@ -23142,7 +23129,6 @@ Floated Menu / Item
 
 .ui.message .header {
   display: block;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: bold;
   margin: -0.14285714em 0em 0rem 0em;
 }
@@ -27034,7 +27020,6 @@ a.ui.card:hover,
 .ui.items > .item > .content > .header {
   display: inline-block;
   margin: -0.21425em 0em 0em;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.85);
 }

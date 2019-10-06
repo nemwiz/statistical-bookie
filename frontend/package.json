@@ -5,7 +5,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "prebuild": "rm -rf cordova/www/*",
+    "build-production": "ng build --target=production --environment=prod --output-path cordova/www/ --base-href .",
+    "build-integration": "ng build --target=production --environment=integration --output-path cordova/www/ --base-href .",
+    "cordova": "cd cordova && cordova build android && cordova run android",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -25,7 +28,7 @@
     "@ngx-translate/http-loader": "^0.1.0",
     "chartist": "^0.11.0",
     "core-js": "^2.4.1",
-    "flag-icon-css": "^2.8.0",
+    "d3": "^4.12.0",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
     "materialize-css": "^0.100.1",
@@ -33,10 +36,15 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@angular/cli": "1.2.0",
+    "@angular/cli": "1.2.6",
     "@angular/compiler-cli": "^4.0.0",
     "@angular/language-service": "^4.0.0",
     "@types/chartist": "^0.9.35",
+    "@types/cordova": "0.0.34",
+    "@types/cordova-plugin-globalization": "0.0.3",
+    "@types/cordova-plugin-network-information": "0.0.3",
+    "@types/cordova-plugin-splashscreen": "0.0.3",
+    "@types/d3": "^4.12.0",
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
     "@types/jquery": "^3.2.6",

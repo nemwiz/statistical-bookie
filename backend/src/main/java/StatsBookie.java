@@ -14,7 +14,7 @@ import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import resource.FixturesResource;
 import resource.LeaguesResource;
-import resource.NumberOfGoalsPerMatchResource;
+import resource.AggregatedMatchResource;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -73,13 +73,13 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
         LeaguesDAO leaguesDAO = new LeaguesDAO(morphiaDatastore);
 
         final FixturesController fixturesController = new FixturesController(fixturesDAO);
-        final LeaguesController leaguesController = new LeaguesController(leaguesDAO);
+        final LeaguesController leaguesController = new LeaguesController(leaguesDAO, matchDAO);
 
-        final NumberOfGoalsPerMatchResource numberOfGoalsPerMatchResource = new NumberOfGoalsPerMatchResource(mainController);
+        final AggregatedMatchResource aggregatedMatchResource = new AggregatedMatchResource(mainController);
         final FixturesResource fixturesResource = new FixturesResource(fixturesController);
         final LeaguesResource leaguesResource = new LeaguesResource(leaguesController);
 
-        environment.jersey().register(numberOfGoalsPerMatchResource);
+        environment.jersey().register(aggregatedMatchResource);
         environment.jersey().register(fixturesResource);
         environment.jersey().register(leaguesResource);
 
@@ -88,12 +88,12 @@ public class StatsBookie extends Application<StatsBookieConfiguration> {
                 environment.servlets().addFilter("CORS", CrossOriginFilter.class);
 
         // Configure CORS parameters
-        cors.setInitParameter("allowedOrigins", "*");
-        cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
-        cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+        cors.setInitParameter("allowedOrigins", "http://localhost:4200");
+        cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin,If-None-Match");
+        cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST");
 
         // Add URL mapping
-        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/api/*");
 
         environment.jersey().setUrlPattern(BASE_URL);
     }

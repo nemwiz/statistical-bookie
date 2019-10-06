@@ -18,7 +18,7 @@ public class NumberOfGoalsAndWinsAggregator {
 
         Map<String, Long> homeTeamResults = this.convertValuesToMap(this.getCount(matches, Constants.HOME_TEAM_WIN));
         Map<String, Long> awayTeamResults = this.convertValuesToMap(this.getCount(matches, Constants.AWAY_TEAM_WIN));
-        Map<String, Long> drawResults = this.convertValuesToMap(this.getCount(matches, Constants.DRAW));
+        Map<String, Long> drawResults = this.convertDrawValuesToMap(this.getCount(matches, Constants.DRAW));
 
         return new NumberOfGoalsAndWinsModel(
                 homeTeamResults,
@@ -67,6 +67,18 @@ public class NumberOfGoalsAndWinsAggregator {
         resultsMap.put("winAndTwoGoalsScored", results[1]);
         resultsMap.put("winAndThreeGoalsScored", results[2]);
         resultsMap.put("winAndFourOrMoreGoalsScored", results[3]);
+
+        return resultsMap;
+    }
+
+    private Map<String, Long> convertDrawValuesToMap(long[] results) {
+
+        Map<String, Long> resultsMap = new LinkedHashMap<>();
+
+        resultsMap.put("drawAndOneGoalScored", results[0]);
+        resultsMap.put("drawAndTwoGoalsScored", results[1]);
+        resultsMap.put("drawAndThreeGoalsScored", results[2]);
+        resultsMap.put("drawAndFourOrMoreGoalsScored", results[3]);
 
         return resultsMap;
     }

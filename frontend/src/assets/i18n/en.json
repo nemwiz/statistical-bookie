@@ -1,10 +1,51 @@
 {
-  "onLastMatches": "On last",
-  "lastFiveMatches": "5 matches",
-  "lastTenMatches": "10 matches",
-  "noGoals": "no goals",
-  "oneGoal": "1 goal",
-  "twoGoals": "2 goals",
-  "threeGoals": "3 goals",
-  "fourOrMoreGoals": "4 or more goals"
+  "noDataAvailable" : "No data available",
+  "serverError" : "Something went wrong. We are working to fix the issue, please come back later.",
+  "loading" : "Loading",
+  "noInternetConnection" : "You are offline",
+
+  "statsBookie" : "Stats bookie",
+  "leagueTitle" : "League",
+  "matchStats" : "Match stats",
+
+  "teamName" : "Team",
+  "teamWins" : "W",
+  "teamDraws" : "D",
+  "teamLosses" : "L",
+  "teamPointsWon" : "Pts.",
+
+  "fixtures" : "Fixtures",
+  "league" : "League",
+
+  "matchChartTitle" : "Featured markets",
+
+  "game": "Game",
+  "onLast": "On last",
+  "percentage": "Likelihood",
+
+  "1stHalfOutcomes" : "Outcome - 1st half",
+  "2ndHalfOutcomes" : "Outcome - 2nd half",
+  "1stHalfTo2ndHalf" : "Half-Time / Full-Time",
+  "doubleChanceBothHalves" : "Half-Time double chance",
+  "doubleChanceFullTime" : "Double chance",
+  "exactResult" : "Correct score",
+  "halfTimeMoreGoals" : "More goals which half",
+  "matchOutcomeFullTime" : "Match outcome",
+  "mixedGames" : "Mixed",
+  "teamGoalsAwayTeam" : "Team goals - away team",
+  "teamGoalsBothTeams" : "Team goals",
+  "teamGoalsHomeTeam" : "Team goals - home team",
+  "totalGoals1stHalf" : "Total goals - 1st half",
+  "totalGoals2ndHalf" : "Total goals - 2nd half",
+  "totalGoalsFulltime" : "Total goals",
+
+  "1stHalfKey" : "1st half",
+  "2ndHalfKey" : "2nd half",
+
+  "double-win-t1": "Double win home team",
+  "double-win-t2": "Double win away team",
+  "handicap-win-t1":"Handicap win home team",
+  "handicap-win-t2": "Handicap win away team",
+  "safe-victory-t1": "Safe win home team",
+  "safe-victory-t2": "Safe win away team"
 }

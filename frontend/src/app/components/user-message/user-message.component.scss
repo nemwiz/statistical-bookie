@@ -1,0 +1,21 @@
+@import '../../../assets/variables';
+
+.message-container {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  top: calc(90% / 2);
+
+  .error-image {
+    opacity: 0.2;
+    text-align: center;
+  }
+
+  .error-text {
+    font-size: $header-font;
+    margin-top: $standard-padding;
+    padding: $standard-padding;
+  }
+
+}

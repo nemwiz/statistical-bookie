@@ -1,10 +1,51 @@
 {
-  "onLastMatches": "Na poslednjih",
-  "lastFiveMatches": "5 mečeva",
-  "lastTenMatches": "10 mečeva",
-  "noGoals": "bez golova",
-  "oneGoal": "1 gol",
-  "twoGoals": "2 gola",
-  "threeGoals": "3 gola",
-  "fourOrMoreGoals": "4 ili više golova"
+  "noDataAvailable" : "Podaci nisu dostupni",
+  "serverError" : "Dogodila se greška. Trenutno je popravljamo, molim vas navratite kasnije.",
+  "loading" : "Učitava se",
+  "noInternetConnection" : "Nema internet konekcije",
+
+  "statsBookie" : "Stats bookie",
+  "leagueTitle" : "Liga",
+  "matchStats" : "Meč statistika",
+
+  "teamName" : "Tim",
+  "teamWins" : "P",
+  "teamDraws" : "N",
+  "teamLosses" : "I",
+  "teamPointsWon" : "Poeni",
+
+  "fixtures" : "Mečevi",
+  "league" : "Liga",
+
+  "matchChartTitle" : "Preporučene igre",
+
+  "game": "Igra",
+  "onLast": "Na poslednjih",
+  "percentage": "Verovatnoća",
+
+  "1stHalfOutcomes" : "Konačan ishod - prvo poluvreme",
+  "2ndHalfOutcomes" : "Konačan ishod - drugo poluvreme",
+  "1stHalfTo2ndHalf" : "Prelazi",
+  "doubleChanceBothHalves" : "Dupla šansa - oba poluvremena",
+  "doubleChanceFullTime" : "Dupla šansa - konačan ishod",
+  "exactResult" : "Tačan rezultat",
+  "halfTimeMoreGoals" : "Poluvreme sa više golova",
+  "matchOutcomeFullTime" : "Konačan ishod",
+  "mixedGames" : "Razno",
+  "teamGoalsAwayTeam" : "Timski golovi - gost",
+  "teamGoalsBothTeams" : "Timski golovi - oba tima",
+  "teamGoalsHomeTeam" : "Timski golovi - domaćin",
+  "totalGoals1stHalf" : "Ukupno golova - prvo poluvreme",
+  "totalGoals2ndHalf" : "Ukupno golova - drugo poluvreme",
+  "totalGoalsFulltime" : "Ukupno golova",
+
+  "1stHalfKey" : "Prvo poluvreme",
+  "2ndHalfKey" : "Drugo poluvreme",
+
+  "double-win-t1": "Dupla pobeda domaćin",
+  "double-win-t2": "Dupla pobeda gost",
+  "handicap-win-t1":"Hendikep pobeda domaćin",
+  "handicap-win-t2": "Hendikep pobeda gost",
+  "safe-victory-t1": "Sigurna pobeda domaćin",
+  "safe-victory-t2": "Sigurna pobeda gost"
 }

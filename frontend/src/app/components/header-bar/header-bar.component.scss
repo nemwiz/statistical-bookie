@@ -1,0 +1,49 @@
+@import "../../../assets/variables";
+
+.header-bar-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: $top-navbar-height;
+  padding: $standard-padding;
+  position: fixed;
+  background-color: $primary-color;
+  z-index: 999;
+
+  .header-title {
+    font-size: $header-font;
+    font-weight: bold;
+    color: $primary-white;
+
+    @media (min-width: $ipad-screen-size) {
+      font-size: $header-font - 1vw;
+    }
+  }
+
+  .back-arrow-container {
+    $container-size: 50px;
+    height: $container-size;
+    width: $container-size;
+    display: flex;
+    align-items: center;
+
+    @media (min-width: $ipad-screen-size) {
+      height: $container-size + 20px;
+      width: $container-size + 10px;
+    }
+  }
+
+  .back-arrow-icon {
+    $icon-height: 32px;
+
+    @media (max-width: $iphone6-plus-screen-size) {
+      height: $icon-height;
+    }
+    @media (max-width: $iphone6-screen-size) {
+      height: $icon-height - 2px;
+    }
+    @media (max-width: $iphone5-screen-size) {
+      height: $icon-height - 8px;
+    }
+  }
+}

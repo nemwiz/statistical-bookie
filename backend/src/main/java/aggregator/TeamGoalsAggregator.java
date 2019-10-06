@@ -3,7 +3,7 @@ package aggregator;
 import collecter.NumberOfGoalsCollecter;
 import helper.Constants;
 import model.Match;
-import viewmodel.TeamGoalsModel;
+import viewmodel.TeamScoredModel;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,13 +15,13 @@ public class TeamGoalsAggregator {
     public TeamGoalsAggregator() {
     }
 
-    public TeamGoalsModel getAggregatedCount(List<Match> matches) {
+    public TeamScoredModel getAggregatedCount(List<Match> matches) {
 
         Map<String, Long> homeTeamResults = this.convertValuesToMap(this.getHomeTeamCount(matches));
         Map<String, Long> awayTeamResults = this.convertValuesToMap(this.getAwayTeamCount(matches));
         Map<String, Long> bothTeamsResults = this.convertValuesToMap(this.getBothTeamsCount(matches));
 
-        return new TeamGoalsModel(homeTeamResults, awayTeamResults, bothTeamsResults);
+        return new TeamScoredModel(homeTeamResults, awayTeamResults, bothTeamsResults);
     }
 
     private long[] getHomeTeamCount(List<Match> matches) {

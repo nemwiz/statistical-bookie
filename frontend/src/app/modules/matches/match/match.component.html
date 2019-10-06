@@ -1,18 +1,21 @@
-<div class="ui small selection divided list center-align">
+<div class="teams-container">{{homeTeam}} vs. {{awayTeam}}</div>
 
-  <div class="item" *ngFor="let data of structuredMatches[0] | keys"
-       [routerLink]="['/fixtures', fixtureId, data.key]"
-       (click)="pushMatchData(structuredMatches[0][data.key], structuredMatches[1][data.key], true)">
+<bar-chart [chartData]="data" [title]="'matchChartTitle'"></bar-chart>
 
-    <div class="content">{{data.key}}</div>
+<div *ngFor="let aggregation of matchesAggregation | keys; let i = index"
+     class="accordion-row"
+     (click)="openAccordion(i)">
+
+  <div *ngIf="aggregation.key !== 'matchCount'"
+       class="accordion"
+       id="accordion-{{i}}"
+       >{{aggregation.key | translate}}
   </div>
 
-  <div class="item" *ngFor="let data of specificStructureMatches[0] | keys"
-       [routerLink]="['/fixtures', fixtureId, data.key]"
-       (click)="pushMatchData(specificStructureMatches[0][data.key], specificStructureMatches[1][data.key], false)">
-
-    <div class="content">{{data.key}}</div>
+  <div id="panel-{{i}}" class="panel">
+    <aggregation-table [aggregation]="aggregation.value" [matchCount]="matchCount"></aggregation-table>
   </div>
 
 </div>
+
 

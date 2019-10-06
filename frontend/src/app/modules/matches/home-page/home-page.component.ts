@@ -1,92 +1,67 @@
-import {Component, OnInit} from '@angular/core';
-import {FixturesService} from "../../../services/fixtures.service";
-import {Fixture} from "../../../interfaces/fixture";
-declare var jQuery: any;
+import {Component, NgZone, OnDestroy, OnInit} from "@angular/core";
+import {LeaguesService} from "../../../services/leagues.service";
+import {League} from "../../../interfaces/league";
+import {Router} from "@angular/router";
+import {UserMessageService} from "../../../services/user.message.service";
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
 
-  fixtures: Fixture[] = [];
-  filteredFixtures: Fixture[] = [];
+  leagues: League[] = [];
 
-  constructor(private fixturesService: FixturesService) {
+  onOnline = () => {
+    this.fetchData();
+  };
+
+  constructor(private leaguesService: LeaguesService,
+              private userMessageService: UserMessageService,
+              private router: Router,
+              private ngZone: NgZone) {
   }
 
   ngOnInit() {
 
-    this.fixturesService.getUpcomingFixtures('1')
-      .subscribe(fixtures => {
-        this.fixtures = fixtures;
-        this.filteredFixtures = fixtures;
-        let adaptedFixtures = this.adaptFixturesToSearchInputFormat(this.fixtures);
+    this.userMessageService.showLoadingSpinner();
 
-        jQuery('.ui.search')
-          .search({
-            source: adaptedFixtures,
-            showNoResults: true,
-            transition: 'fade',
-            maxResults: 3,
-            onSelect: (response) => {
-              this.filterFixturesOnSelection(response.title);
-            },
-            onSearchQuery: (response) => {
-              response.length > 1 ? this.filterFixturesOnSubstring(response) : this.resetFixturesToOriginalState();
-            }
-          });
-      });
+    document.addEventListener('online', this.onOnline);
 
-  }
-
-  pushFixture(fixture: Fixture) {
-    this.fixturesService.pushFixture(fixture);
-  }
-
-  onKey(event: KeyboardEvent) {
-    if ((<HTMLInputElement>event.target).value === '') {
-      this.resetFixturesToOriginalState();
+    if (navigator['connection'] && navigator['connection'].type === 'none') {
+      this.userMessageService.showErrorMessage('noInternetConnection');
+    } else {
+      this.fetchData();
     }
   }
 
-  private adaptFixturesToSearchInputFormat(fixtures: Fixture[]): string[] {
-
-    let adaptedFixtures = new Set();
-    let searchResults = [];
-
-    fixtures.forEach(fixture => {
-      adaptedFixtures.add(fixture.countryName);
-      adaptedFixtures.add(fixture.awayTeam);
-      adaptedFixtures.add(fixture.homeTeam);
-    });
-
-    adaptedFixtures.forEach(fixture => {
-      searchResults.push({title: fixture});
-    });
-
-    return searchResults;
-  }
-
-  private filterFixturesOnSubstring(searchResults: string) {
-    let stringToSearch = searchResults.toLowerCase();
-
-    this.filteredFixtures = this.fixtures.filter(fixture => {
-      return fixture.homeTeam.toLowerCase().includes(stringToSearch) ||
-        fixture.awayTeam.toLowerCase().includes(stringToSearch) ||
-        fixture.countryName.toLowerCase().includes(stringToSearch)
+  private fetchData() {
+    this.leaguesService.getAllLeagues()
+      .toPromise()
+      .then((leagues) => {
+        this.leagues = leagues.sort((a, b) => {
+          return a._id - b._id
+        });
+        if (leagues && leagues.length === 0) {
+          this.userMessageService.showErrorMessage('noDataAvailable');
+          return;
+        }
+        this.userMessageService.hideLoadingSpinner();
+      }).catch(error => {
+      this.userMessageService.showErrorMessage('serverError');
     });
   }
 
-  private filterFixturesOnSelection(selection: string) {
-    this.filteredFixtures = this.fixtures.filter(fixture => {
-      return fixture.homeTeam === selection || fixture.awayTeam === selection || fixture.countryName === selection;
-    })
+  navigateToLeague(leagueId: number) {
+    this.ngZone.run(() => {
+      this.router.navigate([`/leagues/${leagueId}`]);
+    });
   }
 
-  private resetFixturesToOriginalState(): void {
-    this.filteredFixtures = this.fixtures;
+  ngOnDestroy(): void {
+    document.removeEventListener('online', this.onOnline);
   }
 
 }

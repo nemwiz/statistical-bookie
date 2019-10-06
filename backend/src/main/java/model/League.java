@@ -7,16 +7,17 @@ import org.mongodb.morphia.annotations.Id;
 public class League {
 
     @Id
-    private int leagueId;
+    private int id;
     private String leagueName;
     private String leagueNameShort;
     private String leagueCode;
     private String countryName;
     private String countryNameShort;
+    private String liveScoreLink;
     private String countryCode;
 
-    public int getLeagueId() {
-        return leagueId;
+    public int getId() {
+        return id;
     }
 
     public String getLeagueName() {
@@ -37,6 +38,10 @@ public class League {
 
     public String getCountryNameShort() {
         return countryNameShort;
+    }
+
+    public String getLiveScoreLink() {
+        return liveScoreLink;
     }
 
     public String getCountryCode() {

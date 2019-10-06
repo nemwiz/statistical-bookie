@@ -1,7 +1,10 @@
 @import "../assets/variables";
 
-.top-navbar {
-  .icon {
-    font-size: $icon-font-size;
-  }
+.app-main-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollable-content {
+  margin-top: $top-navbar-height;
 }

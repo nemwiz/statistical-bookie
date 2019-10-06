@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {Location} from '@angular/common';
-import {NavigationEnd, Router} from "@angular/router";
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -10,33 +8,30 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class AppComponent {
 
-  currentRoute: string = '';
+  constructor(private translationService: TranslateService) {
 
-  constructor(private location: Location,
-              private router: Router,
-              private translationService: TranslateService) {
-    this.router.events.subscribe((route) => {
-      if (route instanceof NavigationEnd) {
-        this.currentRoute = (<NavigationEnd> route ).url;
+    document.addEventListener('deviceready', () => {
+
+      navigator['splashscreen'].hide();
+
+      if (navigator && navigator['globalization']) {
+        navigator['globalization'].getPreferredLanguage((language) => {
+          this.setLanguageForTranslations(language);
+        }, (error) => {
+          console.log('Error loading system language');
+        });
       }
-    });
 
+    }, false);
+
+  }
+
+  private setLanguageForTranslations(language) {
+    let languageCodeLen = language.value.length;
+    let languageCode = language.value.substr(languageCodeLen - 2, languageCodeLen).toLowerCase();
     this.translationService.setDefaultLang('en');
-
     // the lang to use, if the lang isn't available, it will use the current loader to get them
-    this.translationService.use('rs');
-  }
-
-  navigateBack(): void {
-    this.location.back();
-  }
-
-  changeLanguage(): void {
-    if (this.translationService.currentLang === 'en') {
-      this.translationService.use('rs');
-    } else {
-      this.translationService.use('en');
-    }
+    this.translationService.use(languageCode);
   }
 
 }

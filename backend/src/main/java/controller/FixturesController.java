@@ -1,6 +1,7 @@
 package controller;
 
 import dao.FixturesDAO;
+import helper.SeasonsAndDates;
 import model.Fixture;
 
 import java.util.List;
@@ -13,7 +14,15 @@ public class FixturesController {
         this.fixturesDAO = fixturesDAO;
     }
 
-    public List<Fixture> getUpcomingFixtures(int leagueId) {
-        return this.fixturesDAO.getUpcomingFixtures(leagueId);
+    public List<Fixture> getUpcomingFixtures() {
+
+        List<String> daysOfCurrentWeek = SeasonsAndDates.getEachDayOfTheCurrentWeek();
+        return this.fixturesDAO.getUpcomingFixtures(daysOfCurrentWeek);
+    }
+
+    public List<Fixture> getUpcomingFixturesForLeague(int leagueId) {
+
+        List<String> daysOfCurrentWeek = SeasonsAndDates.getEachDayOfTheCurrentWeek();
+        return this.fixturesDAO.getUpcomingFixturesForLeague(leagueId, daysOfCurrentWeek);
     }
 }

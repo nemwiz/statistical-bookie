@@ -1,0 +1,50 @@
+@import "../../../assets/variables";
+
+.table-container {
+  padding: 10px;
+  $border: 1px solid black;
+
+  .table-header {
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    justify-content: space-between;
+    background-color: $primary-color;
+    color: $primary-white;
+    padding: 5px;
+    border: $border;
+  }
+
+
+  .aggregation-row {
+    $first-column-width: 50%;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-left: $border;
+    border-right: $border;
+    border-bottom: $border;
+
+    &.yellow-row {
+      background-color: #FFC107;
+    }
+
+    &.green-row {
+      background-color: #4CAF50;
+    }
+
+
+    .game {
+      width: $first-column-width;
+    }
+
+    .match-count {
+      width: $first-column-width / 2;
+    }
+
+    .percentage {
+      width: $first-column-width / 2;
+    }
+
+  }
+}

@@ -9,6 +9,7 @@ import viewmodel.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -35,19 +36,19 @@ public class MainController {
         this.exactResultAggregator = exactResultAggregator;
     }
 
-    public List<AggregatedMatchesMetaView> getMatchesByTeamNames(String homeTeamName, String awayTeamName) {
+    public List<List<Map<String, ?>>> getMatchesByTeamNames(String homeTeamName, String awayTeamName) {
 
         Instant start = Instant.now();
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
 
-        List<AggregatedMatchesMetaView> matchesMetaViews = new ArrayList<>();
+        List<List<Map<String, ?>>> matchesMetaViews = new ArrayList<>();
 
         List<Match> lastFiveMatches = this.matchDAO.getMatchesByTeamNames(homeTeamName, awayTeamName, 5);
         List<Match> lastTenMatches = this.matchDAO.getMatchesByTeamNames(homeTeamName, awayTeamName, 10);
 
-        Future<AggregatedMatchesMetaView> fiveMatchesView = executor.submit(() -> this.getAggregatedMatchesMetaView(lastFiveMatches));
-        Future<AggregatedMatchesMetaView> tenMatchesView = executor.submit(() -> this.getAggregatedMatchesMetaView(lastTenMatches));
+        Future<List<Map<String, ?>>> fiveMatchesView = executor.submit(() -> this.getAggregatedMatchesMetaView(homeTeamName, awayTeamName, lastFiveMatches));
+        Future<List<Map<String, ?>>> tenMatchesView = executor.submit(() -> this.getAggregatedMatchesMetaView(homeTeamName, awayTeamName, lastTenMatches));
 
         try {
             matchesMetaViews.add(fiveMatchesView.get(4, TimeUnit.SECONDS));
@@ -77,27 +78,72 @@ public class MainController {
         return matchesMetaViews;
     }
 
-    private AggregatedMatchesMetaView getAggregatedMatchesMetaView(List<Match> matches) {
+    private List<Map<String, ?>> getAggregatedMatchesMetaView(String homeTeamName, String awayTeamName, List<Match> matches) {
 
         NumberOfGoalsModel fullTime = this.numberOfGoalsAggregator.getAggregatedCount(matches, Constants.FULLTIME);
         NumberOfGoalsModel firstHalf = this.numberOfGoalsAggregator.getAggregatedCount(matches, Constants.FIRST_HALF);
         NumberOfGoalsModel secondHalf = this.numberOfGoalsAggregator.getAggregatedCount(matches, Constants.SECOND_HALF);
 
-        TeamGoalsModel teamGoalsView = this.teamGoalsAggregator.getAggregatedCount(matches);
-        MatchOutcomeModel matchOutcomeView = this.matchOutcomeAggregator.getAggregatedCount(matches);
-        MatchDetailOutcomeView matchDetailOutcomeView = this.matchDetailOutcomeAggregator.getAggregatedCount(matches);
+        TeamScoredModel teamScoredModel = this.teamGoalsAggregator.getAggregatedCount(matches);
+        HalftimesOutcomeAndMatchOutcomeModel halftimesOutcomeAndMatchOutcomeModel = this.matchOutcomeAggregator.getAggregatedCount(matches);
         NumberOfGoalsAndWinsModel numberOfGoalsAndWinsView = this.numberOfGoalsAndWinsAggregator.getAggregatedCount(matches);
-        HalfTimeWithMoreGoalsView halfTimeWithMoreGoalsView = this.halfTimeWithMoreGoalsAggregator.getAggregatedCount(matches);
+
+        HalfTimeFullTime halfTimeFullTime = this.matchDetailOutcomeAggregator.getAggregatedCount(matches);
+        HalfTimeWithMoreGoals halfTimeWithMoreGoals = this.halfTimeWithMoreGoalsAggregator.getAggregatedCount(matches);
         Map<String, Long> exactResultsView = this.exactResultAggregator.aggregate(matches);
 
-        return new AggregatedMatchesMetaView(fullTime,
-                firstHalf,
-                secondHalf,
-                teamGoalsView,
-                matchOutcomeView,
-                matchDetailOutcomeView,
-                numberOfGoalsAndWinsView,
-                halfTimeWithMoreGoalsView,
-                exactResultsView);
+        TeamAggregatedData homeTeamAggregation = new TeamAggregatedData(
+                fullTime.getHomeTeam(),
+                firstHalf.getHomeTeam(),
+                secondHalf.getHomeTeam(),
+                teamScoredModel.getHomeTeam(),
+                halftimesOutcomeAndMatchOutcomeModel.getHomeTeam(),
+                numberOfGoalsAndWinsView.getHomeTeam()
+        );
+
+        TeamAggregatedData awayTeamAggregation = new TeamAggregatedData(
+                fullTime.getAwayTeam(),
+                firstHalf.getAwayTeam(),
+                secondHalf.getAwayTeam(),
+                teamScoredModel.getAwayTeam(),
+                halftimesOutcomeAndMatchOutcomeModel.getAwayTeam(),
+                numberOfGoalsAndWinsView.getAwayTeam()
+        );
+
+        BothTeamsAggregatedData bothTeamsAggregatedData = new BothTeamsAggregatedData(
+                fullTime.getBothTeams(),
+                firstHalf.getBothTeams(),
+                secondHalf.getBothTeams(),
+                teamScoredModel.getBothTeams()
+        );
+
+
+        MatchCommonAggregation matchCommonAggregation = new MatchCommonAggregation(
+                halftimesOutcomeAndMatchOutcomeModel.getDraw(),
+                numberOfGoalsAndWinsView.getDraw(),
+                halfTimeFullTime,
+                halfTimeWithMoreGoals,
+                exactResultsView
+        );
+
+        Map<String, TeamAggregatedData> homeTeam = new HashMap<>();
+        homeTeam.put(homeTeamName, homeTeamAggregation);
+
+        Map<String, TeamAggregatedData> awayTeam = new HashMap<>();
+        awayTeam.put(awayTeamName, awayTeamAggregation);
+
+        Map<String, BothTeamsAggregatedData> bothTeams = new HashMap<>();
+        bothTeams.put("BothTeams", bothTeamsAggregatedData);
+
+        Map<String, MatchCommonAggregation> commonAggregationMap = new HashMap<>();
+        commonAggregationMap.put("Common", matchCommonAggregation);
+
+        List<Map<String, ?>> list = new ArrayList<>();
+        list.add(homeTeam);
+        list.add(awayTeam);
+        list.add(bothTeams);
+        list.add(commonAggregationMap);
+
+        return list;
     }
 }

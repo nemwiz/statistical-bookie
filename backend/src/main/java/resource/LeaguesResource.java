@@ -1,17 +1,16 @@
 package resource;
 
-import com.codahale.metrics.annotation.Timed;
 import controller.LeaguesController;
-import model.Fixture;
 import model.League;
+import viewmodel.LeagueTable;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.container.ResourceContext;
-import javax.ws.rs.core.Context;
+import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/leagues")
@@ -19,32 +18,36 @@ import java.util.List;
 public class LeaguesResource {
 
     private LeaguesController leaguesController;
-    @Context
-    private ResourceContext resourceContext;
 
     public LeaguesResource(LeaguesController leaguesController) {
         this.leaguesController = leaguesController;
     }
 
     @GET
-    @Timed
-    public List<League> getAllLeagues() {
-        return this.leaguesController.getAllLeagues();
+    public Response getAllLeagues() {
+
+        List<League> leagueList = this.leaguesController.getAllLeagues();
+
+        CacheControl cc = new CacheControl();
+        cc.setMaxAge(7778464);
+
+        return Response.ok(leagueList)
+                .cacheControl(cc)
+                .build();
     }
 
     @GET
-    @Timed
-    @Path("{leagueId}/leaguetable")
-    public String getLeagueTable() {
-        return this.leaguesController.getLeagueTable();
-    }
+    @Path("/{leagueCode}/table")
+    public Response getLeagueTable(@PathParam("leagueCode") String leagueCode) {
 
-    @Path("{leagueId}/fixtures/upcoming")
-    @GET
-    @Timed
+        List<LeagueTable> leagueTable = this.leaguesController.getLeagueTable(leagueCode);
 
-    public List<Fixture> getSubResource(@PathParam("leagueId") int leagueId) {
-        return this.resourceContext.getResource(FixturesResource.class).getUpcomingFixtures(leagueId);
+        CacheControl cc = new CacheControl();
+        cc.setMaxAge(404800);
+
+        return Response.ok(leagueTable)
+                .cacheControl(cc)
+                .build();
     }
 
 }

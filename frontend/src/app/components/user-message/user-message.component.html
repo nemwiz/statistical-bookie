@@ -1,0 +1,15 @@
+<div class="message-container">
+  <div *ngIf="showLoadingSpinner">
+    <div class="ui medium active text loader">{{loadingTranslationKey | translate}}</div>
+    <p></p>
+  </div>
+
+  <div *ngIf="showErrorMessage">
+    <div class="error-image">
+      <img src="assets/icons/sad-smiley.png">
+    </div>
+    <div class="error-text">
+      {{errorMessage | translate}}
+    </div>
+  </div>
+</div>

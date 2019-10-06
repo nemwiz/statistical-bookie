@@ -1,11 +1,11 @@
 package livescore;
 
-import com.ui4j.api.browser.Page;
 import csv.helper.ScrapperHelper;
 import csv.model.DatabaseMatch;
 import dao.LeaguesDAO;
 import dao.MatchDAO;
 import dao.model.League;
+import io.webfolder.ui4j.api.browser.Page;
 import livescore.model.LiveScoreMatchDetail;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,10 +14,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ui4j.api.browser.BrowserFactory.getWebKit;
+import static io.webfolder.ui4j.api.browser.BrowserFactory.getWebKit;
+
 
 public class MatchScraper extends LiveScoreScraper {
 
+    public static String SCRAPPER_ID = "matchScrapper";
     private static final String HOME_TEAM = "H";
     private static final String AWAY_TEAM = "A";
     private static final String DRAW = "D";
@@ -56,14 +58,14 @@ public class MatchScraper extends LiveScoreScraper {
     }
 
 
-    public void scrapeAllFromSpecificRound(int round) {
+    public void scrapeAllMatchesFromSpecifiedRoundToCurrentRound(int round) {
         List<League> leagueList = getLeaguesDAO().getAllLeagues();
 
         for (League league : leagueList) {
             int currentRound = this.getCurrentRound(league);
 
-            for (; round < currentRound; round++) {
-                scrape(league, round);
+            for (int i = round; i < currentRound; i++) {
+                scrape(league, i);
             }
 
         }
@@ -76,9 +78,17 @@ public class MatchScraper extends LiveScoreScraper {
 
         int currentRound = this.getCurrentRound(league);
 
-        for (; round < currentRound; round++) {
-            scrape(league, round);
+        for (int i = round; i <= currentRound; i++) {
+            scrape(league, i);
         }
+
+        this.shutdownBrowser();
+    }
+
+    public void scrapeLeagueForSpecifiedRound(int round, String leagueCode) {
+        League league = getLeaguesDAO().getLeagueByLeagueCode(leagueCode);
+
+        scrape(league, round);
 
         this.shutdownBrowser();
     }
@@ -94,7 +104,7 @@ public class MatchScraper extends LiveScoreScraper {
 
         List<DatabaseMatch> databaseMatches = scrapeIndividualMatches(individualMatches, round, league);
 
-        this.matchDAO.insertMatchesIntoDatabase(databaseMatches);
+        this.matchDAO.insertMatchesIfNotAlreadyPresent(databaseMatches);
     }
 
     private List<String> getUrlForEachMatch(Document document) {
@@ -118,7 +128,7 @@ public class MatchScraper extends LiveScoreScraper {
 
         List<DatabaseMatch> databaseMatches = new ArrayList<>();
 
-        individualMatchUrls.forEach(url -> {
+        individualMatchUrls.forEach((String url) -> {
 
             System.out.println("url = " + url);
 
@@ -130,9 +140,22 @@ public class MatchScraper extends LiveScoreScraper {
                 e.printStackTrace();
             }
 
-            String detailPageHtml = detailPage.getDocument().getBody().getInnerHTML();
+            String detailPageHtml;
 
-            System.out.println("detailPageHtml = " + detailPageHtml);
+            try {
+                detailPageHtml = detailPage.getDocument().getBody().getInnerHTML();
+            } catch (NullPointerException exception) {
+                detailPage = getWebKit().navigate(url);
+
+                try {
+                    Thread.sleep(60000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                detailPageHtml = detailPage.getDocument().getBody().getInnerHTML();
+
+            }
 
             Document detailDocument = Jsoup.parse(detailPageHtml);
 

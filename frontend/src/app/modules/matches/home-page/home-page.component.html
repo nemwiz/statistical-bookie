@@ -1,27 +1,10 @@
-<div class="ui search search-box">
-
-  <div class="ui icon input input-container">
-    <div class="group">
-      <input type="text" class="prompt input-field" (keyup)="onKey($event)">
-      <span class="bar"></span>
-      <div class="label-and-icon-container">
-        <label>Search</label>
-        <i class="search icon"></i>
-      </div>
-    </div>
-
+<div *ngFor="let league of leagues" class="league-row" (click)="navigateToLeague(league._id)">
+  <div class="icon-container">
+    <img class="league-icon" src="assets/league-icons/{{league.leagueCode}}.png">
   </div>
-  <div class="results"></div>
+  <div class="league-name">{{league.leagueName}}</div>
+  <div class="icon-container">
+    <img class="country-flag" src="assets/flags/{{league.countryName}}.svg">
+  </div>
+
 </div>
-
-  <div class="ui selection celled list">
-    <div *ngFor="let fixture of filteredFixtures"
-         [routerLink]="['/fixtures', fixture.fixtureId.counter]" (click)="pushFixture(fixture)"
-         class="item">
-      <img class="ui avatar image flag-icon-background flag-icon-squared flag-icon-gb">
-        <div class="content">
-          <div class="header">{{fixture.countryName}} {{fixture.date}} </div>
-          <div class="description"> {{fixture.homeTeam}} vs. {{fixture.awayTeam}}</div>
-        </div>
-    </div>
-  </div>

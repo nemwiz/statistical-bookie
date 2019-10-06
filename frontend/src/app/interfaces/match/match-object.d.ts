@@ -1,20 +1,16 @@
 import {Goals} from "./goals";
 import {TeamGoals} from "./team-goals";
 import {MatchOutcome} from "./match-outcome";
-import {MatchDetailOutcome} from "./match-detail-outcome";
+import {HalfTimeFullTime} from "./match-detail-outcome";
 import {GoalsAndWins} from "./goals-and-wins";
 import {HalftimeWithMoreGoals} from "./halftime-with-more-goals";
+import {Dictionary} from "../dictionary";
 
 export interface MatchObject {
-  numberOfGoalsFullTime: NumberOfGoalsMetaView;
-  numberOfGoalsFirstHalf: NumberOfGoalsMetaView;
-  numberOfGoalsSecondHalf: NumberOfGoalsMetaView;
-  teamGoalsView: TeamGoalsView;
-  matchOutcomeView: MatchOutcomeView;
-  matchDetailOutcomeView: MatchDetailOutcome;
-  numberOfGoalsAndWinsView: NumberOfGoalsAndWinsView;
-  halfTimeWithMoreGoalsView: HalftimeWithMoreGoals;
-  exactResultView: object;
+  homeTeam: Dictionary<TeamAggregatedData>;
+  awayTeam: Dictionary<TeamAggregatedData>;
+  bothTeams: Dictionary<TeamAggregatedData>;
+  common: Dictionary<CommonAggregation>;
 }
 
 export interface NumberOfGoalsMetaView {
@@ -39,4 +35,21 @@ export interface NumberOfGoalsAndWinsView {
   homeTeam: GoalsAndWins;
   awayTeam: GoalsAndWins;
   draw: GoalsAndWins;
+}
+
+export interface TeamAggregatedData {
+  numberOfGoalsFulltime: Goals;
+  numberOfGoalsFirstHalf: Goals;
+  numberOfGoalsSecondHalf: Goals;
+  teamScored: TeamGoals;
+  halfTimesAndMatchOutcome?: MatchOutcome;
+  numberOfGoalsAndWin?: GoalsAndWins;
+}
+
+export interface CommonAggregation {
+  drawOutcome: MatchOutcome;
+  drawOutcomeAndGoalsScored: GoalsAndWins;
+  halfTimeFullTime: HalfTimeFullTime;
+  halfTimeWithMoreGoals: HalftimeWithMoreGoals;
+  exactResults: Dictionary<number>;
 }

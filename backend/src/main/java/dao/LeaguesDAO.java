@@ -15,11 +15,8 @@ public class LeaguesDAO {
     }
 
     public List<League> getAllLeagues() {
-
         return this.datastore.getDatastore()
                 .createQuery(League.class)
-                .order("leagueId")
                 .asList();
     }
-
 }

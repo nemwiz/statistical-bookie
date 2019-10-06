@@ -1,95 +1,38 @@
 @import "../../../../assets/variables";
 
-$search-box-margin: 20px;
+.league-row {
+ @extend .list-row;
 
-.search-box {
-  display: flex;
-  justify-content: center;
-
-  .results {
-    left: auto !important;
-    text-align: center;
+  $icon-container-width: 20%;
+  $icon-width: 35px;
+  $icon-height: 30px;
+  .icon-container {
+    width: $icon-container-width;
   }
 
-  .input-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 55%;
+  .league-icon {
+    width: $icon-width;
+    height: $icon-height;
 
-    @media (max-width: $ipad-screen-size) {
-      width: 75%;
+    @media (min-width: $ipad-screen-size) {
+      width: $icon-width + 10px;
+      height: $icon-height + 10px;
     }
-
-    .group {
-      position: relative;
-      margin-bottom: $search-box-margin;
-      width: 100%;
-    }
-
-    .input-field {
-      text-align: center;
-      border: none;
-      border-radius: 0;
-      border-bottom: 5px solid #54c8ff;
-      margin-top: 1em;
-      padding: 0.85em 0.15em;
-      width: 100%;
-      padding-right: 0 !important;
-      color: #ffffff;
-    }
-
-    .label-and-icon-container {
-      color: #54c8ff;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, 0);
-      margin-top: $search-box-margin / 2;
-      font-size: $large-font;
-      pointer-events: none;
-    }
-
-    input {
-      font-size: $large-font;
-      padding: 10px 10px 10px 5px;
-    }
-
-    input:focus {
-      outline: none;
-    }
-
-    .bar {
-      position: relative;
-      display: block;
-      width: 100%;
-    }
-    .bar:before, .bar:after {
-      content: '';
-      height: 8px;
-      width: 0;
-      bottom: 0;
-      position: absolute;
-      background: #ff695e;
-      transition: 0.2s ease all;
-    }
-    .bar:before {
-      left: 50%;
-    }
-    .bar:after {
-      right: 50%;
-    }
-
-    /* active state */
-    input:focus ~ .bar:before, input:focus ~ .bar:after {
-      width: 50%;
-    }
-
-    input:focus ~ .label-and-icon-container {
-      display: none;
-    }
-
   }
 
+  .league-name {
+    width: $icon-container-width * 3;
+    font-size: 4.5vw;
+    font-weight: bold;
+
+    @media (min-width: $ipad-screen-size) {
+      font-size: $item-list-font-large-screen;
+    }
+  }
+
+  .country-flag {
+    width: $icon-height;
+    height: $icon-height - 5px;
+    border: 1px solid $separator-color;
+  }
 }
